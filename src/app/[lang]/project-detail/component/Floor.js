@@ -41,6 +41,7 @@ function ProjectFloor({floorDetails}) {
           {
             floorDetails.map((item, index)=>{
             return(
+              <div key={index}>
               <label className=" d-flex gap-3 align-items-center" >
               <input
                 type="radio"
@@ -56,7 +57,7 @@ function ProjectFloor({floorDetails}) {
               />
               {item?.title}
             </label>
-            )})
+            </div> )})
           }
           </nav>
         </div>

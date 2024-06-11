@@ -37,6 +37,7 @@ function Aboutwasl({ aboutDetails }) {
               .filter((it) => it.path === selectedIndex)
               .map((item, index) => (
                 <button
+                key={index}
                   class="btn btn-secondary dropdown-toggle w-100"
                   type="button"
                   data-bs-toggle="dropdown"
@@ -49,7 +50,7 @@ function Aboutwasl({ aboutDetails }) {
           <ul class="dropdown-menu">
             {aboutDetails?.length &&
               aboutDetails.map((item, index) => (
-                <Link
+                <Link key={index}
                   className="text-decoration-none"
                   href={item?.path ? item?.path : "#"}
                 >
@@ -73,6 +74,7 @@ function Aboutwasl({ aboutDetails }) {
           {aboutDetails?.length &&
             aboutDetails.map((item, index) => (
               <Link
+              key={index}
                 className="rounded-4 text-start p-4 mb-2 text-decoration-none"
                 style={{
                   backgroundColor:
@@ -101,7 +103,7 @@ function Aboutwasl({ aboutDetails }) {
                 <hr className="my-6" />
                 <div className="row mb-5">
                   <div className="col-lg-7">
-                    <Markdown children={item?.Desc} />
+                    <Markdown> {item?.Desc}</Markdown>
                   </div>
                   <div className="col-lg-5 d-flex flex-column align-items-center gap-5">
                     <div className="mt-4 position-relative w-100">

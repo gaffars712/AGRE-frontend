@@ -51,7 +51,7 @@ import { fetchAPI } from "../utils/api-handler";
         </div>
         </div>
       <div className="section-padding" style={{ textAlign: "justify",fontSize:'16px'}}>
-        <Markdown children={infoData?.content}/>
+        <Markdown > {infoData?.content} </Markdown>
       </div>
     </div>
     )

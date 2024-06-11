@@ -51,7 +51,7 @@ function VideoComponent({ videoDetails }) {
         {
           videoDetails.links.length && (
             videoDetails.links.map((item, index) => (
-              <div className="col-12 col-sm-6 col-lg-4 col-xl-3 mb-3 position-relative" style={{ height: '300px' }}>
+              <div key={index} className="col-12 col-sm-6 col-lg-4 col-xl-3 mb-3 position-relative" style={{ height: '300px' }}>
                 <iframe
                   className="w-100 h-100 rounded-4"
                   src={`https://www.youtube.com/embed/${getId(item?.videoLinks)}`}

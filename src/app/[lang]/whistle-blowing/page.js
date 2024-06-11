@@ -68,7 +68,7 @@ async function Page() {
         </div>
       </div>
       <div className="section-padding" style={{ textAlign: "justify", fontSize: '16px' }}>
-        <Markdown children={whistleBlowingData?.content} />
+        <Markdown >{whistleBlowingData?.content}</Markdown>
       </div>
       {/* <WhistleBlowing /> */}
     </div>
