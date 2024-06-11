@@ -1,0 +1,110 @@
+/* global.css */
+
+/* Importing the Roboto font */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap');
+
+body {
+  background-color: white;
+  font-family: 'Roboto', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+h1 {
+  font-size: 28px;
+  line-height: 35px;
+}
+
+/* Heading description styles */
+p {
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+/* Specific div background color */
+.special-div {
+  background-color: #e3e3da;
+}
+.footer-Buttom-Color {
+  background-color: #8c8c87;
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 24px;
+    line-height: 30px;
+  }
+
+  p {
+    font-size: 14px;
+    line-height: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 20px;
+    line-height: 25px;
+  }
+
+  p {
+    font-size: 12px;
+    line-height: 18px;
+  }
+}
+.footerFontSize2{
+  font-size: 14px;
+  color: #2B2A28;
+}
+.fontSize1{
+  font-size: 17px;
+}
+.fontSize3{
+  font-size: 13px;
+}
+.footermain{
+  background-color: #E4E4DC;
+}
+.footerRights{
+  background-color: #8D8D87
+}
+.valuesborder{
+  background-color: white;
+  color: #585754;
+}
+.valuesborder.clicked{
+  background-color: #e4e4dc;
+}
+
+/* Default padding for all screens */
+.footercontainer {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+/* Padding for screens larger than 1200px (desktops) */
+@media (min-width: 1200px) {
+  .footercontainer {
+    padding-left: 150px;
+    padding-right: 150px;
+  }
+}
+
+/* Padding for screens between 768px and 1199px (tablets) */
+@media (min-width: 768px) and (max-width: 1199px) {
+  .footercontainer {
+    padding-left: 80px;
+    padding-right: 80px;
+  }
+}
+
+/* Padding for screens smaller than 768px (mobiles) */
+@media (max-width: 767px) {
+  .footercontainer {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
