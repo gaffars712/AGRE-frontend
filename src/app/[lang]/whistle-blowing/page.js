@@ -5,10 +5,9 @@ import Markdown from "react-markdown";
 import { fetchAPI } from "../utils/api-handler";
 
 
-const getAllWhistleBlowingsSection = async (lang = "en") => {
+const getAllWhistleBlowingsSection = async (lang ) => {
   const path = `/whistleblowings`;
   const urlParamsObject = {
-    sort: { createdAt: "desc" },
     populate: 'deep',
     locale: lang,
     pagination: {
@@ -27,10 +26,10 @@ const getAllWhistleBlowingsSection = async (lang = "en") => {
     return null;
   }
 }
-async function Page() {
+async function Page({params}) {
 
   let data = {};
-  data = await getAllWhistleBlowingsSection();
+  data = await getAllWhistleBlowingsSection(params?.lang);
   console.log('Fetched data:', data);
   let whistleBlowingData = await data
   console.log(whistleBlowingData?.content)
@@ -57,8 +56,8 @@ async function Page() {
     <div>
       <div className='contact-banner position-relative  '>
         <Image src={Copy} alt="anner" width={100} height={200} className='w-100 z-1 policyImgHieght  object-fit-cover' />
-        <div className=' text-white blue-linear-gradient position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 ' style={{ width: '60%', height: '100%', paddingLeft: '8%', top: "0px", fontWeight: "500" }}>
-          Information Security
+        <div className={` text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar'} blue-linear-gradient position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft:params?.lang ==='en' ? '8%' : '',  paddingRight: params?.lang ==='ar' ? '8%' : '' , top: "0px", fontWeight: "500" }}>
+          Whistle Blowing
           {/* <nav className="d-flex flex-wrap" style={{ '--bs-breadcrumb-divider': "'>'" }} aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li style={{color:'#000000',fontWeight:'400px',fontSize:'20px'}} className="breadcrumb-item">Home</li>
@@ -68,7 +67,7 @@ async function Page() {
         </div>
       </div>
       <div className="section-padding" style={{ textAlign: "justify", fontSize: '16px' }}>
-        <Markdown >{whistleBlowingData?.content}</Markdown>
+        <Markdown children={whistleBlowingData?.content} />
       </div>
       {/* <WhistleBlowing /> */}
     </div>

@@ -15,7 +15,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { fetchAPI } from '../../utils/api-handler';
 
-const Residential = ({ searchParams }) => {
+const Residential = ({ params, searchParams }) => {
 
     const { searchText, type, bedroom } = searchParams;
 
@@ -72,6 +72,7 @@ const Residential = ({ searchParams }) => {
     return (
         <div className='section-padding'>
             <Filter
+                params={params}
                 handleSearch={handleSearch}
                 search={search}
                 setSearch={setSearch}
@@ -105,7 +106,7 @@ const Residential = ({ searchParams }) => {
                                     <div className='img-box  mb-2'>
                                         <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
                                     </div>
-                                    <div className=''>{property.id} - {property?.attributes?.proName}</div>
+                                    <div className=''> {property?.attributes?.proName}</div>
                                     <div style={{ fontSize: '14px' }} className=''>
                                         <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
                                             <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>

@@ -1,7 +1,7 @@
 import { usePathname } from 'next/navigation';
 
 
-export default function Filter({ handleSearch, search, setSearch, selectedOption, setSelectedOption, selectedBedroom, setSelectedBedroom }) {
+export default function Filter({ params, handleSearch, search, setSearch, selectedOption, setSelectedOption, selectedBedroom, setSelectedBedroom }) {
     const pathname = usePathname();
     return (
         <div className="w-100 d-flex justify-content-center z-5 mb-5">
@@ -18,7 +18,7 @@ export default function Filter({ handleSearch, search, setSearch, selectedOption
                 </div>
                 <div className="bg-white p-4 rounded-4">
                     <div className=" d-flex flex-md-row flex-column">
-                        <div className="search-bar d-flex flex-md-row flex-column w-100">
+                        <div className={`${params?.lang === 'en' ? 'search-bar' : 'search-bar-ar'}  d-flex flex-md-row flex-column w-100`}>
                             <input
                                 value={search}
                                 type="text"
@@ -62,7 +62,7 @@ export default function Filter({ handleSearch, search, setSearch, selectedOption
                                 <option value="5">5 Bedroom</option>
                             </select>}
                         </div>
-                        <button className="btn-new" style={{ width: '100px' }} onClick={handleSearch}>
+                        <button className={` ${params?.lang === 'en' ? 'btn-new' : 'btn-new-ar'}`} style={{ width: '100px' }} onClick={handleSearch}>
                             Search
                         </button>
                     </div>

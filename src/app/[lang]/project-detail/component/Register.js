@@ -1,9 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { postAPI } from "../../utils/api-handler";
+import { fetchAPI, postAPI } from "../../utils/api-handler";
 
 const postRegisterData = async (lang = "en", formData) => {
   const path = `/register-forms`;
@@ -29,7 +29,27 @@ const postRegisterData = async (lang = "en", formData) => {
   }
 };
 
-const Register = () => {
+const getRegisterLabels = async (lang = "en") => {
+  const path = `/register-labels`;
+  const urlParamsObject = {
+    locale: lang,
+    pagination: {
+      start: 0,
+      limit: 10,
+    },
+  };
+  const options = {};
+
+  const response = await fetchAPI(path, urlParamsObject, options);
+  if (response?.data) {
+    return response?.data[0]?.attributes;
+  } else {
+    return null;
+  }
+};
+
+const Register = ({ params, projectName }) => {
+  console.log(projectName)
   const [propertyType, setPropertyType] = useState("residential");
   const [phone, setPhone] = useState("");
   const [isValidEID, setIsValidEID] = useState("");
@@ -42,8 +62,17 @@ const Register = () => {
     nationality: "",
     unitType: "",
     comment: "",
+    projectName: projectName ? projectName : ''
   });
   const [errors, setErrors] = useState({});
+  const [labels, setLabels] = useState({});
+  const [terms, setTerms] = useState({
+    firstResult: '',
+    secondPart: '',
+    thirdPart: '',
+    fourthPart: '',
+    fifthPart: ''
+  });
 
   const unitTypes = ["Kilograms", "Liters", "Meters", "Pieces"];
   const Nationality = ["indian", "american", "UAE national", "European"];
@@ -117,7 +146,6 @@ const Register = () => {
     };
 
     const isValid = handleValidation(fieldsToValidate);
-    console.log(isValid);
     if (isValid && isAgreed) {
       const dataToSubmit = {
         ...formData,
@@ -133,9 +161,9 @@ const Register = () => {
       });
       setPhone("");
       try {
-        const registrationResponse = await postRegisterData("en", dataToSubmit);
+        const registrationResponse = await postRegisterData(params?.lang, dataToSubmit);
         alert("Data submitted...");
-        formData("");
+        setFormData({});
       } catch (error) {
         console.error("Error registering:", error);
       }
@@ -146,19 +174,53 @@ const Register = () => {
     }
   };
 
+  const fetchLabels = async () => {
+    const fetchedLabels = await getRegisterLabels(params?.lang);
+    setLabels(fetchedLabels);
+
+    if (fetchedLabels) {
+      const data = fetchedLabels.termsLable;
+      const termsIndexEn = data.indexOf("Terms & Conditions");
+      const termsIndexAr = data.indexOf("الشروط والأحكام");
+      const privacyIndexEn = data.indexOf("Privacy Policy");
+      const privacyIndexAr = data.indexOf("سياسة الخصوصية");
+
+      const termsIndex = termsIndexEn !== -1 ? termsIndexEn : termsIndexAr;
+      const privacyIndex = privacyIndexEn !== -1 ? privacyIndexEn : privacyIndexAr;
+
+      const firstResult = termsIndex !== -1 ? data.substring(0, termsIndex) : data;
+      const secondPart = termsIndex === termsIndexEn ? 'Terms & Conditions' : 'الشروط والأحكام';
+      const thirdPart = termsIndex !== -1 && privacyIndex !== -1 ? '&' : '';
+      const fourthPart = privacyIndex === privacyIndexEn ? 'Privacy Policy' : 'سياسة الخصوصية';
+      const fifthPart = privacyIndex !== -1 ? data.substring(privacyIndex + (privacyIndex === privacyIndexEn ? 'Privacy Policy'.length : 'سياسة الخصوصية'.length)) : '';
+
+      setTerms({
+        firstResult,
+        secondPart,
+        thirdPart,
+        fourthPart,
+        fifthPart
+      });
+    }
+  };
+
+  useEffect(() => {
+    fetchLabels();
+  }, [params?.lang]);
+
   return (
     <div
-      className="my-5 rounded-4 px-3 px-sm-5 "
+      className="my-5 rounded-4 px-3 px-sm-5"
       style={{
         backgroundColor: "rgba(0, 51, 102, 0.15)",
         padding: "40px 0px  40px 0px",
       }}
     >
-      <div className="">
-        <h2 className="mb-4">Register Now</h2>
+      <div>
+        <h2 className="mb-4">{labels?.formTitle}</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
-            <label className="form-label">Property Type *</label>
+            <label className="form-label">{labels?.propertyTypeLabel}</label>
             <div>
               <div className="form-check form-check-inline">
                 <input
@@ -169,7 +231,7 @@ const Register = () => {
                   checked={propertyType === "residential"}
                   onChange={() => setPropertyType("residential")}
                 />
-                <label className="form-check-label">Residential</label>
+                <label className="form-check-label">{labels?.oneType}</label>
               </div>
               <div className="form-check form-check-inline">
                 <input
@@ -180,7 +242,7 @@ const Register = () => {
                   checked={propertyType === "commercial"}
                   onChange={() => setPropertyType("commercial")}
                 />
-                <label className="form-check-label">Commercial</label>
+                <label className="form-check-label">{labels?.twoType}</label>
               </div>
             </div>
           </div>
@@ -188,7 +250,7 @@ const Register = () => {
           <div className="row mb-3">
             <div className="col-md-6">
               <label htmlFor="fullName" className="form-label">
-                Full Name *
+                {labels?.nameLabel} *
               </label>
               <input
                 type="text"
@@ -206,7 +268,7 @@ const Register = () => {
             </div>
             <div className="col-md-6">
               <label htmlFor="email" className="form-label">
-                Email Address *
+                {labels?.emailLabel} *
               </label>
               <input
                 type="email"
@@ -225,9 +287,9 @@ const Register = () => {
           </div>
 
           <div className="row mb-3">
-            <div className="col-md-6">
+            <div className={`form-group col-md-6  ${params?.lang === 'ar' ? 'phone-input-ar' : ''}`}>
               <label htmlFor="mobile" className="form-label">
-                Mobile Number *
+                {labels?.numberLabel} *
               </label>
               <PhoneInput
                 country={"in"}
@@ -249,8 +311,8 @@ const Register = () => {
               )}
             </div>
             <div className="col-md-6">
-              <label htmlFor="unitType" className="form-label">
-                Nationality *
+              <label htmlFor="nationality" className="form-label">
+                {labels?.nationalityLabel} *
               </label>
               <select
                 className="form-select"
@@ -268,15 +330,15 @@ const Register = () => {
                   </option>
                 ))}
               </select>
-              {errors.unitType && (
+              {errors.nationality && (
                 <div className="text-danger mt-1" style={{ fontSize: "12px" }}>
-                  {errors.unitType}
+                  {errors.nationality}
                 </div>
               )}
             </div>
             <div className="col-md-6">
               <label htmlFor="unitType" className="form-label">
-                Unit Types*
+                {labels?.UnitLabel} *
               </label>
               <select
                 className="form-select"
@@ -303,7 +365,7 @@ const Register = () => {
           </div>
 
           <div className="mb-3">
-            <label className="form-label">Message or Comment</label>
+            <label className="form-label">{labels?.messageLabel}</label>
             <textarea
               className="form-control"
               name="comment"
@@ -314,7 +376,7 @@ const Register = () => {
           </div>
 
           <div className="form-check mb-3">
-            <input
+            <input style={{ float: params?.lang === 'ar' ? 'right' : "" }}
               type="checkbox"
               className="form-check-input"
               id="termsCheckbox"
@@ -324,10 +386,11 @@ const Register = () => {
                 setTermsError("");
               }}
             />
-            <label className="form-check-label" htmlFor="termsCheckbox">
-              I agree to the{" "}
-              <a href="/terms-and-conditions">Terms and Conditions</a> &{" "}
-              <a href="/privacy-policy">Privacy Policy</a>
+            <label style={{ marginRight: params?.lang === 'ar' ? '22px' : "" }} className="form-check-label" htmlFor="termsCheckbox">
+              {terms.firstResult}
+              <a href="/terms-and-conditions">{terms.secondPart}</a> {terms.thirdPart}{" "}
+              <a href="/privacy-policy">{terms.fourthPart}</a>
+              {terms.fifthPart}
             </label>
           </div>
           {termsError && (
@@ -338,7 +401,7 @@ const Register = () => {
 
           <div className="text-end">
             <button type="submit" className="btn btn-primary">
-              Submit
+              {labels?.formBTN}
             </button>
           </div>
         </form>

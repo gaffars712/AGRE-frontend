@@ -83,7 +83,7 @@ const OurCommercial = ({ commercialDetails, commercialData }) => {
                         className="btn btn-backgroundClr "
                         style={{ width: "135px" }}
                     >
-                        View All
+                        {commercialDetails[0]?.viewBTN ? commercialDetails[0]?.viewBTN : ''}
                     </button>
                 </Link>
             </div>

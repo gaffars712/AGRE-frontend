@@ -6,10 +6,9 @@ import { fetchAPI } from "../utils/api-handler";
 
 
 
-  const getAllrentaltermsSection = async (lang = "en") => {
+  const getAllrentaltermsSection = async (lang) => {
     const path = `/rental-terms`;
     const urlParamsObject = {
-      sort: { createdAt: "desc" },
       populate: 'deep',
       locale: lang,
       pagination: {
@@ -28,10 +27,10 @@ import { fetchAPI } from "../utils/api-handler";
     return null;
   }
 }
-   async function Page() {
+   async function Page({params}) {
 
     let data = {};
-    data = await getAllrentaltermsSection();
+    data = await getAllrentaltermsSection(params?.lang);
     console.log('Fetched data:', data);
     let rentalData = await data
     console.log(rentalData?.Desc)
@@ -41,7 +40,7 @@ import { fetchAPI } from "../utils/api-handler";
     <div>
       <div className='contact-banner position-relative  '>
         <Image src={Copy} alt="wasl-banner" width={100} height={200}  className='w-100 z-1 policyImgHieght  object-fit-cover' />
-        <div className=' text-white blue-linear-gradient position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 ' style={{ width: '60%', height: '100%', paddingLeft:'8%',top:"0px",fontWeight:"500" }}>
+        <div className={` text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar' } position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft:params?.lang ==='en' ? '8%' : '',  paddingRight: params?.lang ==='ar' ? '8%' : '' , top:"0px",fontWeight:"500" }}>
           Rental terms & conditions
           {/* <nav className="d-flex flex-wrap" style={{ '--bs-breadcrumb-divider': "'>'" }} aria-label="breadcrumb">
             <ol className="breadcrumb">
@@ -52,7 +51,7 @@ import { fetchAPI } from "../utils/api-handler";
         </div>
         </div>
       <div className="section-padding" style={{ textAlign: "justify" }}>
-       <Markdown>{rentalData?.Desc}</Markdown>
+       <Markdown children={rentalData?.Desc}/>
       </div>
     </div>
   );

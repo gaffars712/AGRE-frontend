@@ -2,7 +2,7 @@ import React from "react";
 import FAQ from "./component/faq";
 import { fetchAPI } from "../utils/api-handler";
 
-  const getAllfaqSection = async (lang = "en") => {
+  const getAllfaqSection = async (lang) => {
     const path = `/faqs`;
     const urlParamsObject = {
       populate: '*',
@@ -25,10 +25,11 @@ import { fetchAPI } from "../utils/api-handler";
   }
    
 
-   async function page() {
+   async function page({params}) {
+    console.log(params);
 
     let faqdata = {};
-    faqdata = await getAllfaqSection();
+    faqdata = await getAllfaqSection(params?.lang);
     console.log('Fetched data:', faqdata);
     let faqcontentSection = await faqdata
     console.log(faqcontentSection)

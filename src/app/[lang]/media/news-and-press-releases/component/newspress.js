@@ -8,6 +8,7 @@ import image22 from "@/assets/images/image22.png";
 import image23 from "@/assets/images/image23.png";
 import { fetchAPI } from "../../../utils/api-handler";
 import Markdown from "react-markdown";
+import DateSelector from "@/components/commonSection/date";
 
 const getnewsHeroSection = async (lang = "en") => {
   const path = `/news-and-presses`;
@@ -31,7 +32,7 @@ const getnewsHeroSection = async (lang = "en") => {
     return null;
   }
 };
-const getallNews = async (lang = "en") => {
+const getAllNews = async (lang = "en", date) => {
   const path = `/news`;
   const urlParamsObject = {
     sort: { createdAt: "Desc" },
@@ -41,6 +42,13 @@ const getallNews = async (lang = "en") => {
       start: 0,
       limit: 10,
     },
+    ...(date && {
+      filters: {
+        date: {
+          $contains: date
+        }
+      }
+    })
   };
   const options = {};
 
@@ -54,19 +62,24 @@ const getallNews = async (lang = "en") => {
   }
 };
 
-async function Newspress() {
+async function Newspress({ params, searchParams }) {
   let homeData = {};
   let newsData = {};
-  homeData = await getnewsHeroSection();
+  homeData = await getnewsHeroSection(params?.lang);
   console.log(homeData);
-  newsData = await getallNews();
+  newsData = await getAllNews(params?.lang, searchParams?.date);
   console.log(newsData);
-
+  
   return (
     <div className="section-padding navbar-padding mb-4">
-      <div className=" py-4">
-        <p style={{ fontSize: "27px" }}>{homeData?.hero[0]?.title}</p>
-        <p style={{ fontSize: "14px" }}>{homeData?.hero[0]?.Desc}</p>
+      <div className="row w-100 d-flex justify-content-between align-items-end">
+        <div className=" col-12 col-md-8 py-4">
+          <p style={{ fontSize: "27px" }}>{homeData?.hero[0]?.title}</p>
+          <p style={{ fontSize: "14px" }}>{homeData?.hero[0]?.Desc}</p>
+        </div>
+        <div className="col-12 h-100  col-md-4 mb-3">
+          <DateSelector searchParams={searchParams} />
+        </div>
       </div>
       <div
         style={{
@@ -77,7 +90,7 @@ async function Newspress() {
         <div className=" row py-4 px-2">
           <div className="col-lg-6 col-12 col-md-6 px-4">
             <Image
-              src={newsData[0]?.attributes?.img?.data?.attributes?.formats?.small?.url}
+              src={newsData[0]?.attributes?.img?.data?.attributes?.formats?.small?.url ? newsData[0]?.attributes?.img?.data?.attributes?.formats?.small?.url : newsData[0]?.attributes?.img?.data?.attributes?.url}
               width={1000}
               height={1000}
               className="img-fluid"
@@ -99,7 +112,7 @@ async function Newspress() {
             </div>
             <div>
               {/* <p style={{ fontSize: "16px", color: "2B2A28" }}> */}
-              <Markdown  > {newsData[0]?.attributes?.Desc} </Markdown>
+              <Markdown className=' ' children={newsData[0]?.attributes?.Desc} />
               {/* </p> */}
             </div>
             <p>Read More</p>
@@ -108,7 +121,7 @@ async function Newspress() {
       </div>
 
       <div className="mt-4">
-        {newsData && newsData.filter((item,index)=> index !== 0).map((post) => (
+        {newsData && newsData.filter((item, index) => index !== 0).map((post) => (
           <div
             style={{
               borderRadius: "16px",
@@ -121,7 +134,7 @@ async function Newspress() {
               style={{ flex: "0 0 203px", minWidth: "203px" }}
             >
               <Image
-                src={post?.attributes?.img?.data?.attributes?.url}
+                src={post?.attributes?.img?.data?.attributes?.url ? post?.attributes?.img?.data?.attributes?.url : '/'}
                 width={1000}
                 height={1000}
                 className="img-fluid w-100 "

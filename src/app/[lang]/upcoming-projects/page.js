@@ -6,7 +6,7 @@ import { fetchAPI } from "../utils/api-handler";
 import Image from "next/image";
 import flag from "@/assets/images/flag.svg";
 
-const getAllupcomingeSection = async (lang = "en") => {
+const getAllupcomingeSection = async (lang) => {
   const path = `/upcomings`;
   const urlParamsObject = {
     sort: { createdAt: "desc" },
@@ -27,9 +27,9 @@ const getAllupcomingeSection = async (lang = "en") => {
   }
 };
 
-async function  page() {
+async function  page({params}) {
   let data = {};
-  data = await getAllupcomingeSection();
+  data = await getAllupcomingeSection(params?.lang);
 
   
   return (

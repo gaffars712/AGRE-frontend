@@ -5,10 +5,9 @@ import VideoComponent from "./component/videoComponent";
 import { fetchAPI } from "../../utils/api-handler";
 import { Link } from "@mui/material";
 
-const getAllVideoGallery = async (lang = "en") => {
+const getAllVideoGallery = async (lang ) => {
   const path = `/video-galleries`;
   const urlParamsObject = {
-    sort: { createdAt: "desc" },
     populate: "deep",
     locale: lang,
     pagination: {
@@ -26,13 +25,14 @@ const getAllVideoGallery = async (lang = "en") => {
   }
 };
 
-async function VideoGallery  () {
+async function VideoGallery  ({params}) {
 
   let videoData = {};
-  videoData = await getAllVideoGallery();
+  videoData = await getAllVideoGallery(params?.lang);
+  console.log(videoData);
   return (
     <div>
-      <div className="section-padding row">
+      <div className="section-padding w-100 row">
         <div className="col-12 col-sm-7">
           <div className="fs-2 fw-medium mb-4">{videoData.hero[0].title}</div>
           <div className="fs-4">{videoData.hero[0].Desc}</div>

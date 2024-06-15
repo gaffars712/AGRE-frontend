@@ -12,7 +12,7 @@ import Stack from '@mui/material/Stack';
 import { fetchAPI } from "../../../utils/api-handler";
 import PaginationComp from "@/components/commonSection/Pagination";
 
-const getAllblogSection = async (lang = "en", start = 0, limit = 10) => {
+const getAllblogSection = async (lang, start = 0, limit = 10) => {
   const path = `/blogs`;
   const urlParamsObject = {
     sort: { createdAt: "desc" },
@@ -35,7 +35,7 @@ const getAllblogSection = async (lang = "en", start = 0, limit = 10) => {
   }
 };
 
-const getpostArray = async (lang = "en", start = 0, limit = 2) => {
+const getpostArray = async (lang, start = 0, limit = 2) => {
   const path = `/blog-sections`;
   const urlParamsObject = {
     sort: { createdAt: "desc" },
@@ -58,7 +58,7 @@ const getpostArray = async (lang = "en", start = 0, limit = 2) => {
   }
 };
 
-const getnewPost = async (lang = "en", start = 0, limit = 6) => {
+const getnewPost = async (lang, start = 0, limit = 6) => {
   const path = `/blog-sections`;
   const urlParamsObject = {
     sort: { createdAt: "desc" },
@@ -89,6 +89,7 @@ const truncateText = (text, length) => {
 };
 
 const WaslBlog = async ({ params, searchParams }) => {
+  console.log(params);
   // const [homeData, setHomeData] = useState({});
   // const [posts, setPosts] = useState([]);
   // const [newPosts, setNewPosts] = useState([]);
@@ -117,14 +118,14 @@ const WaslBlog = async ({ params, searchParams }) => {
   let postsResponse;
   let totalPages;
   let postsPerPage = 6;
-  let pages =  Number(searchParams?.page) 
+  let pages = Number(searchParams?.page)
 
 
-  
-  const newPosts = await getnewPost();
-  const homeData = await getAllblogSection();
+
+  const newPosts = await getnewPost(params?.lang);
+  const homeData = await getAllblogSection(params?.lang);
   if (searchParams?.page) {
-    postsResponse = await getpostArray("en", (pages - 1) * postsPerPage, postsPerPage);
+    postsResponse = await getpostArray(params?.lang, (pages - 1) * postsPerPage, postsPerPage);
     if (postsResponse.meta.pagination.total) {
       const totalPosts = postsResponse.meta.pagination.total;
       totalPages = Math.ceil(totalPosts / postsPerPage)
@@ -137,7 +138,7 @@ const WaslBlog = async ({ params, searchParams }) => {
       <div>
         <div>
           <h1>{homeData.title}</h1>
-          <p style={{ fontSize: '16px' }}>{homeData?.Desc}</p>
+          <p style={{ fontSize: params?.lang === 'en' ? '16px' : '18px' }}>{homeData?.Desc}</p>
         </div>
       </div>
       <div className="">
@@ -150,8 +151,8 @@ const WaslBlog = async ({ params, searchParams }) => {
                     <div className="img-box">
                       <Image src={post?.attributes?.img?.data?.attributes?.formats?.thumbnail?.url} width={1000} height={1000} className="img-fluid rounded" alt={post?.attributes?.title} />
                     </div>
-                    <p style={{ minHeight: '52px' }}>{post?.attributes.title}</p>
-                    <p style={{ fontSize: '14px' }}>{truncateText(post?.attributes?.Desc, 80)}</p>
+                    <p style={{ minHeight: '52px', marginTop: params?.lang === 'ar' ? '10px' : '', fontSize: params?.lang === 'ar' ? '18px' : ''}}>{post?.attributes.title}</p>
+                    <p style={{ fontSize: params?.lang === 'en' ? '14px' : '16px' }}>{truncateText(post?.attributes?.Desc, 80)}</p>
                     <button className="btn btn-outline-primary w-100 p-2 rounded">Read More</button>
                   </div>
                 </div>
@@ -170,7 +171,7 @@ const WaslBlog = async ({ params, searchParams }) => {
                     <Image src={post?.attributes?.img?.data?.attributes?.formats?.thumbnail?.url} width={1000} height={1000} className="" style={{ width: '106.96px', height: '81px' }} alt={post?.attributes?.title} />
                   </div>
                   <div className="ml-4">
-                    <span className="d-block" style={{ fontSize: '16px' }}>{post?.attributes?.title}</span>
+                    <span className="d-block" style={{ fontSize: params?.lang === 'ar' ? '17px' : '16px' }}>{post?.attributes?.title}</span>
                     <p style={{ fontSize: '14px' }}>{post?.attributes?.description}</p>
                   </div>
                 </div>

@@ -21,7 +21,7 @@ const getAllHomeSection = async (lang = "en") => {
   const response = await fetchAPI(path, urlParamsObject, options);
 
   if (response?.data?.[0]?.attributes) {
-    console.log('respo',response?.data[0]?.attributes)
+    console.log('respo', response?.data[0]?.attributes)
     return response.data[0].attributes;
   } else {
     return null;
@@ -42,9 +42,9 @@ const getAllupcomingeSection = async (lang = "en") => {
   const options = {};
 
   const response = await fetchAPI(path, urlParamsObject, options);
-console.log("response",response.data);
+  console.log("response", response.data);
   if (response?.data?.[0]?.attributes) {
-    console.log('respo',response?.data)
+    console.log('respo', response?.data)
     return response.data[0].attributes;
   } else {
     return null;
@@ -92,27 +92,28 @@ const getAllCommercial = async (lang = "en") => {
   }
 };
 
-export default async function Home() {
+export default async function Home({ params }) {
+  console.log(params?.lang)
   let homeData = {};
-  homeData = await getAllHomeSection();
+  homeData = await getAllHomeSection(params?.lang);
   let homecontentSection = await homeData?.contentSection
 
   let data = {};
-  data = await getAllupcomingeSection();
-  console.log('Fetched data:', data.projects);
+  data = await getAllupcomingeSection(params?.lang);
+  // console.log('Fetched data:', data.projects);
 
   let residentialData = {};
-  residentialData = await getAllResidential();
+  residentialData = await getAllResidential(params?.lang);
 
   let commercialData = {};
-  commercialData = await getAllCommercial();
+  commercialData = await getAllCommercial(params?.lang);
 
   return (
     <main className="">
-      <MainScreen heroDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.hero-section')}/>
-      <UpcommingProject sliderImgData={data.projects} upCommingDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.upcoming-section')}/>
-      <OurResidential residentialData={residentialData} residentialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.residential-section')}/>
-      <OurCommercial commercialData={commercialData} commercialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.commercial-section')}/>    
+      <MainScreen params={params} heroDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.hero-section')} />
+      <UpcommingProject sliderImgData={data?.projects ? data.projects : ''} upCommingDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.upcoming-section')} />
+      <OurResidential residentialData={residentialData} residentialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.residential-section')} />
+      <OurCommercial commercialData={commercialData} commercialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.commercial-section')} />
     </main>
   );
 }

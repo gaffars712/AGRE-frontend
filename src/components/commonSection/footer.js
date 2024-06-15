@@ -8,7 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { fetchAPI } from "@/app/[lang]/utils/api-handler";
 
-const getAllHomeSection = async (lang = "en") => {
+const getFooter = async (lang = "en") => {
   const path = `/footers`;
   const urlParamsObject = {
     sort: { createdAt: "desc" },
@@ -30,11 +30,12 @@ const getAllHomeSection = async (lang = "en") => {
   }
 };
 
-async function Footer() {
+async function Footer({ localeLang }) {
   let data = {};
   let Year;
-  data = await getAllHomeSection();
+  data = await getFooter(localeLang);
   let homecontentSection = await data?.main;
+  console.log(data)
 
   let date = new Date()
   Year = date?.getFullYear()
@@ -65,8 +66,8 @@ async function Footer() {
         <hr style={{ color: "#FFFFFF" }}></hr>
         <div className="d-flex justify-content-center flex-wrap  gap-3 fontSize3 py-4">
           {/* <Link href={"/privacy-policy"} className="text-decoration-none text-white">Privacy Policy</Link> */}
-          {data.Info[0]?.info[0]?.title?.length &&
-            data.Info[0]?.info[0]?.title?.map((item, index) => (
+          {data?.Info[0]?.info[0]?.title?.length &&
+            data?.Info[0]?.info[0]?.title?.map((item, index) => (
               <div key={index}>
                 {index === 0 ? null : (
                   <span
@@ -88,7 +89,7 @@ async function Footer() {
         </div>
         <hr style={{ color: "#FFFFFF" }}></hr>
         <div className="d-flex flex-sm-row align-items-center flex-column gap-2  pb-4">
-          <span>FOLLOW US ON:</span>
+          <span>{data?.followOn[0]?.title ? data?.followOn[0]?.title : ''}</span>
           <div className="d-flex gap-2">
             {data?.followLinks?.length &&
               data?.followLinks?.map((item, index) => (
@@ -108,7 +109,7 @@ async function Footer() {
         className=" footer-end text-center py-4 text-secondary"
         style={{ backgroundColor: "rgba(219, 226, 233, 1)" }}
       >
-        © {Year} Wasl All Rights Reserved
+        © {Year} {data?.copy[0]?.title}
       </div>
     </div>
   );

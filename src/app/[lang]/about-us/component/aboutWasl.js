@@ -9,7 +9,7 @@ import Markdown from "react-markdown";
 import CorporateImg2 from "@/assets/images/CorporateSectionImage2.png";
 import Carousel from "react-elastic-carousel";
 
-function Aboutwasl({ aboutDetails }) {
+function Aboutwasl({params, aboutDetails }) {
   const [selectedIndex, setSelectedIndex] = useState("History");
   const pram = useParams();
 
@@ -28,39 +28,42 @@ function Aboutwasl({ aboutDetails }) {
   useEffect(() => {
     setSelectedIndex(pram?.item);
   }, [pram?.item]);
+  console.log(aboutDetails);
+  const reversedAboutDetails = params?.lang === 'ar' ? [...aboutDetails].reverse() : aboutDetails;
+
   return (
     <div className="section-padding">
       <div className="d-flex flex-column flex-md-row gap-sm-2 gap-lg-5">
         <div class="dropdown d-md-none my-5 ">
-          {aboutDetails?.length &&
-            aboutDetails
-              .filter((it) => it.path === selectedIndex)
+          {reversedAboutDetails?.length &&
+            reversedAboutDetails
+              .filter((it) => it?.attributes?.path === selectedIndex)
               .map((item, index) => (
                 <button
-                key={index}
+                  key={index}
                   class="btn btn-secondary dropdown-toggle w-100"
                   type="button"
                   data-bs-toggle="dropdown"
                   aria-expanded="false"
                 >
-                  {item.title}
+                  {item?.attributes?.title}
                 </button>
               ))}
 
           <ul class="dropdown-menu">
-            {aboutDetails?.length &&
-              aboutDetails.map((item, index) => (
+            {reversedAboutDetails?.length &&
+              reversedAboutDetails.map((item, index) => (
                 <Link key={index}
                   className="text-decoration-none"
-                  href={item?.path ? item?.path : "#"}
+                  href={item?.attributes?.path ? item?.attributes?.path : "#"}
                 >
                   <li>
                     <div
                       className="dropdown-item"
                       key={index}
-                      onClick={() => handleButtonClick(item?.path)}
+                      onClick={() => handleButtonClick(item?.attributes?.path)}
                     >
-                      {item?.title}
+                      {item?.attributes?.title}
                     </div>
                   </li>
                 </Link>
@@ -71,39 +74,39 @@ function Aboutwasl({ aboutDetails }) {
           className="d-none d-md-flex  d-flex flex-column"
           style={{ minWidth: "300px" }}
         >
-          {aboutDetails?.length &&
-            aboutDetails.map((item, index) => (
+          {reversedAboutDetails?.length &&
+            reversedAboutDetails.map((item, index) => (
               <Link
-              key={index}
+                key={index}
                 className="rounded-4 text-start p-4 mb-2 text-decoration-none"
                 style={{
                   backgroundColor:
-                    selectedIndex === item?.path
+                    selectedIndex === item?.attributes?.path
                       ? "rgba(0, 51, 102, 0.15)"
                       : "white",
                   color: "#585754",
                   border: "1px solid #E4E4DC",
                   borderLeft:
-                    selectedIndex === item?.path
+                    selectedIndex === item?.attributes?.path
                       ? "4px solid black"
                       : "1px solid #E4E4DC",
                 }}
-                href={item?.path ? item?.path : "#"}
+                href={item?.attributes?.path ? item?.attributes?.path : "#"}
               >
-                {item?.title}
+                {item?.attributes?.title}
               </Link>
             ))}
         </div>
-        {aboutDetails?.length &&
-          aboutDetails
-            .filter((item) => item.path == selectedIndex)
+        {reversedAboutDetails?.length &&
+          reversedAboutDetails
+            .filter((item) => item?.attributes?.path == selectedIndex)
             .map((item, index) => (
               <div key={index} className="border rounded-4 p-4">
-                <div className="fs-4">{item?.title}</div>
+                <div className="fs-4">{item?.attributes?.title}</div>
                 <hr className="my-6" />
                 <div className="row mb-5">
                   <div className="col-lg-7">
-                    <Markdown> {item?.Desc}</Markdown>
+                    <Markdown children={item?.attributes?.Desc} />
                   </div>
                   <div className="col-lg-5 d-flex flex-column align-items-center gap-5">
                     <div className="mt-4 position-relative w-100">
@@ -118,14 +121,14 @@ function Aboutwasl({ aboutDetails }) {
                           borderRadius: "15px",
                         }}
                       ></div>
-                      <Image
-                        src={item?.firstImg?.data?.attributes?.url}
+                      {item?.attributes?.firstImg && <Image
+                        src={item?.attributes?.firstImg?.data?.attributes?.formats?.thumbnail?.url}
                         style={{ position: "relative", zIndex: "1" }}
                         className="w-100 h-auto"
                         alt="our-value image1"
                         width={292}
                         height={195}
-                      />
+                      />}
                       <div
                         style={{
                           position: "absolute",
@@ -138,9 +141,9 @@ function Aboutwasl({ aboutDetails }) {
                         }}
                       ></div>
                     </div>
-                    {item?.secondImg?.data && (
+                    {item?.attributes?.secondImg?.data && (
                       <Image
-                        src={item?.secondImg?.data?.attributes?.url}
+                        src={item?.attributes?.secondImg?.data?.attributes?.formats?.thumbnail?.url}
                         className="mt-5 w-100 h-auto"
                         alt="our-value image2"
                         width={292}
@@ -149,8 +152,8 @@ function Aboutwasl({ aboutDetails }) {
                     )}
                   </div>
                 </div>
-                {item?.fullImg?.data && (
-                  <TextCard imgUrl={item?.fullImg?.data?.attributes?.url} />
+                {item?.attributes?.fullImg?.data && (
+                  <TextCard imgUrl={item?.attributes?.fullImg?.data?.attributes?.formats?.thumbnail?.url} />
                 )}
               </div>
             ))}

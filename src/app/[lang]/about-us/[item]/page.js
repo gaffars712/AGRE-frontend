@@ -4,7 +4,8 @@ import Aboutwasl from "../component/aboutWasl";
 import Footer from "../../../../components/commonSection/footer"
 import Navbar from "../../../../components/commonSection/navbar";
 
-const getAllHomeSection = async (lang = "en") => {
+const getAllHomeSection = async (lang) => {
+  console.log(lang);
   const path = `/about-uses`;
   const urlParamsObject = {
     sort: { createdAt: "desc" },
@@ -18,29 +19,28 @@ const getAllHomeSection = async (lang = "en") => {
   const options = {};
 
   const response = await fetchAPI(path, urlParamsObject, options);
-
-  if (response?.data?.[0]?.attributes) {
-    console.log('respo',response?.data[0]?.attributes)
-    return response.data[0].attributes;
+  console.log(response)
+  if (response?.data) {
+    console.log('respo',response?.data[0])
+    return response.data;
   } else {
     return null;
   }
 };
 
-export default async function AboutUs({lang= 'en', params: {  } }) {
+export default async function AboutUs({ params }) {
 
  
   let data = {};
-  data = await getAllHomeSection();
-  console.log('Fetched data:', data);
-  let homecontentSection = await data?.contentSection
+  data = await getAllHomeSection(params?.lang);
+  let homecontentSection = await data
   console.log(homecontentSection)
 
 
   return (
     <main>
       <section className="aboutwasl-section">
-         <Aboutwasl aboutDetails = {homecontentSection}/>
+         <Aboutwasl params={params} aboutDetails = {homecontentSection}/>
       </section>
     </main>
   );  

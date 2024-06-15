@@ -76,7 +76,7 @@ const Child = ({ item, index, isSelected, onClick }) => {
       {isSelected && (
         <div className="faq-answer p-2" style={{ textAlign: 'justify' }}>
           {/* <Markdown {item?.Desc}/> */}
-          <Markdown > {item?.Desc} </Markdown>
+          <Markdown children={item?.Desc} />
         </div>
       )}
     </div>

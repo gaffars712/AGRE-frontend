@@ -66,7 +66,7 @@ export default async function RootLayout({ children }) {
   const cookieStore = cookies()
   const localeLang = cookieStore.get('locale')?.value || "en";
   let navData = {};
-  navData = await getNavList()
+  navData = await getNavList(localeLang)
   return (
     <html lang={localeLang} dir={localeLang === `ar` ? 'rtl' : 'ltr'}>
       <head>
@@ -75,10 +75,10 @@ export default async function RootLayout({ children }) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       </head>
       <body className={inter.className}>
-        <Navbar navData={navData} />
+        <Navbar localeLang={localeLang} navData={navData} />
 
         {children}
-        <Footer />
+        <Footer localeLang={localeLang} />
 
       </body>
     </html>

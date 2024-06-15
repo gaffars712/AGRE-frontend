@@ -4,10 +4,9 @@ import Copy from "@/assets/location/copy.svg";
 import Markdown from "react-markdown";
 import { fetchAPI } from "../utils/api-handler";
 
-  const getAllPrivacyPolicySection = async (lang = "en") => {
+  const getAllPrivacyPolicySection = async (lang) => {
     const path = `/privacy-policies`;
     const urlParamsObject = {
-      sort: { createdAt: "desc" },
       populate: 'deep',
       locale: lang,
       pagination: {
@@ -26,10 +25,10 @@ import { fetchAPI } from "../utils/api-handler";
     return null;
   }
 }
-   async function Page() {
+   async function Page({params}) {
 
     let data = {};
-    data = await getAllPrivacyPolicySection();
+    data = await getAllPrivacyPolicySection(params?.lang);
     console.log('Fetched data:', data);
     let policyData= await data
     console.log(policyData?.content)
@@ -39,7 +38,7 @@ import { fetchAPI } from "../utils/api-handler";
     <div>
       <div className='contact-banner position-relative  '>
       <Image src={Copy} alt="wasl-banner" width={100} height={200}  className='w-100 z-1 policyImgHieght  object-fit-cover' />
-        <div className=' text-white blue-linear-gradient position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 ' style={{ width: '60%', height: '100%', paddingLeft:'8%',top:"0px",fontWeight:"500" }}>
+        <div className={` text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar'}  position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%',paddingLeft:params?.lang ==='en' ? '8%' : '',  paddingRight: params?.lang ==='ar' ? '8%' : '' ,top:"0px",fontWeight:"500" }}>
         Privacy Policy
           {/* <nav className="d-flex flex-wrap" style={{ '--bs-breadcrumb-divider': "'>'" }} aria-label="breadcrumb">
             <ol className="breadcrumb">
@@ -50,7 +49,7 @@ import { fetchAPI } from "../utils/api-handler";
         </div>
         </div>
       <div className="section-padding" style={{ textAlign: "justify" }}>
-        <Markdown> {policyData?.content}</Markdown>
+        <Markdown children={policyData?.content}/>
       </div>
     </div>
   );

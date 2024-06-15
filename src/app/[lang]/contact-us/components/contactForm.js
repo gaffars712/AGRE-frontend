@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from 'react';
 import { postAPI } from "../../utils/api-handler";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css"; // Make sure you have this import for styles
 
 const postRegisterData = async (lang = "en", transformedData) => {
   const path = `/contact-us-forms`;
@@ -26,7 +28,8 @@ const postRegisterData = async (lang = "en", transformedData) => {
   }
 };
 
-function ContactForm() {
+function ContactForm({ params, formLabels }) {
+  console.log(formLabels);
   const [formData, setFormData] = useState({
     fullName: '',
     mobileNumber: '',
@@ -42,6 +45,13 @@ function ContactForm() {
     setFormData({
       ...formData,
       [name]: type === 'checkbox' ? checked : value,
+    });
+  };
+
+  const handlePhoneChange = (value) => {
+    setFormData({
+      ...formData,
+      mobileNumber: value,
     });
   };
 
@@ -79,10 +89,11 @@ function ContactForm() {
           interestedIn: '',
           termsAccepted: false,
         });
+        alert('Form submitted successfully!');
       } catch (error) {
         console.error("Error registering:", error);
+        alert('Error submitting form.');
       }
-      alert('Form submitted successfully!');
     }
   };
 
@@ -97,61 +108,71 @@ function ContactForm() {
             <div className='mt-5'>
               <div style={{ fontSize: '16px' }} className='row'>
                 <div className='form-group col-lg-6 mb-3'>
-                  <strong>Full Name*</strong>
+                  <strong>{formLabels[0]?.nameLabel}*</strong>
                   <input
                     type='text'
                     className='form-control mt-2'
                     name='fullName'
                     value={formData.fullName}
                     onChange={handleInputChange}
-                    placeholder='Enter value here'
+                    placeholder=''
                   />
                   {errors.fullName && <p style={{ color: 'red' }}>{errors.fullName}</p>}
                 </div>
 
-                <div className='form-group col-lg-6'>
-                  <strong>Mobile Number*</strong>
-                  <input
-                    type='text'
-                    className='form-control mt-2'
-                    name='mobileNumber'
+                <div className={`form-group col-lg-6 mt-2 ${params?.lang === 'ar' ? 'phone-input-ar' : ''}`}>
+                  <strong>{formLabels[0]?.numberLabel}*</strong>
+                  <PhoneInput
+                    country={"in"}
                     value={formData.mobileNumber}
-                    onChange={handleInputChange}
-                    placeholder='Enter your mobile number'
+                    onChange={handlePhoneChange}
+                    className=""
+                    inputProps={{
+                      name: "mobileNumber",
+                      required: true,
+                      className: "form-control",
+                      id: "mobile",
+                      style: { textAlign: 'left' } // Default alignment is left for LTR languages
+
+                    }}
+                    containerStyle={{ width: "100%" }}
+                    inputStyle={{ width: "100%", direction: 'rtl', marginTop: '18px', backgroundColor: 'red' }}
+                    style={{ Left: params?.lang === 'ar' ? '' : "" }}
                   />
                   {errors.mobileNumber && <p style={{ color: 'red' }}>{errors.mobileNumber}</p>}
                 </div>
               </div>
               <div className='row'>
                 <div className='form-group col-lg-6'>
-                  <strong>Email Address*</strong>
+                  <strong>{formLabels[0]?.emailLabel}*</strong>
                   <input
-                    type='text'
+                    type='email' // Changed to 'email' type
                     className='form-control mt-2'
                     name='email'
                     value={formData.email}
                     onChange={handleInputChange}
-                    placeholder='Enter your email address'
+                    placeholder=''
                   />
                   {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
                 </div>
 
-                <div className='form-group col-lg-6'>
-                  <strong>Interested in*</strong>
+                <div className='form-group col-lg-6' >
+                  <strong>{formLabels[0]?.interestLabel}*</strong>
                   <input
+
                     type='text'
                     className='form-control mt-2'
                     name='interestedIn'
                     value={formData.interestedIn}
                     onChange={handleInputChange}
-                    placeholder='Enter your interest'
+                    placeholder=''
                   />
                   {errors.interestedIn && <p style={{ color: 'red' }}>{errors.interestedIn}</p>}
                 </div>
               </div>
             </div>
-            <div className="mt-4 form-check">
-              <input
+            <div className="mt-4 form-check" >
+              <input style={{ float: params?.lang === 'ar' ? 'right' : '' }}
                 type="checkbox"
                 className="form-check-input mt-2"
                 id="exampleCheck1"
@@ -159,7 +180,7 @@ function ContactForm() {
                 checked={formData.termsAccepted}
                 onChange={handleInputChange}
               />
-              <label className="form-check-label" htmlFor="exampleCheck1">By clicking Register Now you’re agreeing with terms & condition *</label>
+              <label style={{ marginRight: params?.lang === 'ar' ? '22px' : "" }} className="form-check-label" htmlFor="exampleCheck1">{formLabels[0]?.formTerms} *</label>
               {errors.termsAccepted && <p style={{ color: 'red' }}>{errors.termsAccepted}</p>}
             </div>
             <div className='mt-3 text-center p-4'>
@@ -168,7 +189,7 @@ function ContactForm() {
                 style={{ backgroundColor: "#003366", width: '195px', height: '42px', borderRadius: '8px', fontSize: '16px' }}
                 className='text-white'
               >
-                Submit your interest
+                {formLabels[0]?.formBTN}
               </button>
             </div>
           </form>

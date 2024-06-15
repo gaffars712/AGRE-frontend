@@ -11,28 +11,28 @@ import Register from './Register'
 import Map from  '@/app/[lang]/project-detail/component/Map'
 import Markdown from 'react-markdown'
 
-const DetailsAboutProject = ({ projectId, projectDetails }) => {
+const DetailsAboutProject = ({params, projectId, projectDetails }) => {
 
-    console.log(projectDetails?.attributes?.proDesc);
+    console.log(projectDetails);
     const [selectedImage, setSelectedImage] = useState(projectDetails?.attributes?.proImgs?.data[0].attributes.url)
    
     return (
         <div className='container'>
             <div className="row">
-                <div className='col-sm-5 p-0'>
-                    <div style={{ maxWidth: '470px' }}>
+                <div className='col-12 col-lg-5 p-0'>
+                    <div style={{ width:"100%" }}>
                         <div className='lh-sm' style={{ fontSize: '26px' }}>{projectDetails?.attributes?.proTitle}</div>
                         {/* <p className='lh-base  mt-3'>{projectDetails?.attributes?.proDesc}</p> */}
-                        <Markdown className='textAlignJustify lh-base  mt-3 ' >{projectDetails?.attributes?.proDesc}</Markdown>
+                        <Markdown className='textAlignJustify lh-base  mt-3 'children={projectDetails?.attributes?.proDesc} />
                     </div>
                 </div>
-                <div className='col-sm-7 d-flex justify-content-end flex-column flex-md-row p-0'>
+                <div className='col-12 col-lg-7 d-flex justify-content-end flex-column flex-lg-row p-0'>
                     <div className='position-relative'>
                         <Image src={selectedImage} alt='room1' width={414} height={307} className='object-fit-cover z-1  position-absolute project-description-main-image' />
 
                         <div className='project-description-main-image-bg'></div>
                     </div>
-                    <div className=' d-flex flex-row flex-md-column gap-3 sub-images-project-desc' style={{ width: '104.17px' }}>
+                    <div className={` d-flex flex-row flex-lg-column gap-3 ${params?.lang === 'en' ? 'sub-images-project-desc' : 'sub-images-project-desc-ar'} `} style={{ width: '104.17px' }}>
                         {projectDetails?.attributes?.proImgs?.data?.length &&
                             projectDetails?.attributes?.proImgs?.data?.slice(0,4)?.map((item, index) => {
                                 const imageUrl = item?.attributes?.url;
@@ -67,7 +67,7 @@ const DetailsAboutProject = ({ projectId, projectDetails }) => {
                 </div>
                 {projectDetails?.attributes?.proPlans ? <ProjectFloor floorDetails={projectDetails?.attributes?.proPlans}/> : null}
                 <Map mapUrl={projectDetails?.attributes?.locationURL} mapDetails={projectDetails?.attributes}/>
-                <Register />
+                <Register projectName={projectDetails?.attributes?.proName} params={params} />
 
             </div>
         </div>

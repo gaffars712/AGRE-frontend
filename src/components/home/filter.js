@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Filter() {
+export default function Filter({params}) {
 
     const router = useRouter();
 
@@ -67,11 +67,12 @@ export default function Filter() {
                 </div>
                 <div className="bg-white p-4 rounded-4">
                     <div className=" d-flex flex-md-row flex-column">
-                        <div className="search-bar d-flex flex-md-row flex-column w-100">
+                        <div className={` ${params?.lang === 'en' ? 'search-bar' : 'search-bar-ar' }  d-flex flex-md-row flex-column w-100`}>
                             <input
                                 type="text"
                                 className="form-control flex-grow-1"
-                                placeholder={window.innerWidth < 768.92 ? 'Search...' : ''}
+                                // placeholder={window.innerWidth < 768.92 ? 'Search...' : ''}
+                                placeholder={'Search...'}
                                 onChange={(e) => setSearchText(e.target.value)}
                             />
                             {selectedType == 'commercial' ?
@@ -106,7 +107,7 @@ export default function Filter() {
                                 <option value="5">5 Bedroom</option>
                             </select>}
                         </div>
-                        <button className="btn-new" style={{ width: '100px' }} onClick={handleSearch}>
+                        <button className={`${params?.lang === 'en' ? 'btn-new' : 'btn-new-ar'}`} style={{ width: '100px' }} onClick={handleSearch}>
                             Search
                         </button>
                     </div>

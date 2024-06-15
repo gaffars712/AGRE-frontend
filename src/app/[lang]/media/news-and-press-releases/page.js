@@ -1,10 +1,11 @@
 import React from 'react'
 import Newspress from './component/newspress';
 
-const NewsAndPressReport = () => {
+const NewsAndPressReport = ({params,searchParams}) => {
+  console.log(searchParams)
   return (
     <div>
-    <Newspress/>
+    <Newspress params ={params}searchParams={searchParams}/>
     </div>
   )
 }

@@ -25,11 +25,9 @@ const getPhotoGallery = async (lang = "en") => {
     return null;
   }
 };
-async function PhotoGallery() {
+async function PhotoGallery({params}) {
 
-  let PhotoData = await getPhotoGallery();
-  console.log(PhotoData);
-  console.log(PhotoData.residetialP);
+  let PhotoData = await getPhotoGallery(params?.lang);
 
   return (
     <div>

@@ -93,7 +93,7 @@ function OurResidential  ({residentialDetails, residentialData}) {
                         className="btn btn-backgroundClr "
                         style={{ width: "135px" }}
                     >
-                        View All
+                        {residentialDetails[0]?.viewBTN ? residentialDetails[0]?.viewBTN : ''}
                     </button>
                 </Link>
             </div>
