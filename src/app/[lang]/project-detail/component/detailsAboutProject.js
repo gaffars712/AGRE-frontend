@@ -23,7 +23,7 @@ const DetailsAboutProject = ({params, projectId, projectDetails }) => {
                     <div style={{ width:"100%" }}>
                         <div className='lh-sm' style={{ fontSize: '26px' }}>{projectDetails?.attributes?.proTitle}</div>
                         {/* <p className='lh-base  mt-3'>{projectDetails?.attributes?.proDesc}</p> */}
-                        <Markdown className='textAlignJustify lh-base  mt-3 'children={projectDetails?.attributes?.proDesc} />
+                        <Markdown className='textAlignJustify lh-base  mt-3 '>{projectDetails?.attributes?.proDesc} </Markdown>
                     </div>
                 </div>
                 <div className='col-12 col-lg-7 d-flex justify-content-end flex-column flex-lg-row p-0'>

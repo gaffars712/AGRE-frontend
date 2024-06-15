@@ -112,7 +112,7 @@ async function Newspress({ params, searchParams }) {
             </div>
             <div>
               {/* <p style={{ fontSize: "16px", color: "2B2A28" }}> */}
-              <Markdown className=' ' children={newsData[0]?.attributes?.Desc} />
+              <Markdown className=' ' >{newsData[0]?.attributes?.Desc}</Markdown>
               {/* </p> */}
             </div>
             <p>Read More</p>
