@@ -113,7 +113,7 @@ function Aboutwasl({ params, aboutDetails }) {
                 <div className="row mb-5">
                   <h3 className="mb-2">{item?.attributes?.shortDes}</h3>
                   <div className="col-lg-7">
-                    <Markdown children={item?.attributes?.Desc} />
+                    <Markdown >{item?.attributes?.Desc}</Markdown>
                   </div>
                   <div className="col-lg-5 d-flex flex-column align-items-center gap-5">
                     <div className="mt-4 position-relative w-100">
