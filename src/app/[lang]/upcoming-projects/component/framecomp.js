@@ -25,6 +25,7 @@ function Framecomp({properties}) {
     //         image: upcoming1,
     //     },
     // ];
+    console.log(properties);
     return (
         <div className='section-padding'>
             <p style={{ fontSize: '27px' }}>{properties?.hero[0]?.title}</p>
@@ -41,7 +42,7 @@ function Framecomp({properties}) {
                                     <li className='mt-2'> <span>{item?.Desc}</span></li>
                                 </ul>
                             </div>
-                            <div style={{ borderTop: '1px solid rgba(228, 228, 220, 1)' }} className='text-center p-2 '>View All <Image src={Arrow} className='mx-2' /></div>
+                            <div style={{ borderTop: '1px solid rgba(228, 228, 220, 1)' }} className='text-center p-2 '>{item?.viewBTN} <Image src={Arrow} className='mx-2' /></div>
                         </div>
 
                     </div>

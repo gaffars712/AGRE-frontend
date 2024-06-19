@@ -3,17 +3,26 @@
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
-export default function Filter({params}) {
+export default function Filter({ params, filters }) {
+    console.log(params);
 
     const router = useRouter();
 
-    const [selectedType, setSelectedType] = useState('residential');
+    const [selectedType, setSelectedType] = useState(filters?.titleOne);
     const [searchText, setSearchText] = useState('');
     const [selectedOption, setSelectedOption] = useState('');
     const [selectedBedroom, setSelectedBedroom] = useState('');
 
     const handleSearch = () => {
-        let query = `/properties/${selectedType}`;
+        let query;
+        if (selectedType === 'سكني' && params?.lang === 'ar') {
+            query = `/properties/residential`;
+        } else if (selectedType === 'تجاري' && params?.lang === 'ar') {
+            query = `/properties/commercial`;
+        }else{
+          let  lowercase = selectedType.toLowerCase()
+            query = `/properties/${lowercase}`
+        }
 
         let queryParams = [];
 
@@ -26,7 +35,7 @@ export default function Filter({params}) {
         }
 
         if (selectedBedroom) {
-            queryParams.push(`bedroom=${encodeURIComponent(selectedBedroom)}`);
+            queryParams.push(`bedroom=${encodeURIComponent(selectedBedroom[0])}`);
         }
 
         if (queryParams.length > 0) {
@@ -45,70 +54,101 @@ export default function Filter({params}) {
             <div className="bg-backgroundClr p-3 w-100 rounded-4">
                 <div className="d-flex mx-3">
                     <div
-                        onClick={() => setSelectedType('residential')}
+                        onClick={() => setSelectedType(filters?.titleOne)}
                         className="p-2 rounded-top-3"
                         style={{
-                            backgroundColor: selectedType === 'residential' ? '#002245' : '',
+                            backgroundColor: selectedType === filters?.titleOne ? '#002245' : '',
                             cursor: 'pointer',
                         }}
                     >
-                        Residential
+                        {filters?.titleOne}
                     </div>
                     <div
-                        onClick={() => setSelectedType('commercial')}
+                        onClick={() => setSelectedType(filters?.titleTwo)}
                         className="p-2 rounded-top-3"
                         style={{
-                            backgroundColor: selectedType === 'commercial' ? '#002245' : '',
+                            backgroundColor: selectedType === filters?.titleTwo ? '#002245' : '',
                             cursor: 'pointer',
                         }}
                     >
-                        Commercial
+                        {filters?.titleTwo}
                     </div>
                 </div>
                 <div className="bg-white p-4 rounded-4">
                     <div className=" d-flex flex-md-row flex-column">
-                        <div className={` ${params?.lang === 'en' ? 'search-bar' : 'search-bar-ar' }  d-flex flex-md-row flex-column w-100`}>
+                        <div className={` ${params?.lang === 'en' ? 'search-bar' : 'search-bar-ar'}  d-flex flex-md-row flex-column w-100`}>
                             <input
                                 type="text"
                                 className="form-control flex-grow-1"
                                 // placeholder={window.innerWidth < 768.92 ? 'Search...' : ''}
-                                placeholder={'Search...'}
+                                placeholder={filters?.searchPlaceholder}
                                 onChange={(e) => setSearchText(e.target.value)}
                             />
-                            {selectedType == 'commercial' ?
+                            {selectedType == filters?.titleTwo ?
                                 <select
                                     className=" filterTypeInput form-select form-control"
                                     style={{ width: '150px' }}
                                     onChange={(e) => setSelectedOption(e.target.value)}
                                 >
-                                    <option value="" className=' fw-bold'>Type</option>
-                                    <option value="office">Office</option>
-                                    <option value="retail">Retail</option>
+                                    {filters?.typesCommercial && params?.lang === 'en'
+                                        ?
+                                        filters?.typesCommercial && filters?.typesCommercial.map((item, i) => {
+                                            return (
+                                                <option key={i} value={item === "Type" ? '' : item} className={`${item === "Type" ? "fw-bold" : ''}`}>{item}</option>
+                                            )
+                                        })
+                                        :
+                                        filters?.typesCommercialAR && filters?.typesCommercialAR.map((item, i) => {
+                                            return (
+                                                <option key={i} value={item === "Type" ? '' : item} className={`${item === "Type" ? "fw-bold" : ''}`}>{item}</option>
+                                            )
+                                        })
+
+                                    }
                                 </select>
                                 : <select
                                     className="filterTypeInput form-control"
                                     style={{ width: '150px' }}
                                     onChange={(e) => setSelectedOption(e.target.value)}
                                 >
-                                    <option value="" className=' fw-bold'>Type</option>
-                                    <option value="villa">Villa</option>
-                                    <option value="apartment">Apartment</option>
+                                    {filters?.types && params?.lang === 'en'
+                                        ?
+                                        filters?.types && filters?.types.map((item, i) => {
+                                            return (
+                                                <option key={i} value={item === "Type" ? '' : item} className={`${item === "Type" ? "fw-bold" : ''} `}>{item}</option>
+                                            )
+                                        })
+                                        :
+                                        filters?.typesAR && filters?.typesAR.map((item, i) => {
+                                            return (
+                                                <option key={i} value={item === "Type" ? '' : item} className={`${item === "Type" ? "fw-bold" : ''} `}>{item}</option>
+                                            )
+                                        })
+                                    }
                                 </select>}
-                            {selectedType != 'commercial' && <select
+                            {selectedType != filters?.titleTwo && <select
                                 className="filterBedroom form-control"
                                 style={{ width: '150px' }}
                                 onChange={(e) => setSelectedBedroom(e.target.value)}
                             >
-                                <option value="" className=' fw-bold'> Bedrooms</option>
-                                <option value="1">1 Bedroom</option>
-                                <option value="2">2 Bedroom</option>
-                                <option value="3">3 Bedroom</option>
-                                <option value="4">4 Bedroom</option>
-                                <option value="5">5 Bedroom</option>
+                                {filters?.bedRooms && params?.lang === 'en'
+                                    ?
+                                    filters?.bedRooms && filters?.bedRooms.map((item, i) => {
+                                        return (
+                                            <option key={i} value={item === "Badrooms" ? '' : item} className={`${item === "Badrooms" ? "fw-bold" : ''} `}>{item}</option>
+                                        )
+                                    })
+                                    :
+                                    filters?.bedRoomsAR && filters?.bedRoomsAR.map((item, i) => {
+                                        return (
+                                            <option key={i} value={item === "Badrooms" ? '' : item} className={`${item === "Badrooms" ? "fw-bold" : ''} `}>{item}</option>
+                                        )
+                                    })
+                                }
                             </select>}
                         </div>
                         <button className={`${params?.lang === 'en' ? 'btn-new' : 'btn-new-ar'}`} style={{ width: '100px' }} onClick={handleSearch}>
-                            Search
+                            {filters?.SearchBTN ? filters?.SearchBTN : 'Search'}
                         </button>
                     </div>
                 </div>

@@ -16,7 +16,7 @@ const location = [
 
 ]
 
-const MapComponent = ({ mapDetails, mapUrl }) => {
+const MapComponent = ({ params, mapDetails, mapUrl }) => {
   return (
     <div>
       <div className="row mb-3 mt-5 d-flex justify-content-md-between">
@@ -28,14 +28,26 @@ const MapComponent = ({ mapDetails, mapUrl }) => {
             </p>
           </div>
           <div className="d-flex flex-wrap w-100 gap-3" >
-            {mapDetails?.locationFeature?.map((loc, index) => (
-              <div key={index} className=' d-flex align-items-center flex-column' style={{ width: '90px' }}>
-                <div className='d-flex justify-content-center align-items-center' style={{ height: '90px' }}>
-                  {COMMON.LOCATION[loc]}
+            {mapDetails?.locationFeature && params?.lang === 'en'
+              ?
+              mapDetails?.locationFeature?.map((loc, index) => (
+                <div key={index} className=' d-flex align-items-center flex-column' style={{ width: '90px' }}>
+                  <div className='d-flex justify-content-center align-items-center' style={{ height: '90px' }}>
+                    {COMMON.LOCATION[loc]}
+                  </div>
+                  <div className=' d-flex text-center' style={{ fontSize: '14px', minHeight: '30px', lineHeight: '20px' }}>{loc}</div>
                 </div>
-                <div className=' d-flex text-center' style={{ fontSize: '14px', minHeight: '30px', lineHeight: '20px' }}>{loc}</div>
-              </div>
-            ))}
+              ))
+              :
+              mapDetails?.locationFeatureAR?.map((loc, index) => (
+                <div key={index} className=' d-flex align-items-center flex-column' style={{ width: '90px' }}>
+                  <div className='d-flex justify-content-center align-items-center' style={{ height: '90px' }}>
+                    {COMMON.LOCATION[loc]}
+                  </div>
+                  <div className=' d-flex text-center' style={{ fontSize: '14px', minHeight: '30px', lineHeight: '20px' }}>{loc}</div>
+                </div>
+              ))
+            }
           </div>
         </div>
         <div className="col-md-5 p-0 ">

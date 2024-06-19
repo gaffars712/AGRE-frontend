@@ -20,14 +20,14 @@ const FAQ = ({ faqcontentSection }) => {
       <div className='contact-banner position-relative '>
         <Image src={hd} alt="faq-image" className='object-fit-cover w-100  ' />
         <div className='position-absolute w-100  navbar-padding  ' style={{top:"15px",padding:""}}>
-          <h3 className="text-white">FAQs</h3>
+          <h3 className="text-white">{faqcontentSection?.title}</h3>
           <nav className="d-flex flex-wrap text-white" aria-label="breadcrumb">
             <ol className="breadcrumb d-flex align-items-center">
               <li
                 className="breadcrumb-item"
                 style={{ color: '#000000', fontWeight: 400, fontSize: '16px' }}
               >
-                <Link className="text-white" style={{textDecorationLine:"none"}} href="/">Home</Link>
+                <Link className="text-white" style={{textDecorationLine:"none"}} href={faqcontentSection?.fromPagePath ? faqcontentSection?.fromPagePath : '/'}>{faqcontentSection?.fromPage}</Link>
               </li>
               <li
                 className="breadcrumb-divider mx-2"
@@ -40,14 +40,14 @@ const FAQ = ({ faqcontentSection }) => {
                 style={{ color: '#000000', fontWeight: 400, fontSize: '16px' }}
                 aria-current="page"
               >
-                FAQs
+                {faqcontentSection?.title}
               </li>
             </ol>
           </nav>
         </div>
       </div>
       <div className="section-padding" >
-        {faqcontentSection?.map((item, index) => (
+        {faqcontentSection?.faqs?.map((item, index) => (
           <Child
             key={index}
             item={item}
@@ -76,7 +76,7 @@ const Child = ({ item, index, isSelected, onClick }) => {
       {isSelected && (
         <div className="faq-answer p-2" style={{ textAlign: 'justify' }}>
           {/* <Markdown {item?.Desc}/> */}
-          <Markdown >{item?.Desc}</Markdown>
+          <Markdown children={item?.Desc} />
         </div>
       )}
     </div>

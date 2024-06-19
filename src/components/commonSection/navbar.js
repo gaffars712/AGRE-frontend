@@ -72,7 +72,7 @@ const Navbar = ({ localeLang, navData }) => {
                     className='w-100'
                     style={{ outline: 'none', border: 'none', background: '#F4F4F4' }}
                     type="text"
-                    placeholder="Search"
+                    placeholder={navData[0]?.attributes?.searchPlaceholder ? navData[0]?.attributes?.searchPlaceholder :"Search"}
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     onKeyPress={handleKeyPress}

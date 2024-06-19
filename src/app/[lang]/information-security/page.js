@@ -41,7 +41,7 @@ import { fetchAPI } from "../utils/api-handler";
       <div className='contact-banner position-relative  '>
       <Image src={Copy} alt="wasl-banner" width={100} height={200}  className='w-100 z-1 policyImgHieght  object-fit-cover' />
         <div className={` text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar' } position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft:params?.lang ==='en' ? '8%' : '',  paddingRight: params?.lang ==='ar' ? '8%' : '' , top:"0px",fontWeight:"500" }}>
-        Information Security
+        {infoData?.title}
           {/* <nav className="d-flex flex-wrap" style={{ '--bs-breadcrumb-divider': "'>'" }} aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li style={{color:'#000000',fontWeight:'400px',fontSize:'20px'}} className="breadcrumb-item">Home</li>
@@ -51,7 +51,7 @@ import { fetchAPI } from "../utils/api-handler";
         </div>
         </div>
       <div className="section-padding" style={{ textAlign: "justify",fontSize:'16px'}}>
-        <Markdown >{infoData?.content}</Markdown>
+        <Markdown children={infoData?.content}/>
       </div>
     </div>
     )

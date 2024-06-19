@@ -153,7 +153,7 @@ const WaslBlog = async ({ params, searchParams }) => {
                     </div>
                     <p style={{ minHeight: '52px', marginTop: params?.lang === 'ar' ? '10px' : '', fontSize: params?.lang === 'ar' ? '18px' : ''}}>{post?.attributes.title}</p>
                     <p style={{ fontSize: params?.lang === 'en' ? '14px' : '16px' }}>{truncateText(post?.attributes?.Desc, 80)}</p>
-                    <button className="btn btn-outline-primary w-100 p-2 rounded">Read More</button>
+                    <button className="btn btn-outline-primary w-100 p-2 rounded">{params?.lang === 'en' ? 'Read More' :"اقرأ أكثر"}</button>
                   </div>
                 </div>
               ))}

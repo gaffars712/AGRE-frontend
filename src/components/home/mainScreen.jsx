@@ -3,8 +3,7 @@ import React from "react";
 import CoverImage from "@/assets/images/cover-image.svg";
 import Image from "next/image";
 import Filter from "./filter";
-const MainScreen = ({params, heroDetails}) => {
-
+const MainScreen = ({params, heroDetails, filters}) => {
    
     return (
         <div className="w-100 main-screen-container" >
@@ -25,7 +24,7 @@ const MainScreen = ({params, heroDetails}) => {
                 >
                     <div className="bg-backgroundClr main-screen-subcontainer ">{ heroDetails?.length ?  heroDetails[0]?.heroContent : "A great choice of premium apartments with a promise of luxury and convenience"}</div>
                 </div>
-                <Filter params={params}/>
+                <Filter filters={filters} params={params}/>
             </div>
         </div>
     );

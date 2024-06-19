@@ -4,7 +4,7 @@ import Image from "next/image";
 import bed from "@/assets/images/bed.png";
 import floorPlanIcon from "@/assets/images/plan.svg";
 
-function ProjectFloor({floorDetails}) {
+function ProjectFloor({floorDetails, params}) {
   const [selected, setSelected] = useState(floorDetails[0].id);
 
   const handleChange = (event) => {
@@ -14,7 +14,7 @@ function ProjectFloor({floorDetails}) {
   return (
     <div className="p-0">
       <div className="py-4 m-0">
-        <h5>PLANS</h5>
+        <h5>{params?.lang === 'en' ? 'PLANS' : 'خطط' }</h5>
       </div>
       <div
         className="row text-white bg-backgroundClr p-2 m-0 floor-plan-heading "
@@ -31,7 +31,7 @@ function ProjectFloor({floorDetails}) {
               />
           </div>
           <div>
-            <h6 className="mr-3 mt-1 px-2">Floor Plan</h6>
+            <h6 className="mr-3 mt-1 px-2">{params?.lang === 'en' ? 'Floor Plan' : 'مخطط الطابق' }</h6>
           </div>
         </div>
       </div>

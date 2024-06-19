@@ -71,6 +71,26 @@ const getAllResidential = async (lang = "en") => {
     return null;
   }
 };
+const getfilterLabels = async (lang = "en") => {
+  const path = `/filters`;
+  const urlParamsObject = {
+    populate: "deep",
+    locale: lang,
+    pagination: {
+      start: 0,
+      limit: 10,
+    },
+  };
+  const options = {};
+
+  const response = await fetchAPI(path, urlParamsObject, options);
+
+  if (response?.data?.[0]?.attributes) {
+    return response?.data?.[0]?.attributes;
+  } else {
+    return null;
+  }
+};
 const getAllCommercial = async (lang = "en") => {
   const path = `/commercial-projects`;
   const urlParamsObject = {
@@ -107,10 +127,12 @@ export default async function Home({ params }) {
 
   let commercialData = {};
   commercialData = await getAllCommercial(params?.lang);
+  let filters = {};
+  filters = await getfilterLabels(params?.lang)
 
   return (
     <main className="">
-      <MainScreen params={params} heroDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.hero-section')} />
+      <MainScreen filters={filters} params={params} heroDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.hero-section')} />
       <UpcommingProject sliderImgData={data?.projects ? data.projects : ''} upCommingDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.upcoming-section')} />
       <OurResidential residentialData={residentialData} residentialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.residential-section')} />
       <OurCommercial commercialData={commercialData} commercialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.commercial-section')} />

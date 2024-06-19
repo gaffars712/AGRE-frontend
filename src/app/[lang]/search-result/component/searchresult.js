@@ -18,7 +18,7 @@ import size from "@/assets/images/size.svg";
 import { fetchAPI } from '../../utils/api-handler';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-function Searchresult({ search }) {
+function Searchresult({ params, search }) {
 
     const Router = useRouter()
     const properties = [
@@ -108,12 +108,13 @@ function Searchresult({ search }) {
     const [commercialPropertiesData, setCommercialPropertiesData] = useState([])
     const [residentialPropertiesData, setResidentialPropertiesData] = useState([])
     const [blogs, setblogs] = useState([])
-    const getAllblogSection = async () => {
+    const getAllblogSection = async (lang) => {
         try {
             const path = `/blog-sections`;
             const urlParamsObject = {
                 sort: { createdAt: "desc" },
                 populate: "deep",
+                locale: lang,
                 filters: {
                     title: { $contains: searchText },
                 }
@@ -129,12 +130,13 @@ function Searchresult({ search }) {
 
         }
     };
-    const getPropertiesData = async () => {
+    const getPropertiesData = async (lang) => {
         const commercialPath = `/commercial-projects`
         const residentialPath = `/residential-projects`
 
         const urlParamsObject = {
             populate: '*',
+            locale: lang,
             filters: {
                 proName: { $contains: searchText },
             }
@@ -164,22 +166,23 @@ function Searchresult({ search }) {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await getPropertiesData();
+                await getPropertiesData(params?.lang);
                 console.log('ji');
-                await getAllblogSection();
+                await getAllblogSection(params?.lang);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
 
         fetchData();
+        console.log(residentialPropertiesData);
     }, [searchText]);
     return (
         <>
             <div>
                 <div className="section-padding d-flex flex-column flex-md-row justify-content-between align-items-center border border-top-0  ">
                     <div className="searchbox mb-3 mb-md-0">
-                        <p style={{ fontSize: '28px', fontWeight: '500', color: "gray" }}>Search Result</p>
+                        <p style={{ fontSize: '28px', fontWeight: '500', color: "gray" }}>{params?.lang === 'en' ? "Search Result" : "نتيجة البحث"}</p>
                         <div style={{ fontSize: '24px', fontWeight: '500' }}>
                             {searchText}
                         </div>
@@ -191,7 +194,7 @@ function Searchresult({ search }) {
                                 outline: 'none',
                                 maxWidth: '300px',
                                 border: '1px solid #ccc',
-                                borderRadius: '10px'
+                                borderRadius: params?.lang === 'ar' ? '0px 8px 8px 0px' : '8px 0px 0px 8px'
                             }}
                             value={searchText}
                             onChange={(e) => setSearchText(e.target.value)}
@@ -200,22 +203,22 @@ function Searchresult({ search }) {
                         />
                         {searchText ? <span
                             onClick={() => { setSearchText(''); Router.push('/search-result') }}
-                            style={{ width: '50px', marginLeft: '-46px', padding: '8.5px 12px', cursor: 'pointer' }}
+                            style={{ width: '50px', marginLeft: params?.lang === 'en' ? '-46px' : "", padding: '8.5px 12px', cursor: 'pointer' }}
                         >
                             <CloseIcon className='border-0' />
                         </span> : ''}
                         <button
                             onClick={() => getPropertiesData()}
-                            style={{ width: '100px', marginLeft: '-8px', padding: '8.5px 0' }}
-                            className="btn-new "
+                            style={{ width: '100px', marginLeft: params?.lang === 'en' ? '-8px' : "", padding: '8.5px 0' }}
+                            className={` ${params?.lang === 'en' ? "btn-new" : 'btn-new-ar'} `}
                         >
-                            Search
+                            {params?.lang === 'en' ? 'Search' : "يبحث"}
                         </button>
                     </div>
                 </div>
                 <div className='section-padding'>
                     <div className="project-result">
-                        <p style={{ fontSize: '28px', fontWeight: '500' }}>Blog Results</p>
+                        <p style={{ fontSize: '28px', fontWeight: '500' }}>{params?.lang === 'en' ? 'Blog Results' : "نتائج المدونة"}</p>
                         <div className="row mt-4">
 
                             {blogs.length && blogs?.map(post => (
@@ -226,7 +229,7 @@ function Searchresult({ search }) {
                                         </div>
                                         <p style={{ minHeight: '52px' }}>{post?.attributes.title}</p>
                                         <p style={{ fontSize: '14px' }}>{truncateText(post?.attributes?.Desc, 80)}</p>
-                                        <button className="btn btn-outline-primary w-100 p-2 rounded">Read More</button>
+                                        <button className="btn btn-outline-primary w-100 p-2 rounded">{params?.lang === 'en' ? 'Read More' : "اقرأ أكثر"}</button>
                                     </div>
                                 </div>
                             ))}
@@ -234,24 +237,24 @@ function Searchresult({ search }) {
                     </div>
 
                     <div className="row w-100 ">
-                        <p style={{ fontSize: '28px', fontWeight: '500' }}>Properties Result</p>
+                        <p style={{ fontSize: '28px', fontWeight: '500' }}>{params?.lang === 'en' ? " Properties Result" : "نتيجة الخصائص"}</p>
 
-                        <div className='py-2'>Commercial Properties :</div>
+                        <div className='py-2'>{params?.lang === 'en' ? "Commercial Properties" : "العقارات التجارية"} :</div>
                         {commercialPropertiesData?.length && commercialPropertiesData.map((property) => {
                             return (
-                                <Link href={`/project-detail/commercial/${property.id}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
+                                <Link href={`/project-detail/commercial/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
                                     <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
                                         <div className='img-box  mb-2'>
                                             <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
                                         </div>
-                                        <div className=''>{property.id} - {property?.attributes?.proName}</div>
+                                        <div className=''> {property?.attributes?.proName}</div>
                                         <div style={{ fontSize: '14px' }} className=''>
                                             <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
                                                 <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>
-                                                <li><Image src={building} alt="Building" /> <span className='mx-2'>Unit No : {property?.attributes?.proUnit}</span></li>
-                                                <li><Image src={money} alt="Money" /> <span className='mx-2'>Price : {property?.attributes?.proPrice} (AED)</span></li>
-                                                <li><Image src={size} alt="Size" /> <span className='mx-2'>Size : {property?.attributes?.proSize} (Sq.ft.)</span></li>
-                                                <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> Type: {property?.attributes?.proType}</span></li>
+                                                <li><Image src={building} alt="Building" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Unit No' : 'رقم الوحدة'} : {property?.attributes?.proUnit}</span></li>
+                                                <li><Image src={money} alt="Money" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Price' : 'سعر'} : {property?.attributes?.proPrice} ({ params?.lang === 'en' ? 'AED' : 'درهم'})</span></li>
+                                                <li><Image src={size} alt="Size" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Size' : 'مقاس'} : {property?.attributes?.proSize} ({params?.lang === 'en' ? 'Sq.ft.' : "قدم مربع."})</span></li>
+                                                <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> {params?.lang === 'en' ? 'Type :' : 'يكتب :'} {property?.attributes?.proType}</span></li>
                                             </ul>
                                         </div>
                                         <p></p>
@@ -260,22 +263,22 @@ function Searchresult({ search }) {
                             )
                         })
                         }
-                        <div className='py-2'>Residential Properties : </div>
+                        <div className='py-2'>{params?.lang === 'en' ? "Residential Properties" : "العقارات السكنية"} : </div>
 
                         {residentialPropertiesData?.length && residentialPropertiesData.map((property) => (
-                            <Link href={`/project-detail/residential/${property.id}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
+                            <Link href={`/project-detail/residential/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
                                 <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
                                     <div className='img-box  mb-2'>
                                         <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
                                     </div>
-                                    <div className=''>{property.id} - {property?.attributes?.proName}</div>
+                                    <div className=''> {property?.attributes?.proName}</div>
                                     <div style={{ fontSize: '14px' }} className=''>
                                         <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
                                             <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>
-                                            <li><Image src={building} alt="Building" /> <span className='mx-2'>Unit No : {property?.attributes?.proUnit}</span></li>
-                                            <li><Image src={money} alt="Money" /> <span className='mx-2'>Price : {property?.attributes?.proPrice} (AED)</span></li>
-                                            <li><Image src={size} alt="Size" /> <span className='mx-2'>Size : {property?.attributes?.proSize} (Sq.ft.)</span></li>
-                                            <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> Type: {property?.attributes?.proType}</span></li>
+                                            <li><Image src={building} alt="Building" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Unit No' : 'رقم الوحدة'} : {property?.attributes?.proUnit}</span></li>
+                                            <li><Image src={money} alt="Money" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Price' : 'سعر'} : {property?.attributes?.proPrice} ({ params?.lang === 'en' ? 'AED' : 'درهم'})</span></li>
+                                            <li><Image src={size} alt="Size" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Size' : 'مقاس'} : {property?.attributes?.proSize} ({params?.lang === 'en' ? 'Sq.ft.' : "قدم مربع."})</span></li>
+                                            <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> {params?.lang === 'en' ? 'Type :' : 'يكتب :'} {property?.attributes?.proType}</span></li>
                                         </ul>
                                     </div>
                                     <p></p>

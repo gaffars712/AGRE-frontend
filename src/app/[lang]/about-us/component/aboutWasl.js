@@ -9,9 +9,10 @@ import Markdown from "react-markdown";
 import CorporateImg2 from "@/assets/images/CorporateSectionImage2.png";
 import Carousel from "react-elastic-carousel";
 
-function Aboutwasl({params, aboutDetails }) {
+function Aboutwasl({ params, aboutDetails }) {
   const [selectedIndex, setSelectedIndex] = useState("History");
   const pram = useParams();
+  console.log(pram)
 
   const buttonArray = [
     "history",
@@ -29,8 +30,13 @@ function Aboutwasl({params, aboutDetails }) {
     setSelectedIndex(pram?.item);
   }, [pram?.item]);
   console.log(aboutDetails);
-  const reversedAboutDetails = params?.lang === 'ar' ? [...aboutDetails].reverse() : aboutDetails;
-
+  let reversedAboutDetails;
+  if (params?.lang === 'ar') {
+    console.log('para', params);
+    reversedAboutDetails = [...aboutDetails].reverse()
+  } else {
+    reversedAboutDetails = [...aboutDetails].reverse()
+  }
   return (
     <div className="section-padding">
       <div className="d-flex flex-column flex-md-row gap-sm-2 gap-lg-5">
@@ -105,8 +111,9 @@ function Aboutwasl({params, aboutDetails }) {
                 <div className="fs-4">{item?.attributes?.title}</div>
                 <hr className="my-6" />
                 <div className="row mb-5">
+                  <h3 className="mb-2">{item?.attributes?.shortDes}</h3>
                   <div className="col-lg-7">
-                    <Markdown >{item?.attributes?.Desc}</Markdown>
+                    <Markdown children={item?.attributes?.Desc} />
                   </div>
                   <div className="col-lg-5 d-flex flex-column align-items-center gap-5">
                     <div className="mt-4 position-relative w-100">

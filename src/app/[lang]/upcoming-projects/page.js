@@ -30,7 +30,7 @@ const getAllupcomingeSection = async (lang) => {
 async function  page({params}) {
   let data = {};
   data = await getAllupcomingeSection(params?.lang);
-
+console.log(data);
   
   return (
     <>
@@ -38,8 +38,8 @@ async function  page({params}) {
                 <div className='contact-banner  position-relative  '>
                     <Image src={frameimage} alt="wasl-banner" className='w-100' />
                     <div className='position-absolute  section-padding navbar-padding top-0 lh-lg'>
-                        <h3 className=' mt-1'>{data?.hero[0]?.title}</h3>
-                        <div><Image src={flag}/> 2 Properties Found</div>
+                        <h3 className=' mt-1 text-white'>{data?.hero[0]?.title}</h3>
+                        <div className='text-white'><Image src={flag}/> 2 {data?.hero[0]?.countName}</div>
 
                         {/* <ul  className='d-flex ' style={{listStyle:'none',color:"##2B2A28"}}>
                           <li><Image src={flag}/> 2 Properties Found</li>

@@ -25,19 +25,20 @@ async function getGlobal(lang) {
   return await fetchAPI(path, urlParamsObject, options);
 }
 
-export async function generateMetadata({ params: { lang } }) {
+export async function generateMetadata(lang) {
   const meta = await getGlobal(lang);
   if (!meta.data) return COMMON.FALLBACK_SEO;
 
   const { seo, favicon } = meta?.data?.attributes;
-  const { url } = favicon?.data?.attributes;
+  // const { url } = favicon?.data?.attributes;
+  console.log(seo);
 
   return {
     title: seo?.metaTitle,
     description: seo?.metaDesc,
-    icons: {
-      icon: url,
-    },
+    // icons: {
+    //   icon: url,
+    // },
   };
 }
 export async function getNavList(lang = "en") {
@@ -67,12 +68,15 @@ export default async function RootLayout({ children }) {
   const localeLang = cookieStore.get('locale')?.value || "en";
   let navData = {};
   navData = await getNavList(localeLang)
+  const data = await generateMetadata(localeLang)
+  console.log(data);
   return (
     <html lang={localeLang} dir={localeLang === `ar` ? 'rtl' : 'ltr'}>
       <head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>{data?.title ? data?.title : 'Al Ghandi Properties'}</title>
       </head>
       <body className={inter.className}>
         <Navbar localeLang={localeLang} navData={navData} />

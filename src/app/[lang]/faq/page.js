@@ -18,7 +18,7 @@ import { fetchAPI } from "../utils/api-handler";
      console.log("response",response);
   if (response?.data) {
     console.log('respo', response?.data)
-    return response.data[0]?.attributes?.faqs;
+    return response.data[0]?.attributes;
   } else {
     return null;
   }

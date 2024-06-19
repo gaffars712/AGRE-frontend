@@ -51,6 +51,8 @@ async function Footer({ localeLang }) {
               >
                 <div className="mb-3">{item?.name}</div>
                 {item.subName.map((it, ix) => (
+                  <>
+                  {it?.type ? <div className="mb-1">{it?.type}</div> : null}
                   <Link
                     key={ix}
                     href={it?.path}
@@ -59,7 +61,7 @@ async function Footer({ localeLang }) {
                   >
                     <span>{it?.name}</span>
                   </Link>
-                ))}
+                  </> ))}
               </div>
             ))}
         </div>

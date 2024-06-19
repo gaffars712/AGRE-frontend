@@ -16,6 +16,7 @@ import { usePathname } from 'next/navigation';
 import { fetchAPI } from '../../utils/api-handler';
 
 const Residential = ({ params, searchParams }) => {
+    const pathname = usePathname()
 
     const { searchText, type, bedroom } = searchParams;
 
@@ -26,20 +27,66 @@ const Residential = ({ params, searchParams }) => {
     const [search, setSearch] = useState(searchText);
     const [selectedOption, setSelectedOption] = useState(type);
     const [selectedBedroom, setSelectedBedroom] = useState(bedroom);
+    const [typeLabels, setTypeLabels] = useState({})
+    const [properties, setproperties] = useState(null)
 
+    const getNavList = async (lang = "en") => {
+        const path = `/properties`;
+        const urlParamsObject = {
+            populate: "deep",
+            locale: lang,
+            pagination: {
+                start: 0,
+                limit: 10,
+            },
+        };
+        const options = {};
 
-    const getData = async () => {
+        const response = await fetchAPI(path, urlParamsObject, options);
+        setproperties(response?.data[0]?.attributes)
+        if (response?.data) {
+            return response?.data;
+        } else {
+            return null;
+        }
+
+    }
+    const getfilterLabels = async (lang = "en") => {
+        const path = `/filters`;
+        const urlParamsObject = {
+            populate: "deep",
+            locale: lang,
+            pagination: {
+                start: 0,
+                limit: 10,
+            },
+        };
+        const options = {};
+
+        const response = await fetchAPI(path, urlParamsObject, options);
+
+        if (response?.data?.[0]?.attributes) {
+            setTypeLabels(response?.data?.[0]?.attributes)
+            return response?.data?.[0]?.attributes;
+        } else {
+            return null;
+        }
+    };
+    const getData = async (lang) => {
         const path = `/residential-projects`;
+        let badroomNumber = selectedBedroom ? selectedBedroom[0] : bedroom;
+        console.log(badroomNumber);
 
         const urlParamsObject = {
             populate: '*',
+            locale: lang,
             pagination: {
                 page: currentPage,
                 pageSize: 9,
             },
             filters: {
                 proName: { $contains: search },
-                proPlans: { title: { $contains: selectedBedroom } },
+                proPlans: { title: { $contains: badroomNumber } },
                 proType: { $contains: selectedOption }
             }
         }
@@ -60,18 +107,21 @@ const Residential = ({ params, searchParams }) => {
         }
     }
     useEffect(() => {
-        getData();
+        getNavList(params?.lang)
+        getfilterLabels(params?.lang)
+        getData(params?.lang);
     }, [search, currentPage, searchParams]);
 
     const handleSearch = () => {
         setCurrentPage(1);
-        getData();
+        getData(params?.lang);
     }
 
 
     return (
         <div className='section-padding'>
             <Filter
+                typeLabels={typeLabels}
                 params={params}
                 handleSearch={handleSearch}
                 search={search}
@@ -82,8 +132,8 @@ const Residential = ({ params, searchParams }) => {
                 setSelectedBedroom={setSelectedBedroom}
 
             />
-            <h3>Residential Properties for rent in UAE</h3>
-            <div className='mb-4 ' style={{ fontSize: '13px', marginLeft: '2px' }}>{residentialProperties?.length > 0 ? `${"1 - " + residentialProperties?.length + " of " + " " + totalResults + " " + " Records Found"}` : 'No Records Found'}</div>
+            <h3>{properties?.titleTwoTitle && pathname.includes('/residential') ? properties?.titleTwoTitle : properties?.titleOneTitle}</h3>
+            <div className='mb-4 ' style={{ fontSize: '13px', marginLeft: '2px' }}>{residentialProperties?.length > 0 ? `${"1 - " + residentialProperties?.length + ` ${params?.lang === 'ar' ? 'ل' : 'of'} ` + " " + totalResults + " " + properties?.shortDes}` : params?.lang === 'en' ? 'No Records Found' : 'لا توجد سجلات'}</div>
 
             {/*TODO - Don't Remove*/}
 
@@ -110,10 +160,10 @@ const Residential = ({ params, searchParams }) => {
                                     <div style={{ fontSize: '14px' }} className=''>
                                         <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
                                             <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>
-                                            <li><Image src={building} alt="Building" /> <span className='mx-2'>Unit No : {property?.attributes?.proUnit}</span></li>
-                                            <li><Image src={money} alt="Money" /> <span className='mx-2'>Price : {property?.attributes?.proPrice} (AED)</span></li>
-                                            <li><Image src={size} alt="Size" /> <span className='mx-2'>Size : {property?.attributes?.proSize} (Sq.ft.)</span></li>
-                                            <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> Type: {property?.attributes?.proType}</span></li>
+                                            <li><Image src={building} alt="Building" /> <span className='mx-2'>{params?.lang === 'en' ? 'Unit No' : 'رقم الوحدة'} :  {property?.attributes?.proUnit}</span></li>
+                                            <li><Image src={money} alt="Money" /> <span className='mx-2'>{params?.lang === 'en' ? 'Price' : 'سعر'} : {property?.attributes?.proPrice} ({params?.lang === 'en' ? 'AED' : 'درهم'})</span></li>
+                                            <li><Image src={size} alt="Size" /> <span className='mx-2'>{params?.lang === 'en' ? 'Size' : 'مقاس'} : {property?.attributes?.proSize} ({params?.lang === 'en' ? 'Sq.ft.' : "قدم مربع."})</span></li>
+                                            <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> {params?.lang === 'en' ? 'Type :' : 'يكتب :'} {property?.attributes?.proType}</span></li>
                                         </ul>
                                     </div>
                                     <p></p>
@@ -127,7 +177,7 @@ const Residential = ({ params, searchParams }) => {
                 }
             </div>
             <div className="d-flex justify-content-center mt-4">
-                <div className="d-flex justify-content-center mt-4">
+                <div dir='ltr' className="d-flex justify-content-center mt-4">
 
                     <Stack spacing={2}>
                         <Pagination

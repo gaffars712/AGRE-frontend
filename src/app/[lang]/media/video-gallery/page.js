@@ -38,8 +38,8 @@ async function VideoGallery  ({params}) {
           <div className="fs-4">{videoData.hero[0].Desc}</div>
         </div>
         <div className="col-12 col-sm-5  d-flex  justify-content-end align-items-center">
-          <Image src={youtubeLogo} alt="youtube-logo" />
-          <button className="rounded-3 px-4 py-2 ms-4 border-0 " style={{backgroundColor: '#636363'}}><a href={videoData.hero[0].channelLink} target="_blank" className="text-decoration-none  text-white">Subscribe Now</a></button>
+          <Image src={youtubeLogo} alt="youtube-logo" className={`${params?.lang === 'ar' ? 'ms-4' : ''}`} />
+          <button className={`rounded-3 px-4 py-2 ${params?.lang === 'en' ? 'ms-4' :'' }  border-0 `} style={{backgroundColor: '#636363'}}><a href={videoData.hero[0].channelLink} target="_blank" className="text-decoration-none  text-white">{videoData.hero[0].SubsBTN}</a></button>
         </div>
       </div>
       <VideoComponent videoDetails={videoData} />

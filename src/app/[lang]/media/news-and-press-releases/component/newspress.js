@@ -69,7 +69,7 @@ async function Newspress({ params, searchParams }) {
   console.log(homeData);
   newsData = await getAllNews(params?.lang, searchParams?.date);
   console.log(newsData);
-  
+
   return (
     <div className="section-padding navbar-padding mb-4">
       <div className="row w-100 d-flex justify-content-between align-items-end">
@@ -112,10 +112,10 @@ async function Newspress({ params, searchParams }) {
             </div>
             <div>
               {/* <p style={{ fontSize: "16px", color: "2B2A28" }}> */}
-              <Markdown className=' ' >{newsData[0]?.attributes?.Desc}</Markdown>
+              <Markdown className=' ' children={newsData[0]?.attributes?.Desc} />
               {/* </p> */}
             </div>
-            <p>Read More</p>
+            <p>{params?.lang === 'en' ? 'Read More' : "اقرأ أكثر"}</p>
           </div>
         </div>
       </div>
@@ -156,10 +156,10 @@ async function Newspress({ params, searchParams }) {
                     }}
                     className="p-1 cardcolor rounded fs-6"
                   >
-                    Date: {post?.attributes?.date}
+                    {params?.lang === 'en' ? "Date" : "تاريخ"} : {post?.attributes?.date}
                   </span>
                 ) : null}
-                <span className="newsAndMedia px-5 ">Read More</span>
+                <span className="newsAndMedia px-5 ">{params?.lang === 'en' ? 'Read More' : "اقرأ أكثر"}</span>
               </div>
             </div>
           </div>

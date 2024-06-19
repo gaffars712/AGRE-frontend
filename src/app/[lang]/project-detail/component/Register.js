@@ -312,7 +312,7 @@ const Register = ({ params, projectName }) => {
             </div>
             <div className="col-md-6">
               <label htmlFor="nationality" className="form-label">
-                {labels?.nationalityLabel} *
+                {labels?.nationalityLabel} 
               </label>
               <select
                 className="form-select"
