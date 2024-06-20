@@ -13,7 +13,7 @@ async function fetchWithRetry(url, options = {}, retries = 3) {
       if (!response.ok) {
         const errorData = await response.json();
         console.error('Fetch error:', errorData);
-        throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+        // throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
       }
 
       return response;
