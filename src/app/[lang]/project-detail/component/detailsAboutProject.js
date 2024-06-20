@@ -37,7 +37,7 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                             projectDetails?.attributes?.proImgs?.data?.slice(0, 4)?.map((item, index) => {
                                 const imageUrl = item?.attributes?.url;
                                 return (
-                                    <Image src={item?.attributes?.url} onClick={() => setSelectedImage(imageUrl)} key={index} alt={`image ${index}`} width={104.17} height={104.17} className='object-fit-cover rounded-3 sub-image-project-description' style={{ boxShadow: `${imageUrl == selectedImage ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px' : ''}`, cursor: 'pointer' }} />
+                                    <Image src={item?.attributes?.url ? item?.attributes?.url : '/'} onClick={() => setSelectedImage(imageUrl)} key={index} alt={`image ${index}`} width={104.17} height={104.17} className='object-fit-cover rounded-3 sub-image-project-description' style={{ boxShadow: `${imageUrl == selectedImage ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px' : ''}`, cursor: 'pointer' }} />
                                 )
                             })
                         }
