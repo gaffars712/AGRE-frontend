@@ -14,7 +14,7 @@ import Markdown from 'react-markdown'
 const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
 
     console.log(projectDetails);
-    const [selectedImage, setSelectedImage] = useState(projectDetails?.attributes?.proImgs?.data[0].attributes.url)
+    const [selectedImage, setSelectedImage] = useState(projectDetails?.attributes?.proImgs?.data[0].attributes.url ? projectDetails?.attributes?.proImgs?.data[0].attributes.url : null)
 
     return (
         <div className='container'>
@@ -23,7 +23,7 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                     <div style={{ width: "100%" }}>
                         <div className='lh-sm' style={{ fontSize: '26px' }}>{projectDetails?.attributes?.proTitle}</div>
                         {/* <p className='lh-base  mt-3'>{projectDetails?.attributes?.proDesc}</p> */}
-                        <Markdown className='textAlignJustify lh-base  mt-3 ' >{projectDetails?.attributes?.proDesc}</Markdown>
+                        <Markdown className='textAlignJustify lh-base  mt-3 ' >{projectDetails?.attributes?.proDesc ? projectDetails?.attributes?.proDesc : ''}</Markdown>
                     </div>
                 </div>
                 <div className='col-12 col-lg-7 d-flex justify-content-end flex-column flex-lg-row p-0'>
@@ -79,9 +79,9 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                         </div>
                     </div>
                 </div>
-                {projectDetails?.attributes?.proPlans ? <ProjectFloor params={params} floorDetails={projectDetails?.attributes?.proPlans} /> : null}
-                <Map params={params} mapUrl={projectDetails?.attributes?.locationURL} mapDetails={projectDetails?.attributes} />
-                <Register projectName={projectDetails?.attributes?.proName} params={params} />
+                {projectDetails?.attributes?.proPlans ? <ProjectFloor params={params} floorDetails={projectDetails?.attributes?.proPlans ? projectDetails?.attributes?.proPlans : null} /> : null}
+                <Map params={params} mapUrl={projectDetails?.attributes?.locationURL} mapDetails={projectDetails?.attributes ? projectDetails?.attributes : null} />
+                <Register projectName={projectDetails?.attributes?.proName ? projectDetails?.attributes?.proName : null} params={params} />
 
             </div>
         </div>
