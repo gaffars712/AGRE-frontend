@@ -1,34 +1,22 @@
 import qs from "qs";
-import fetch from "node-fetch"; // Ensure you have node-fetch installed
-import AbortController from "abort-controller"; // Ensure you have abort-controller installed
 
 function getStrapiURL(path = '') {
-    return `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${path}`;
+  return `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${path}`;
 }
 
-// Function to perform fetch with a timeout
-async function fetchWithTimeout(url, options = {}, timeout = 5000) {
-  const controller = new AbortController();
-  const id = setTimeout(() => controller.abort(), timeout);
-  options.signal = controller.signal;
-
-  try {
-    const response = await fetch(url, options);
-    clearTimeout(id); // Clear timeout if fetch is successful
-    return response;
-  } catch (error) {
-    if (error.name === 'AbortError') {
-      throw new Error('Request timed out');
-    }
-    throw error;
-  }
-}
-
-// Function to perform fetch with retry logic
-async function fetchWithRetry(url, options = {}, retries = 3, timeout = 5000) {
+// Function to perform a simple retry on fetch failures
+async function fetchWithRetry(url, options = {}, retries = 3) {
   for (let i = 0; i < retries; i++) {
     try {
-      return await fetchWithTimeout(url, options, timeout);
+      const response = await fetch(url, options);
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error('Fetch error:', errorData);
+        throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
+      }
+
+      return response;
     } catch (error) {
       if (i === retries - 1) {
         throw error; // Throw error if last retry fails
@@ -38,9 +26,13 @@ async function fetchWithRetry(url, options = {}, retries = 3, timeout = 5000) {
   }
 }
 
-// Fetch API with enhanced error handling
-export async function fetchAPI(path, urlParamsObject = {}, options = {}, timeout = 5000) {
+export async function fetchAPI(
+  path,
+  urlParamsObject = {},
+  options = {}
+) {
   try {
+    // Merge default and user options
     const mergedOptions = {
       next: { revalidate: 60 },
       headers: {
@@ -50,18 +42,13 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}, timeout
       ...options,
     };
 
+    // Build request URL
     const queryString = qs.stringify(urlParamsObject);
     const requestUrl = `${getStrapiURL(`/api${path}${queryString ? `?${queryString}` : ""}`)}`;
 
+    // Trigger API call
     console.log('Before fetch:', requestUrl);
-    const response = await fetchWithRetry(requestUrl, mergedOptions, 3, timeout);
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error('Fetch error:', errorData);
-      throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
-    }
-
+    const response = await fetchWithRetry(requestUrl, mergedOptions);
     const data = await response.json();
     console.log('After fetch:', data);
     return data;
@@ -72,9 +59,14 @@ export async function fetchAPI(path, urlParamsObject = {}, options = {}, timeout
   }
 }
 
-// Post API with enhanced error handling
-export async function postAPI(path, urlParamsObject = {}, options = {}, payloadData = {}, timeout = 5000) {
+export async function postAPI(
+  path,
+  urlParamsObject = {},
+  options = {},
+  payloadData = {}
+) {
   try {
+    // Merge default and user options
     const mergedOptions = {
       method: "POST",
       next: { revalidate: 60 },
@@ -83,21 +75,16 @@ export async function postAPI(path, urlParamsObject = {}, options = {}, payloadD
         "Accept": "application/json",
       },
       ...options,
-      body: JSON.stringify(payloadData),
+      body: JSON.stringify(payloadData)
     };
 
+    // Build request URL
     const queryString = qs.stringify(urlParamsObject);
     const requestUrl = `${getStrapiURL(`/api${path}${queryString ? `?${queryString}` : ""}`)}`;
 
+    // Trigger API call
     console.log('Before POST:', requestUrl);
-    const response = await fetchWithRetry(requestUrl, mergedOptions, 3, timeout);
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.error('POST error:', errorData);
-      throw new Error(`API request failed with status ${response.status}: ${response.statusText}`);
-    }
-
+    const response = await fetchWithRetry(requestUrl, mergedOptions);
     const data = await response.json();
     console.log('After POST:', data);
     return data;
