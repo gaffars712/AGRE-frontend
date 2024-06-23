@@ -52,7 +52,7 @@ export default function MediaLayout({ children }) {
                     {data && data.map((item, i) => {
                         console.log(item);
                         return(
-                            <li key={item} className={` d-flex justify-content-center align-items-center ${pathname.includes(item?.attributes?.path) ? "active-tab" : ""}`} style={{ listStyleType: "none", padding: "10px 15px" }}>
+                            <li key={i} className={` d-flex justify-content-center align-items-center ${pathname.includes(item?.attributes?.path) ? "active-tab" : ""}`} style={{ listStyleType: "none", padding: "10px 15px" }}>
                                 <Link href={item?.attributes?.path} style={{ textDecoration: 'none', color: pathname.includes(item?.attributes?.path) ? "black" : "white" }}>{item?.attributes?.name}</Link>
                             </li>
                         )

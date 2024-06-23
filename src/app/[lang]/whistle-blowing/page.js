@@ -49,6 +49,7 @@ async function Page({params}) {
     //     </div>
     //     <div className="navbar-padding" style={{marginTop:'40px'}}>
     //     </div>
+    //   <Markdown children={whistleBlowingData?.content} />
     //   </div>
     //   <WhistleBlowing />
     // </div>

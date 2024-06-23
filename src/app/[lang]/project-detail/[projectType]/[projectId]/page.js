@@ -32,11 +32,11 @@ async function ProjectDetails({ params }) {
   let residentialData = {};
   residentialData = await getAllResidential({ projectType: params?.projectType} , params?.lang);
   console.log(residentialData);
-  let projectDetails = residentialData.find(item => item.attributes.slug === params.projectId);
+  let projectDetails = residentialData.find(item => item?.attributes.slug === params?.projectId);
   return (
     <div className=''>
       <div className='position-relative d-flex align-items-center'>
-        <Image src={projectDetails?.attributes?.bannerImg?.data?.attributes?.url ? projectDetails?.attributes?.bannerImg?.data?.attributes?.url : '/'} width={1366} height={254} alt='image 1 ' className='w-100 z-1 banner-image-project-desc object-fit-cover' />
+        <Image src={projectDetails && projectDetails?.attributes?.bannerImg?.data?.attributes?.url} width={1366} height={254} alt='image 1 ' className='w-100 z-1 banner-image-project-desc object-fit-cover' />
         <div className={`${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar'} text-white  position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft: '8%', paddingRight: params?.lang === 'ar' ? '8%' : '' }} >
           {projectDetails && projectDetails?.attributes?.proName}
         </div>

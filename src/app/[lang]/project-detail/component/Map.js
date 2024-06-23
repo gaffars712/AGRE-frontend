@@ -27,7 +27,7 @@ const MapComponent = ({ params, mapDetails, mapUrl }) => {
               {mapDetails?.locationDesc}
             </p>
           </div>
-          <div className="d-flex flex-wrap w-100 gap-3" >
+          <div className="d-flex flex-wrap w-100 justify-content-start gap-3" >
             {mapDetails?.locationFeature && params?.lang === 'en'
               ?
               mapDetails?.locationFeature?.map((loc, index) => (

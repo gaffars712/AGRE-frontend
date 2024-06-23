@@ -15,7 +15,7 @@ export default function Map({mapUrl, height="450"}) {
     <div className="mt-5 mt-md-0" >
 
       <div className="border rounded-4 w-100 p-1 p-md-3">
-        <iframe src={embedLink} width="100%" height={height} className="rounded-4" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        <iframe src={embedLink} width="100%" height={height} className="rounded-4" allowFullScreen="" loading="lazy" referrerPolicy="no-referrer-when-downgrade"></iframe>
       </div>
     </div>
   );

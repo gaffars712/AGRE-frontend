@@ -10,11 +10,12 @@ import ProjectFloor from '@/app/[lang]/project-detail/component/Floor'
 import Register from './Register'
 import Map from '@/app/[lang]/project-detail/component/Map'
 import Markdown from 'react-markdown'
+import ImgComp from '@/components/commonSection/ImgComp'
 
 const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
 
     console.log(projectDetails);
-    const [selectedImage, setSelectedImage] = useState(projectDetails?.attributes?.proImgs?.data[0].attributes.url ? projectDetails?.attributes?.proImgs?.data[0].attributes.url : null)
+    const [selectedImage, setSelectedImage] = useState(projectDetails?.attributes?.proImgs?.data[0].attributes.url)
 
     return (
         <div className='container'>
@@ -23,13 +24,13 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                     <div style={{ width: "100%" }}>
                         <div className='lh-sm' style={{ fontSize: '26px' }}>{projectDetails?.attributes?.proTitle}</div>
                         {/* <p className='lh-base  mt-3'>{projectDetails?.attributes?.proDesc}</p> */}
-                        <Markdown className='textAlignJustify lh-base  mt-3 ' >{projectDetails?.attributes?.proDesc ? projectDetails?.attributes?.proDesc : ''}</Markdown>
+                        <Markdown className='textAlignJustify lh-base  mt-3 '>{projectDetails?.attributes?.proDesc}</Markdown>
                     </div>
                 </div>
                 <div className='col-12 col-lg-7 d-flex justify-content-end flex-column flex-lg-row p-0'>
                     <div className='position-relative'>
-                        <Image src={selectedImage} alt='room1' width={414} height={307} className='object-fit-cover z-1  position-absolute project-description-main-image' />
-
+                        {/* <Image src={selectedImage} alt='room1' width={414} height={307} className='object-fit-cover z-1  position-absolute project-description-main-image' /> */}
+                        <ImgComp src={selectedImage} index={1} width={414} height={307} className='object-fit-cover z-1  position-absolute project-description-main-image' />
                         <div className='project-description-main-image-bg'></div>
                     </div>
                     <div className={` d-flex flex-row flex-lg-column gap-3 ${params?.lang === 'en' ? 'sub-images-project-desc' : 'sub-images-project-desc-ar'} `} style={{ width: '104.17px' }}>
@@ -37,7 +38,10 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                             projectDetails?.attributes?.proImgs?.data?.slice(0, 4)?.map((item, index) => {
                                 const imageUrl = item?.attributes?.url;
                                 return (
-                                    <Image src={item?.attributes?.url ? item?.attributes?.url : '/'} onClick={() => setSelectedImage(imageUrl)} key={index} alt={`image ${index}`} width={104.17} height={104.17} className='object-fit-cover rounded-3 sub-image-project-description' style={{ boxShadow: `${imageUrl == selectedImage ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px' : ''}`, cursor: 'pointer' }} />
+                                    <span onClick={() => setSelectedImage(imageUrl)} key={index}>
+                                        {/* <Image src={item?.attributes?.url} onClick={() => setSelectedImage(imageUrl)} key={index} alt={`image ${index}`} width={104.17} height={104.17} className='object-fit-cover rounded-3 sub-image-project-description' style={{ boxShadow: `${imageUrl == selectedImage ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px' : ''}`, cursor: 'pointer' }} /> */}
+                                        <ImgComp className='object-fit-cover rounded-3 sub-image-project-description' index={index} src={item?.attributes?.url} width={104.17} height={104.17} />
+                                    </span>
                                 )
                             })
                         }
@@ -45,7 +49,7 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                 </div>
                 <div className='container ' style={{ marginBottom: '30px' }}>
                     <div className="row">
-                        <div className='col-sm-10 d-flex gap-3 justify-content-center justify-content-md-start flex-wrap p-0 mt-3 mt-md-0'>
+                        <div className='col-sm-10 d-flex gap-3 justify-content-start justify-content-md-start flex-wrap p-0 mt-3 mt-md-0'>
                             {projectDetails?.attributes?.proFeature && params?.lang === 'en' ?
                                 projectDetails?.attributes?.proFeature?.map((item, index) => {
                                     return (
@@ -79,9 +83,9 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                         </div>
                     </div>
                 </div>
-                {projectDetails?.attributes?.proPlans ? <ProjectFloor params={params} floorDetails={projectDetails?.attributes?.proPlans ? projectDetails?.attributes?.proPlans : null} /> : null}
-                <Map params={params} mapUrl={projectDetails?.attributes?.locationURL} mapDetails={projectDetails?.attributes ? projectDetails?.attributes : null} />
-                <Register projectName={projectDetails?.attributes?.proName ? projectDetails?.attributes?.proName : null} params={params} />
+                {projectDetails?.attributes?.proPlans ? <ProjectFloor params={params} floorDetails={projectDetails?.attributes?.proPlans} /> : null}
+                <Map params={params} mapUrl={projectDetails?.attributes?.locationURL} mapDetails={projectDetails?.attributes} />
+                <Register projectName={projectDetails?.attributes?.proName} params={params} />
 
             </div>
         </div>

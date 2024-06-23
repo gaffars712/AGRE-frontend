@@ -37,7 +37,7 @@ function ProjectFloor({floorDetails, params}) {
       </div>
       <div className="floor-plan-container " style={{ fontSize: "16px", backgroundColor: "rgba(0, 51, 102, 0.15)" , borderEndEndRadius:'16px', borderBottomLeftRadius:'16px' }}>
         <div className="">
-          <nav className="nav-bar d-flex flex-md-row flex-column  flex-wrap floor-plan-nav rounded-4 border border-backgroundClr" style={{fontSize:'16px'}}>
+          <nav  className="nav-bar  d-flex flex-md-row flex-column  flex-wrap floor-plan-nav rounded-4 " style={{fontSize:'16px',}}>
           {
             floorDetails.map((item, index)=>{
             return(
