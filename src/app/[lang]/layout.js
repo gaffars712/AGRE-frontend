@@ -9,6 +9,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '@/styles/global.scss'
 import Navbar from "@/components/commonSection/navbar";
 import Footer from "@/components/commonSection/footer";
+import WhatsappButton from "../../components/commonSection/WhatsApp";
+
 const inter = Inter({ subsets: ["latin"] });
 
 async function getGlobal(lang) {
@@ -77,8 +79,13 @@ export default async function RootLayout({ children }) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{data?.title ? data?.title : 'Al Ghandi Properties'}</title>
+        {/* <script src="//code.tidio.co/pixcucapejnpwuw7cx6nkujdjctzrmyz.js" async></script> */}
+        <script type="text/javascript" id="hs-script-loader" async defer src="//js-eu1.hs-scripts.com/144927450.js"></script>
       </head>
       <body className={inter.className}>
+        <div className="whatsapp-button-container">
+          <WhatsappButton />
+        </div>
         <Navbar localeLang={localeLang} navData={navData} />
 
         {children}

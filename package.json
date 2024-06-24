@@ -22,6 +22,7 @@
     "react-elastic-carousel": "^0.11.5",
     "react-markdown": "^9.0.1",
     "react-phone-input-2": "^2.15.1",
+    "react-whatsapp": "^0.3.0",
     "sass": "^1.77.2"
   },
   "devDependencies": {
