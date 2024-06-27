@@ -144,26 +144,40 @@ const Page = ({ params, searchParams }) => {
                 </div>
             </div> */}
             <div className='row'>
-                {commercialProperties?.length ? commercialProperties.map((property) => {
+                {commercialProperties?.length ? commercialProperties.map((property,index) => {
                     return (
-                        <Link href={`/project-detail/commercial/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
-                            <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
-                                <div className='img-box  mb-2'>
-                                    <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
-                                </div>
-                                <div className=''> {property?.attributes?.proName}</div>
-                                <div style={{ fontSize: '14px' }} className=''>
-                                    <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
-                                        <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>
-                                        <li><Image src={building} alt="Building" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Unit No' : 'رقم الوحدة'} : {property?.attributes?.proUnit}</span></li>
-                                        <li><Image src={money} alt="Money" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Price' : 'سعر'} : {property?.attributes?.proPrice} ( { params?.lang === 'en' ? 'AED' : 'درهم'})</span></li>
-                                        <li><Image src={size} alt="Size" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Size' : 'مقاس'} : {property?.attributes?.proSize} ( {params?.lang === 'en' ? 'Sq.ft.' : "قدم مربع."})</span></li>
-                                        <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'>  {params?.lang === 'en' ? 'Type :' : 'يكتب :'} {property?.attributes?.proType}</span></li>
-                                    </ul>
-                                </div>
-                                <p></p>
+                        // <Link href={`/project-detail/commercial/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
+                        //     <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
+                        //         <div className='img-box  mb-2'>
+                        //             <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
+                        //         </div>
+                        //         <div className=''> {property?.attributes?.proName}</div>
+                        //         <div style={{ fontSize: '14px' }} className=''>
+                        //             <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
+                        //                 <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>
+                        //                 <li><Image src={building} alt="Building" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Unit No' : 'رقم الوحدة'} : {property?.attributes?.proUnit}</span></li>
+                        //                 <li><Image src={money} alt="Money" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Price' : 'سعر'} : {property?.attributes?.proPrice} ( { params?.lang === 'en' ? 'AED' : 'درهم'})</span></li>
+                        //                 <li><Image src={size} alt="Size" /> <span className='mx-2'>{ params?.lang === 'en' ? 'Size' : 'مقاس'} : {property?.attributes?.proSize} ( {params?.lang === 'en' ? 'Sq.ft.' : "قدم مربع."})</span></li>
+                        //                 <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'>  {params?.lang === 'en' ? 'Type :' : 'يكتب :'} {property?.attributes?.proType}</span></li>
+                        //             </ul>
+                        //         </div>
+                        //         <p></p>
+                        //     </div>
+                        // </Link>
+                        <div key={index} className='col-12 rounded-4 col-md-6  col-lg-4 col-xl-3 col-2xl-2 mb-3 text-decoration-none h-100 text-black'>
+                                <Link href={`/${params?.lang}/project-detail/commercial/${property?.attributes?.slug}`} key={property.id} className='position-relative d-flex h-100 text-decoration-none w-100 text-black'>
+                                    <Image height={100} width={250} alt='img' className='object-fit-cover w-100 rounded-4 h-100' src={property?.attributes?.SliderImg?.data?.attributes?.url} />
+                                    <div
+                                        style={{
+                                            backgroundColor: "rgba(4, 115, 169, 0.5)",
+                                            height: "53px",
+                                            fontWeight:"500"
+                                        }}
+                                        className='position-absolute rounded-bottom-4 bottom-0 z-3 d-flex align-items-center w-100 justify-content-center text-white'>
+                                        {property?.attributes?.proName}
+                                    </div>
+                                </Link>
                             </div>
-                        </Link>
                     )
                 }) :
                     <div>

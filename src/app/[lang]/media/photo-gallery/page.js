@@ -33,12 +33,12 @@ async function PhotoGallery({params}) {
     <div>
       <div className='section-padding'>
         <div className=' ' >
-          <div className='mb-3 fs-2 fw-medium' style={{ fontSize: '29px' }}>{PhotoData.hero[0].title}</div>
-          <div className='mt-4 fs-4'>{PhotoData.hero[0].Desc}</div>
+          {/* <div className='mb-3 fs-2 fw-medium' style={{ fontSize: '29px' }}>{PhotoData.hero[0].title}</div>
+          <div className='mt-4 fs-4'>{PhotoData.hero[0].Desc}</div> */}
         </div>
       </div>
-      <Residential residetialData={PhotoData?.residetialP} />
-      <Commercial commercialData={PhotoData?.commercialP} />
+      <Residential params={params} residetialData={PhotoData?.residetialP} />
+      <Commercial v={params} commercialData={PhotoData?.commercialP} />
     </div>
   )
 }

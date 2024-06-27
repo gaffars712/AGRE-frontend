@@ -16,12 +16,12 @@ export default function Filter({ params, filters }) {
     const handleSearch = () => {
         let query;
         if (selectedType === 'سكني' && params?.lang === 'ar') {
-            query = `/properties/residential`;
+            query = `/${params?.lang}/properties/residential`;
         } else if (selectedType === 'تجاري' && params?.lang === 'ar') {
-            query = `/properties/commercial`;
+            query = `/${params?.lang}/properties/commercial`;
         }else{
           let  lowercase = selectedType.toLowerCase()
-            query = `/properties/${lowercase}`
+            query = `/${params?.lang}/properties/${lowercase}`
         }
 
         let queryParams = [];

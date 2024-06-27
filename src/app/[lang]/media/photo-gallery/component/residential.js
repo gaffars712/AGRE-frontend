@@ -2,15 +2,15 @@
 import React from "react";
 import Carousel from "react-elastic-carousel";
 
-const Residential = ({residetialData}) => {
-  console.log("consoledata",residetialData)
+const Residential = ({ residetialData, params }) => {
+  console.log("consoledata", residetialData)
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 650, itemsToShow: 2 },
     { width: 1008, itemsToShow: 3 },
     { width: 1500, itemsToShow: 4 },
   ];
-  
+
   return (
     <div
       className="section-padding "
@@ -20,7 +20,9 @@ const Residential = ({residetialData}) => {
         className="text-headingClr text-center mb-5"
         style={{ fontSize: "32px" }}
       >
-        Our Residential
+
+        {params?.lang === 'en' ? 'Our Residential' : 'السكنية لدينا'}
+
       </div>
       <Carousel breakPoints={breakPoints}>
         {residetialData?.length &&
@@ -46,12 +48,13 @@ const Card = ({ image, title, key, id }) => {
     <div
       key={key}
       className="rounded-4 position-relative"
-      // style={{ width: "321px" }}
+    // style={{ width: "321px" }}
     >
       <img
         className="w-100  object-fit-cover rounded-4 z-1"
         // style={{ height: "410px" }}
         src={image}
+        alt="img"
       ></img>
     </div>
   );

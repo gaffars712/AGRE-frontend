@@ -66,14 +66,14 @@ export async function getNavList(lang = "en") {
 
 }
 export default async function RootLayout({ children }) {
+  const segmentPath = children?.props?.segmentPath[1][1] ? children?.props?.segmentPath[1][1] : null
   const cookieStore = cookies()
-  const localeLang = cookieStore.get('locale')?.value || "en";
+  const localeLang = cookieStore.get('locale')?.value || segmentPath;
   let navData = {};
-  navData = await getNavList(localeLang)
-  const data = await generateMetadata(localeLang)
-  console.log(data);
+  navData = await getNavList(segmentPath ? segmentPath : localeLang)
+  const data = await generateMetadata(segmentPath ? segmentPath : localeLang)
   return (
-    <html lang={localeLang} dir={localeLang === `ar` ? 'rtl' : 'ltr'}>
+    <html lang={localeLang} dir={localeLang === `ar` || segmentPath === 'ar' ? 'rtl' : 'ltr'}>
       <head>
         <meta charSet="UTF-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
@@ -86,10 +86,10 @@ export default async function RootLayout({ children }) {
         <div className="whatsapp-button-container">
           <WhatsappButton />
         </div>
-        <Navbar localeLang={localeLang} navData={navData} />
+        <Navbar segmentPath={segmentPath} localeLang={localeLang} navData={navData} />
 
         {children}
-        <Footer localeLang={localeLang} />
+        <Footer segmentPath={segmentPath} localeLang={localeLang} />
 
       </body>
     </html>

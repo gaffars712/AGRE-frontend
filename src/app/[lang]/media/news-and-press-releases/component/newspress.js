@@ -94,6 +94,7 @@ async function Newspress({ params, searchParams }) {
               width={1000}
               height={1000}
               className="img-fluid"
+              alt="Banner"
             />
           </div>
           <div className="col-lg-6 col-12 col-md-6 px-4">

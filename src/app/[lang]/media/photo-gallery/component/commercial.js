@@ -2,7 +2,7 @@
 import React from "react";
 import Carousel from "react-elastic-carousel";
 
-const Commercial = ({commercialData}) => {
+const Commercial = ({commercialData, params}) => {
   console.log(commercialData);
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
@@ -18,7 +18,7 @@ const Commercial = ({commercialData}) => {
         className="text-headingClr text-center mb-5"
         style={{ fontSize: "32px" }}
       >
-        Our Commercial
+       {params?.lang === 'en' ? 'Our Commercial' : 'التجارية لدينا'}
       </div>
       <Carousel breakPoints={breakPoints}>
         {commercialData?.length &&
@@ -50,6 +50,7 @@ const Card = ({ image, title, key, id }) => {
         className="w-100  object-fit-cover rounded-4 z-1"
         // style={{ height: "410px" }}
         src={image}
+        alt="img"
       ></img>
     </div>
   );

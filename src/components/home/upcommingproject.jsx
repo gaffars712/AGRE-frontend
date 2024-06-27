@@ -87,8 +87,8 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
 
 
             <div className="pb-4 d-flex w-100 justify-content-center">
-            <div className="section-padding d-flex row w-100  flex-md-row gap-5 ">
-                <div className="col-12 col-sm-5 col-lg-3" >
+            <div className="section-padding d-flex row w-100 justify-content-xl-center  gap-5 ">
+                <div className="col-12 col-sm-5 col-lg-5 col-xl-3" >
                     <div
                         className="imagbox1"
                         style={{ width: "291px", height: "458px" }}
@@ -113,14 +113,14 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
                             />
                         </div>
                     </div>
-                    <h6 className="text-center  " style={{ marginTop: "32px" }}>
-                        {upCommingDetails?.length ?  upCommingDetails[0]?.img?.data[0]?.attributes?.caption : "6 Villas, Jumeirah"}
+                    <h6 className="  text-lg-left text-sm-center" style={{ marginTop: "32px" }}>
+                        {upCommingDetails[0]?.img?.data[0]?.attributes?.caption ?  upCommingDetails[0]?.img?.data[0]?.attributes?.caption : "6 Villas, Jumeirah"}
                     </h6>
                 </div>
-                <div className="imagbox2 col-12 col-sm-5 col-lg-3" style={{ marginTop: "24px" }}>
+                <div className="imagbox2 col-12 col-sm-5 col-lg-4 col-xl-3" style={{ marginTop: "24px" }}>
                     <Image src={sliderImgData[1]?.sliderImg?.data?.attributes?.url} alt="" width={292}
                                 height={457} className="h-auto" />
-                    <h6 className="text-center mt-2">{upCommingDetails?.length ?  upCommingDetails[0]?.img?.data[1]?.attributes?.caption : "6 Villas, Jumeirah"}</h6>
+                    <h6 className=" text-lg-left text-sm-center mt-2">{upCommingDetails[0]?.img?.data[1]?.attributes?.caption ?  upCommingDetails[0]?.img?.data[1]?.attributes?.caption : "6 Villas, Jumeirah"} </h6>
                 </div>
                 <div
                     className="d-flex justify-content-center col-12 col-md-4  sm:flex-row align-items-center"
@@ -131,7 +131,7 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
                     }}
                 >
                     <div className="">
-                        <h3 className="text-headingClr">{upCommingDetails?.length ? upCommingDetails[0]?.title : "Upcoming Projects"}</h3>
+                        <h3 className="text-headingClr">{upCommingDetails[0]?.title ? upCommingDetails[0]?.title : "Upcoming Projects"}</h3>
                         <div
                             className="mt-4 mb-5 align-items-center w-100"
                             style={{
@@ -144,14 +144,14 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
                         >
                            {upCommingDetails?.length ? upCommingDetails[0]?.desc : " Our uniquely designed spacious villas are sure to impress anyone seeking a modern, peaceful an elegant home."}
                         </div>
-                        <Link href={'/upcoming-projects'} className="">
+                        {/* <Link href={'/upcoming-projects'} className="">
                             <button
                                 className="btn btn-backgroundClr w-100"
                                 style={{ maxWidth: "125px" }}
                             >
                                 {upCommingDetails[0]?.viewBTN ? upCommingDetails[0]?.viewBTN : ''}
                             </button>
-                        </Link>
+                        </Link> */}
                     </div>
                 </div>
             </div>

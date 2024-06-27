@@ -129,9 +129,9 @@ function Aboutwasl({ params, aboutDetails }) {
                         }}
                       ></div>
                       {item?.attributes?.firstImg && <Image
-                        src={item?.attributes?.firstImg?.data?.attributes?.formats?.thumbnail?.url}
+                        src={item?.attributes?.firstImg?.data?.attributes?.url}
                         style={{ position: "relative", zIndex: "1" }}
-                        className="w-100 h-auto"
+                        className="w-100 h-auto rounded-4"
                         alt="our-value image1"
                         width={292}
                         height={195}

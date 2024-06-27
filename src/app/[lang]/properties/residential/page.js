@@ -146,29 +146,52 @@ const Residential = ({ params, searchParams }) => {
                     <div>Staff accomodation(7)</div>
                 </div>
             </div> */}
-            <div className='row'>
+            <div className='row '>
                 {
                     residentialProperties?.length ?
 
-                        residentialProperties.map((property) => (
-                            <Link href={`/project-detail/residential/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
-                                <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
-                                    <div className='img-box  mb-2'>
-                                        <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
+                        residentialProperties.map((property, index) => (
+                            // console.log('asdfasdfsdf',property?.attributes?.SliderImg?.data?.attributes?.url)
+                            <div key={index} className='col-12 rounded-4 col-md-6  col-lg-4 col-xl-3 col-2xl-2 mb-3 text-decoration-none h-100 text-black'>
+                                <Link href={`/${params?.lang}/project-detail/residential/${property?.attributes?.slug}`} key={property.id} className='position-relative w-100 d-flex h-100 text-decoration-none text-black'>
+                                    <Image height={100} width={250}   objectFit="cover"   alt='img' className='object-fit-cover rounded-4 h-100 w-100' src={property?.attributes?.SliderImg?.data?.attributes?.url} /> 
+                                    <div
+                                        style={{
+                                            backgroundColor: "rgba(4, 115, 169, 0.5)",
+                                            height: "53px",
+                                            fontWeight:"500"
+                                        }}
+                                        className='position-absolute rounded-bottom-4 bottom-0 z-3 d-flex align-items-center w-100 justify-content-center text-white'>
+                                        {property?.attributes?.proName}
                                     </div>
-                                    <div className=''> {property?.attributes?.proName}</div>
-                                    <div style={{ fontSize: '14px' }} className=''>
-                                        <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
-                                            <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>
-                                            <li><Image src={building} alt="Building" /> <span className='mx-2'>{params?.lang === 'en' ? 'Unit No' : 'رقم الوحدة'} :  {property?.attributes?.proUnit}</span></li>
-                                            <li><Image src={money} alt="Money" /> <span className='mx-2'>{params?.lang === 'en' ? 'Price' : 'سعر'} : {property?.attributes?.proPrice} ({params?.lang === 'en' ? 'AED' : 'درهم'})</span></li>
-                                            <li><Image src={size} alt="Size" /> <span className='mx-2'>{params?.lang === 'en' ? 'Size' : 'مقاس'} : {property?.attributes?.proSize} ({params?.lang === 'en' ? 'Sq.ft.' : "قدم مربع."})</span></li>
-                                            <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> {params?.lang === 'en' ? 'Type :' : 'يكتب :'} {property?.attributes?.proType}</span></li>
-                                        </ul>
-                                    </div>
-                                    <p></p>
-                                </div>
-                            </Link>
+                                </Link>
+                            </div>
+                            // <Link href={`/project-detail/residential/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
+                            //     <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
+                            //         <div className='img-box  mb-2'>
+                            //             <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
+                            //         </div>
+                            //         <div className=''> {property?.attributes?.proName}</div>
+                            //         <div style={{ fontSize: '14px' }} className=''>
+                            //             <ul style={{ listStyle: 'none', lineHeight: '30px' }} className='nav-link'>
+                            //                 <li className=''><Image src={flag} alt="Flag" /> <span className='mx-2 ' style={{ fontSize: '12px', color: 'rgba(43, 42, 40, 0.7)' }}>{property?.attributes?.ProAddress}</span></li>
+                            //                 <li><Image src={building} alt="Building" /> <span className='mx-2'>{params?.lang === 'en' ? 'Unit No' : 'رقم الوحدة'} :  {property?.attributes?.proUnit}</span></li>
+                            //                 <li><Image src={money} alt="Money" /> <span className='mx-2'>{params?.lang === 'en' ? 'Price' : 'سعر'} : {property?.attributes?.proPrice} ({params?.lang === 'en' ? 'AED' : 'درهم'})</span></li>
+                            //                 <li><Image src={size} alt="Size" /> <span className='mx-2'>{params?.lang === 'en' ? 'Size' : 'مقاس'} : {property?.attributes?.proSize} ({params?.lang === 'en' ? 'Sq.ft.' : "قدم مربع."})</span></li>
+                            //                 <li><Image src={bedroomImage} alt="Bedroom" /><span className='mx-2'> {params?.lang === 'en' ? 'Type :' : 'يكتب :'} {property?.attributes?.proType}</span></li>
+                            //             </ul>
+                            //         </div>
+                            //         <p></p>
+                            //     </div>
+                            // </Link>
+                            // <span className='w-75'>
+                            //     <Card
+                            //         image={property?.attributes?.SliderImg?.data?.attributes?.formats?.thumbnail?.url}
+                            //         title={property?.attributes?.proName}
+                            //         key={index}
+                            //         id={property?.attributes?.slug}
+                            //     />
+                            // </span>
                         ))
                         :
                         <div>
@@ -195,3 +218,29 @@ const Residential = ({ params, searchParams }) => {
 };
 
 export default Residential;
+const Card = ({ image, title, key, id }) => {
+    return (
+        <Link
+            href={`/project-detail/residential/${id}`}
+            key={key}
+            className="rounded-4 position-relative"
+        // style={{ width: "321px" }}
+        >
+            <img
+                className="w-100  object-fit-cover rounded-4 z-1"
+                // style={{ height: "410px" }}
+                src={image}
+                alt='img'
+            ></img>
+            <div
+                className="position-absolute rounded-bottom-4 bottom-0 z-3 w-100 d-flex align-items-center justify-content-center text-black"
+                style={{
+                    backgroundColor: "rgba(4, 115, 169, 0.5)",
+                    height: "53px",
+                }}
+            >
+                {title}
+            </div>
+        </Link>
+    );
+};

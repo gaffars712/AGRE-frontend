@@ -132,10 +132,10 @@ export default async function Home({ params }) {
 
   return (
     <main className="">
-      <MainScreen filters={filters} params={params} heroDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.hero-section')} />
-      <UpcommingProject sliderImgData={data?.projects ? data.projects : ''} upCommingDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.upcoming-section')} />
-      <OurResidential residentialData={residentialData} residentialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.residential-section')} />
-      <OurCommercial commercialData={commercialData} commercialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.commercial-section')} />
+      <MainScreen params={params} filters={filters} heroDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.hero-section')} />
+      <UpcommingProject params={params} sliderImgData={data?.projects ? data.projects : ''} upCommingDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.upcoming-section')} />
+      <OurResidential params={params} residentialData={residentialData} residentialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.residential-section')} />
+      <OurCommercial params={params} commercialData={commercialData} commercialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.commercial-section')} />
     </main>
   );
 }

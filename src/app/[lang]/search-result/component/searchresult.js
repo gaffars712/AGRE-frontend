@@ -242,7 +242,7 @@ function Searchresult({ params, search }) {
                         <div className='py-2'>{params?.lang === 'en' ? "Commercial Properties" : "العقارات التجارية"} :</div>
                         {commercialPropertiesData?.length && commercialPropertiesData.map((property) => {
                             return (
-                                <Link href={`/project-detail/commercial/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
+                                <Link href={`/${params?.lang}/project-detail/commercial/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
                                     <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
                                         <div className='img-box  mb-2'>
                                             <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />
@@ -266,7 +266,7 @@ function Searchresult({ params, search }) {
                         <div className='py-2'>{params?.lang === 'en' ? "Residential Properties" : "العقارات السكنية"} : </div>
 
                         {residentialPropertiesData?.length && residentialPropertiesData.map((property) => (
-                            <Link href={`/project-detail/residential/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
+                            <Link href={`/${params?.lang}/project-detail/residential/${property?.attributes?.slug}`} key={property.id} className='col-12 col-md-6 col-lg-4 mb-3 text-decoration-none text-black'>
                                 <div className='rounded-3 border p-3' style={{ maxWidth: '356px' }}>
                                     <div className='img-box  mb-2'>
                                         <Image width={326} height={170} src={property?.attributes?.bannerImg?.data?.attributes?.formats?.large?.url} className='object-fit-cover w-100 rounded' alt={property?.attributes?.proName} />

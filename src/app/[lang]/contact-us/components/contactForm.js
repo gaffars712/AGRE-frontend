@@ -103,7 +103,8 @@ function ContactForm({ params, formLabels }) {
         <div style={{ width: '796px' }} className='contact-form border p-5 m-5 bg-white rounded'>
           <form className='' onSubmit={handleSubmit}>
             <div className='mt-'>
-              <h4 className='text-center'>Contact us</h4>
+              {console.log(formLabels)}
+              <h4 className='text-center'>{formLabels[0]?.formTitle} </h4>
             </div>
             <div className='mt-5'>
               <div style={{ fontSize: '16px' }} className='row'>

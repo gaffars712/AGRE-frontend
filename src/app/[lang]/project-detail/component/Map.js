@@ -31,20 +31,20 @@ const MapComponent = ({ params, mapDetails, mapUrl }) => {
             {mapDetails?.locationFeature && params?.lang === 'en'
               ?
               mapDetails?.locationFeature?.map((loc, index) => (
-                <div key={index} className=' d-flex align-items-center flex-column' style={{ width: '90px' }}>
-                  <div className='d-flex justify-content-center align-items-center' style={{ height: '90px' }}>
+                <div key={index} className=' d-flex align-items-center flex-column facilites-container' >
+                  <div className='d-flex justify-content-center align-items-center facility' >
                     {COMMON.LOCATION[loc]}
                   </div>
-                  <div className=' d-flex text-center' style={{ fontSize: '14px', minHeight: '30px', lineHeight: '20px' }}>{loc}</div>
+                  <div className=' d-flex text-center facility-text'>{loc}</div>
                 </div>
               ))
               :
               mapDetails?.locationFeatureAR?.map((loc, index) => (
-                <div key={index} className=' d-flex align-items-center flex-column' style={{ width: '90px' }}>
-                  <div className='d-flex justify-content-center align-items-center' style={{ height: '90px' }}>
+                <div key={index} className=' d-flex align-items-center flex-column facilites-container' >
+                  <div className='d-flex justify-content-center align-items-center facility' >
                     {COMMON.LOCATION[loc]}
                   </div>
-                  <div className=' d-flex text-center' style={{ fontSize: '14px', minHeight: '30px', lineHeight: '20px' }}>{loc}</div>
+                  <div className=' d-flex text-center facility-text'>{loc}</div>
                 </div>
               ))
             }

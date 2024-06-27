@@ -4,13 +4,13 @@
 import Link from "next/link";
 import Carousel from "react-elastic-carousel";
 
-function OurResidential  ({residentialDetails, residentialData}) {
+function OurResidential  ({params, residentialDetails, residentialData}) {
 
     const breakPoints = [
         { width: 1, itemsToShow: 1 },
         { width: 650, itemsToShow: 2 },
         { width: 1008, itemsToShow: 3 },
-        { width: 1500, itemsToShow: 4 },
+        // { width: 1500, itemsToShow: 4 },
     ];
     const residentialContent = [
         {
@@ -79,6 +79,7 @@ function OurResidential  ({residentialDetails, residentialData}) {
                     residentialData?.map((item, index) => {
                         return (
                             <Card
+                            params={params}
                                 image={item?.attributes?.SliderImg?.data?.attributes?.url}
                                 title={item?.attributes?.proName}
                                 key={index}
@@ -88,14 +89,14 @@ function OurResidential  ({residentialDetails, residentialData}) {
                     })}
             </Carousel>
             <div className=" w-100 d-flex justify-content-center mt-5">
-                <Link href={"/properties/residential"} className="">
+                {/* <Link href={"/properties/residential"} className="">
                     <button
                         className="btn btn-backgroundClr "
                         style={{ width: "135px" }}
                     >
                         {residentialDetails[0]?.viewBTN ? residentialDetails[0]?.viewBTN : ''}
                     </button>
-                </Link>
+                </Link> */}
             </div>
         </div>
     );
@@ -103,10 +104,10 @@ function OurResidential  ({residentialDetails, residentialData}) {
 
 export default OurResidential;
 
-const Card = ({ image, title, key, id }) => {
+const Card = ({ image, title, key, id , params }) => {
     return (
         <Link
-            href={`/project-detail/residential/${id}`}
+            href={`/${params?.lang}/project-detail/residential/${id}`}
             key={key}
             className="rounded-4 position-relative"
             // style={{ width: "321px" }}
@@ -115,12 +116,14 @@ const Card = ({ image, title, key, id }) => {
                 className="w-100  object-fit-cover rounded-4 z-1"
                 // style={{ height: "410px" }}
                 src={image}
+                alt="img"
             ></img>
             <div
-                className="position-absolute rounded-bottom-4 bottom-0 z-3 w-100 d-flex align-items-center justify-content-center text-black"
+                className="position-absolute rounded-bottom-4 bottom-0 z-3 w-100 d-flex align-items-center justify-content-center text-white"
                 style={{
                     backgroundColor: "rgba(4, 115, 169, 0.5)",
                     height: "53px",
+                    fontWeight:"500"
                 }}
             >
                 {title}

@@ -28,10 +28,8 @@ export async function fetchAPI(
     )}`;
 
     // Trigger API call
-    console.log('berfor fetch',requestUrl)
     const response = await fetch(requestUrl, mergedOptions);
     const data = await response.json();
-    console.log('after fetch',data)
     return data;
     
   } catch (error) {

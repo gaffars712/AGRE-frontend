@@ -30,10 +30,10 @@ const getFooter = async (lang = "en") => {
   }
 };
 
-async function Footer({ localeLang }) {
+async function Footer({ localeLang , segmentPath }) {
   let data = {};
   let Year;
-  data = await getFooter(localeLang);
+  data = await getFooter(segmentPath ? segmentPath : localeLang);
   let homecontentSection = await data?.main;
   console.log(data)
 
@@ -55,7 +55,7 @@ async function Footer({ localeLang }) {
                   {it?.type ? <div className="mb-1">{it?.type}</div> : null}
                   <Link
                     key={ix}
-                    href={it?.path}
+                    href={`/${segmentPath ? segmentPath : localeLang}${it?.path}`}
                     style={{ textDecoration: "none", color: "white" }}
                     className="d-flex flex-column gap-1"
                   >
@@ -74,14 +74,16 @@ async function Footer({ localeLang }) {
                 {index === 0 ? null : (
                   <span
                     style={{
-                      borderLeft: "1px solid white",
+                      borderLeft: `${segmentPath ? segmentPath === 'en' ? '1px solid white' : '' : localeLang === 'en' ? '1px solid white' : ''}`,
+                      borderRight: `${segmentPath ? segmentPath === 'ar' ? '1px solid white' : '' : localeLang === 'ar' ? '1px solid white' : ''}`,
                       height: "10px",
                       paddingRight: "10px",
                     }}
                   ></span>
                 )}
                 <Link
-                  href={item?.path}
+                  // href={item?.path}
+                  href={`/${segmentPath ? segmentPath : localeLang}${item?.path}`}
                   className="text-decoration-none text-white"
                 >
                   {item?.name}

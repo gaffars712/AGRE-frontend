@@ -18,6 +18,7 @@ const WhatsappButton = () => {
           width={55}
           height={55}
           src={WhatsApp}
+          alt="whatsapp"
           className={`${styles["whatsapp-image"]}`} // Apply CSS class
         />
       </ReactWhatsapp>

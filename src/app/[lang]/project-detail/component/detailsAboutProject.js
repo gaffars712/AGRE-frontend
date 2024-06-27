@@ -16,7 +16,15 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
 
     console.log(projectDetails);
     const [selectedImage, setSelectedImage] = useState(projectDetails?.attributes?.proImgs?.data[0].attributes.url)
+    const handleUpdateImg = (imageUrl) => {
+        if(imageUrl === selectedImage){
+            setSelectedImage(projectDetails?.attributes?.proImgs?.data[0].attributes.url)
+        }else{
+            setSelectedImage(imageUrl)
+        }
 
+
+    }
     return (
         <div className='container'>
             <div className="row">
@@ -35,10 +43,10 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                     </div>
                     <div className={` d-flex flex-row flex-lg-column gap-3 ${params?.lang === 'en' ? 'sub-images-project-desc' : 'sub-images-project-desc-ar'} `} style={{ width: '104.17px' }}>
                         {projectDetails?.attributes?.proImgs?.data?.length &&
-                            projectDetails?.attributes?.proImgs?.data?.slice(0, 4)?.map((item, index) => {
+                            projectDetails?.attributes?.proImgs?.data?.slice(1, 5)?.map((item, index) => {
                                 const imageUrl = item?.attributes?.url;
                                 return (
-                                    <span onClick={() => setSelectedImage(imageUrl)} key={index}>
+                                    <span onClick={() => handleUpdateImg(imageUrl)} key={index}>
                                         {/* <Image src={item?.attributes?.url} onClick={() => setSelectedImage(imageUrl)} key={index} alt={`image ${index}`} width={104.17} height={104.17} className='object-fit-cover rounded-3 sub-image-project-description' style={{ boxShadow: `${imageUrl == selectedImage ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px' : ''}`, cursor: 'pointer' }} /> */}
                                         <ImgComp className='object-fit-cover rounded-3 sub-image-project-description' index={index} src={item?.attributes?.url} width={104.17} height={104.17} />
                                     </span>
@@ -83,7 +91,7 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                         </div>
                     </div>
                 </div>
-                {projectDetails?.attributes?.proPlans ? <ProjectFloor params={params} floorDetails={projectDetails?.attributes?.proPlans} /> : null}
+                {/* {projectDetails?.attributes?.proPlans ? <ProjectFloor params={params} floorDetails={projectDetails?.attributes?.proPlans} /> : null} */}
                 <Map params={params} mapUrl={projectDetails?.attributes?.locationURL} mapDetails={projectDetails?.attributes} />
                 <Register projectName={projectDetails?.attributes?.proName} params={params} />
 

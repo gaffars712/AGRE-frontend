@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 export default function PropertiesLayout({ children }) {
     const [properties, setproperties] = useState(null)
+    const [localeLang, setlocaleLang] = useState(null)
     const pathname = usePathname();
     const getNavList = async (lang = "en") => {
         const path = `/properties`;
@@ -34,8 +35,10 @@ export default function PropertiesLayout({ children }) {
     useEffect(() => {
         if (pathname.includes('/ar/')) {
             getNavList('ar')
+            setlocaleLang('ar')
         } else if (pathname.includes('/en/')) {
             getNavList('en')
+            setlocaleLang('en')
         }
     }, [])
     return (
@@ -49,10 +52,10 @@ export default function PropertiesLayout({ children }) {
             <div className="bg-backgroundClr  text-white" style={{ paddingTop: '110px' }} >
                 <nav className="d-flex  gap-4 pt-2 navbar-padding" >
                     <li className={` d-flex justify-content-center align-items-center ${pathname.includes("/properties/commercial") ? "active-tab" : ""}`} style={{ listStyleType: "none", padding: "10px 15px" }}>
-                        <Link href={"/properties/commercial"} style={{ textDecoration: 'none', color: pathname.includes("/properties/commercial") ? "black" : "white" }}>{properties?.titleOne}</Link>
+                        <Link href={`/${localeLang}/properties/commercial`} style={{ textDecoration: 'none', color: pathname.includes("/properties/commercial") ? "black" : "white" }}>{properties?.titleOne}</Link>
                     </li>
                     <li className={`${pathname.includes("/properties/residential") ? "active-tab" : ""}`} style={{ listStyleType: "none", padding: "10px 15px" }}>
-                        <Link href={"/properties/residential"} style={{ textDecoration: 'none', color: pathname.includes("/properties/residential") ? "black" : "white" }}>{properties?.titleTwo}</Link>
+                        <Link href={`/${localeLang}/properties/residential`} style={{ textDecoration: 'none', color: pathname.includes("/properties/residential") ? "black" : "white" }}>{properties?.titleTwo}</Link>
                     </li>
                 </nav>
             </div>
