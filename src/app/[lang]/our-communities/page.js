@@ -23,6 +23,7 @@ const Page = async ({ params, searchParams }) => {
                 proName: { $contains: searchText },
                 proPlans: { title: { $contains: badroomNumber } },
                 proType: { $contains: type },
+                communitie: { $contains: true },
             },
         };
 
@@ -48,6 +49,7 @@ const Page = async ({ params, searchParams }) => {
             filters: {
                 proName: { $contains: searchText },
                 proType: { $contains: type },
+                communitie: { $contains: true },
             },
         };
 
@@ -72,24 +74,24 @@ const Page = async ({ params, searchParams }) => {
 
 
     // Filter the properties by specific names
-    const filteredData = mergedData.filter(property => {
-        const proName = property?.attributes?.proName;
-        return ["Jumeira Villas", "فلل جميرا", "الدرة", "Al Durah"].includes(proName);
-    });
+    // const mergedData = mergedData.filter(property => {
+    //     const proName = property?.attributes?.proName;
+    //     return ["Jumeira Villas", "فلل جميرا", "الدرة", "Al Durah"].includes(proName);
+    // });
 
-    const totalResults = filteredData.length;
+    const totalResults = mergedData.length;
     const totalPages = Math.ceil(totalResults / 9);
 
     return (
         <div className='section-padding'>
             <h3>{lang === 'en' ? 'Our Communities ' : 'مجتمعاتنا'}</h3>
             <div className='mb-4' style={{ fontSize: '13px', marginLeft: '2px' }}>
-                {filteredData?.length > 0 
-                    ? `1 - ${filteredData.length} ${lang === 'ar' ? 'ل' : 'of'} ${filteredData.length} `
+                {mergedData?.length > 0 
+                    ? `1 - ${mergedData.length} ${lang === 'ar' ? 'ل' : 'of'} ${mergedData.length} `
                     : lang === 'en' ? 'No Records Found' : 'لا توجد سجلات'}
             </div>
             <div className='row'>
-                {filteredData?.length ? filteredData.map((property) => (
+                {mergedData?.length ? mergedData.map((property) => (
                     <div key={property.id} className='col-12 rounded-4 col-md-6 col-lg-4 col-xl-3 col-2xl-2 mb-3 text-decoration-none h-100 text-black'>
                         <Link href={`/${lang}/project-detail/${property?.isComercial ? 'commercial' : 'residential'}/${property?.attributes?.slug}`} className='position-relative d-flex h-100 w-100 text-decoration-none text-black'>
                             <Image height={100}

@@ -58,11 +58,11 @@ function ContactForm({ params, formLabels }) {
   const validate = () => {
     const newErrors = {};
 
-    if (!formData.fullName) newErrors.fullName = 'Full Name is required.';
-    if (!formData.mobileNumber) newErrors.mobileNumber = 'Mobile Number is required.';
-    if (!formData.email) newErrors.email = 'Email Address is required.';
-    if (!formData.interestedIn) newErrors.interestedIn = 'Interest is required.';
-    if (!formData.termsAccepted) newErrors.termsAccepted = 'You must accept the terms and conditions.';
+    if (!formData.fullName) newErrors.fullName = params?.lang === 'en' ? 'Full Name is required.' : 'الإسم الكامل ضروري';
+    if (!formData.mobileNumber) newErrors.mobileNumber = params?.lang === 'en' ? 'Mobile Number is required.' : 'رقم الجوال مطلوب';
+    if (!formData.email) newErrors.email = params?.lang === 'en' ? 'Email Address is required.' : 'عنوان البريد الإلكتروني مطلوب';
+    if (!formData.interestedIn) newErrors.interestedIn = params?.lang === 'en' ? 'Interest is required.' : 'الفائدة مطلوبة';
+    if (!formData.termsAccepted) newErrors.termsAccepted = params?.lang === 'en' ? 'You must accept the terms and conditions.' : 'يجب عليك قبول الأحكام والشروط.';
 
     return newErrors;
   };

@@ -7,7 +7,7 @@ import CoverImage from "@/assets/images/cover-image.svg";
 
 
 const HomeCarousel = ({ heroDetails }) => {
-    console.log(heroDetails[0]?.heroImg?.data?.attributes?.formats?.large?.url);
+    console.log(heroDetails[0]?.heroImg);
     const state = {
         items: [
             { id: 1, title: 'item #1' },
@@ -24,8 +24,11 @@ const HomeCarousel = ({ heroDetails }) => {
     return (
         <div dir='ltr'>
         <Carousel transitionTime={900} autoPlay interval={5000} infiniteLoop showThumbs={false} showStatus={false}>
-            <div>
-                <Image src={heroDetails[0]?.heroImg?.data?.attributes?.url ? heroDetails[0]?.heroImg?.data?.attributes?.url : heroDetails[0]?.heroImg?.data?.attributes?.formats?.large?.url}
+          {heroDetails[0]?.heroImg?.data && heroDetails[0]?.heroImg?.data.map((item,index)=>{
+            console.log(item);
+            return(
+            <div key={index}>
+                <Image src={item?.attributes?.url ? item?.attributes?.url : item?.attributes?.formats?.large?.url}
                     alt="cover-image"
                     className=" object-fit-cover cover-image"
                     style={{ width: "100%" }}
@@ -33,24 +36,8 @@ const HomeCarousel = ({ heroDetails }) => {
                     height={1000}
                 />
             </div>
-            <div>
-                <Image src={heroDetails?.length ? heroDetails[0]?.heroImg?.data?.attributes?.url : CoverImage}
-                    alt="cover-image"
-                    className=" object-fit-cover cover-image"
-                    style={{ width: "100%" }}
-                    width={11000}
-                    height={1000}
-                />
-            </div>
-            <div>
-                <Image src={heroDetails?.length ? heroDetails[0]?.heroImg?.data?.attributes?.url : CoverImage}
-                    alt="cover-image"
-                    className=" object-fit-cover cover-image"
-                    style={{ width: "100%" }}
-                    width={11000}
-                    height={1000}
-                />
-            </div>
+            )
+          })}
         </Carousel>
         </div>
     )

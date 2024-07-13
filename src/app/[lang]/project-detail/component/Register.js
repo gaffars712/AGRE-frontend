@@ -75,7 +75,9 @@ const Register = ({ params, projectName }) => {
   });
 
   const unitTypes = ["Kilograms", "Liters", "Meters", "Pieces"];
+  const unitTypesAR = ["كيلوجرامات", "لترات", "أمتار", "قطع"];
   const Nationality = ["indian", "american", "UAE national", "European"];
+  const NationalityAr = ["هندي", "أمريكي", "مواطن إماراتي", "أوروبي"];
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -103,27 +105,27 @@ const Register = ({ params, projectName }) => {
     let errorMessages = {};
 
     if (!fields.fullName) {
-      errorMessages.fullName = "Full Name is required";
+      errorMessages.fullName = params?.lang === 'en' ? "Full Name is required" : 'الإسم الكامل ضروري';
     } else {
       errorMessages.fullName = "";
     }
 
     if (!fields.email) {
-      errorMessages.email = "Email is required";
+      errorMessages.email = params?.lang === 'en' ? "Email is required" : 'البريد الالكتروني مطلوب';
     } else if (!/\S+@\S+\.\S+/.test(fields.email)) {
-      errorMessages.email = "Email address is invalid";
+      errorMessages.email = params?.lang === 'en' ? "Email address is invalid" : 'عنوان البريد الإلكتروني غير صالح';
     } else {
       errorMessages.email = "";
     }
 
     if (!fields.mobile) {
-      errorMessages.mobile = "Mobile Number is required";
+      errorMessages.mobile = params?.lang === 'en' ? "Mobile Number is required" : 'رقم الجوال مطلوب';
     } else {
       errorMessages.mobile = "";
     }
 
     if (!fields.unitType) {
-      errorMessages.unitType = "Unit Type is required";
+      errorMessages.unitType = params?.lang === 'en' ? "Unit Type is required" : 'نوع الوحدة مطلوب';
     } else {
       errorMessages.unitType = "";
     }
@@ -169,7 +171,7 @@ const Register = ({ params, projectName }) => {
       }
     } else {
       if (!isAgreed) {
-        setTermsError("Please agree to the Terms and Conditions");
+        setTermsError(params?.lang === 'en' ? "Please agree to the Terms and Conditions" : 'يرجى الموافقة على الشروط والأحكام');
       }
     }
   };
@@ -312,7 +314,7 @@ const Register = ({ params, projectName }) => {
             </div>
             <div className="col-md-6">
               <label htmlFor="nationality" className="form-label">
-                {labels?.nationalityLabel} 
+                {labels?.nationalityLabel}
               </label>
               <select
                 className="form-select"
@@ -322,13 +324,21 @@ const Register = ({ params, projectName }) => {
                 onChange={handleChange}
               >
                 <option value="" disabled>
-                  - Select -
+                  {params?.lang === 'ar' ? '- يختار -' : '- Select -'}
                 </option>
-                {Nationality.map((unit, index) => (
-                  <option key={index} value={unit}>
-                    {unit}
-                  </option>
-                ))}
+                {params?.lang === 'ar' ?
+                  NationalityAr.map((unit, index) => (
+                    <option key={index} value={unit}>
+                      {unit}
+                    </option>
+                  ))
+                  :
+                  Nationality.map((unit, index) => (
+                    <option key={index} value={unit}>
+                      {unit}
+                    </option>
+                  ))
+                }
               </select>
               {errors.nationality && (
                 <div className="text-danger mt-1" style={{ fontSize: "12px" }}>
@@ -348,13 +358,20 @@ const Register = ({ params, projectName }) => {
                 onChange={handleChange}
               >
                 <option value="" disabled>
-                  - Select -
+                  {params?.lang === 'ar' ? '- يختار -' : '- Select -'}
                 </option>
-                {unitTypes.map((unit, index) => (
-                  <option key={index} value={unit}>
-                    {unit}
-                  </option>
-                ))}
+                {params?.lang === 'ar' ?
+                  unitTypesAR.map((unit, index) => (
+                    <option key={index} value={unit}>
+                      {unit}
+                    </option>
+                  ))
+                  :
+                  unitTypes.map((unit, index) => (
+                    <option key={index} value={unit}>
+                      {unit}
+                    </option>
+                  ))}
               </select>
               {errors.unitType && (
                 <div className="text-danger mt-1" style={{ fontSize: "12px" }}>
