@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_footer_webs",
+  "info": {
+    "displayName": "web",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "info": {
+      "type": "json"
+    }
+  }
+}

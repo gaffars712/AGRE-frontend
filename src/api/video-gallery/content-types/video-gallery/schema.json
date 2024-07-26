@@ -1,0 +1,41 @@
+{
+  "kind": "collectionType",
+  "collectionName": "video_galleries",
+  "info": {
+    "singularName": "video-gallery",
+    "pluralName": "video-galleries",
+    "displayName": "videoGallery",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "hero": {
+      "displayName": "hero-section",
+      "type": "component",
+      "repeatable": true,
+      "component": "video-gallery-section.hero-section",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "links": {
+      "type": "component",
+      "repeatable": true,
+      "component": "video-gallery-section.video-section",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    }
+  }
+}

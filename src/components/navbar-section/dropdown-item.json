@@ -1,0 +1,15 @@
+{
+  "collectionName": "components_navbar_section_dropdown_items",
+  "info": {
+    "displayName": "dropdownItem"
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    }
+  }
+}

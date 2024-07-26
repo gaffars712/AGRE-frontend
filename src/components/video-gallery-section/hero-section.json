@@ -1,0 +1,23 @@
+{
+  "collectionName": "components_video_gallery_heros",
+  "info": {
+    "displayName": "hero",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "Desc": {
+      "type": "text"
+    },
+    "channelLink": {
+      "type": "text",
+      "required": true
+    },
+    "SubsBTN": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_video_gallery_videos",
+  "info": {
+    "displayName": "video",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "videoLinks": {
+      "type": "text"
+    }
+  }
+}

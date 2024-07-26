@@ -1,0 +1,61 @@
+{
+  "collectionName": "components_about_content",
+  "info": {
+    "displayName": "content",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "default": "."
+    },
+    "firstImg": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "secondImg": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "fullImg": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "mainTitle": {
+      "type": "string"
+    },
+    "shortDes": {
+      "type": "string"
+    },
+    "Desc": {
+      "type": "richtext"
+    },
+    "path": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

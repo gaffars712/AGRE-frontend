@@ -1,0 +1,29 @@
+{
+  "collectionName": "components_project_details_plans",
+  "info": {
+    "displayName": "plan",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "img": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "title": {
+      "type": "string",
+      "unique": false,
+      "required": true
+    },
+    "Desc": {
+      "type": "text"
+    }
+  }
+}

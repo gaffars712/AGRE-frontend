@@ -1,0 +1,25 @@
+{
+  "collectionName": "components_conteact_us_section_add_labels",
+  "info": {
+    "displayName": "addLabels",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "emailLabel": {
+      "type": "string"
+    },
+    "contectLabel": {
+      "type": "string"
+    },
+    "HoursLabel": {
+      "type": "string"
+    },
+    "officeLabel": {
+      "type": "string"
+    },
+    "addBTN": {
+      "type": "string"
+    }
+  }
+}

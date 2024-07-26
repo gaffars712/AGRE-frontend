@@ -1,0 +1,44 @@
+{
+  "collectionName": "components_upcoming_section_all_upcomings",
+  "info": {
+    "displayName": "allUpcoming",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "Desc": {
+      "type": "text"
+    },
+    "img": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "sliderImg": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "proName": {
+      "type": "string"
+    },
+    "viewBTN": {
+      "type": "string"
+    }
+  }
+}

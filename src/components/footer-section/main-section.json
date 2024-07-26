@@ -1,0 +1,13 @@
+{
+  "collectionName": "components_footer_mains",
+  "info": {
+    "displayName": "main",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "main": {
+      "type": "json"
+    }
+  }
+}

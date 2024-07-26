@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "whistleblowings",
+  "info": {
+    "singularName": "whistleblowing",
+    "pluralName": "whistleblowings",
+    "displayName": "Whistleblowing",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "content": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "title": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    }
+  }
+}

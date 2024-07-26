@@ -1,0 +1,145 @@
+{
+  "kind": "collectionType",
+  "collectionName": "filters",
+  "info": {
+    "singularName": "filter",
+    "pluralName": "filters",
+    "displayName": "filter",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "titleOne": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "titleTwo": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "searchPlaceholder": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "types": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "options": [
+        "Type",
+        "Villa",
+        "Apartment"
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "bedRooms": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "options": [
+        "Bedrooms",
+        "1 Bedroom",
+        "2 Bedroom",
+        "3 Bedroom ",
+        "4 Bedroom",
+        "5 Bedroom"
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "SearchBTN": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "string"
+    },
+    "typesAR": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "options": [
+        "يكتب",
+        "فيلا",
+        "شقة",
+        ""
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "bedRoomsAR": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "options": [
+        "غرفة نوم",
+        "1 غرفة نوم",
+        "2 غرفة نوم",
+        "3 غرفة نوم",
+        "4 غرفة نوم",
+        "5 غرفة نوم",
+        ""
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "typesCommercial": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "options": [
+        "Type",
+        "Office",
+        "Retail"
+      ]
+    },
+    "typesCommercialAR": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "options": [
+        "يكتب",
+        "مكتب",
+        "بيع بالتجزئة",
+        ""
+      ]
+    }
+  }
+}

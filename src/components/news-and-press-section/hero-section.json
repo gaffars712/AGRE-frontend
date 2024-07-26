@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_news_and_press_heros",
+  "info": {
+    "displayName": "Hero",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "Desc": {
+      "type": "text"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "collectionName": "components_footer_section_follow_links",
+  "info": {
+    "displayName": "followLinks",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "link": {
+      "type": "text",
+      "required": true
+    },
+    "img": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

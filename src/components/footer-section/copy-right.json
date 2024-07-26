@@ -1,0 +1,12 @@
+{
+  "collectionName": "components_footer_section_copy_rights",
+  "info": {
+    "displayName": "copyRight"
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    }
+  }
+}

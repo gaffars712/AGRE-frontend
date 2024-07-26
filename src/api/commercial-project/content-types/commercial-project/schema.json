@@ -1,0 +1,389 @@
+{
+  "kind": "collectionType",
+  "collectionName": "commercial_projects",
+  "info": {
+    "singularName": "commercial-project",
+    "pluralName": "commercial-projects",
+    "displayName": "CommercialProject",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {
+    "i18n": {
+      "localized": true
+    }
+  },
+  "attributes": {
+    "SliderImg": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "bannerImg": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "proName": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proTitle": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proImgs": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      }
+    },
+    "locationTitle": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "locationDesc": {
+      "type": "text",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proParking": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proSize": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proPrice": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proUnit": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "ProAddress": {
+      "type": "string",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "slug": {
+      "type": "uid",
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proFeature": {
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "options": [
+        "Ample Car Parking Space",
+        "24 x 7 Security & Maintenance Service",
+        "Badminton Court",
+        "Barbeque Area",
+        "Children Play Area",
+        "Coffee Shop",
+        "EV Charging Station",
+        "Free Chiller",
+        "Free Cooking Gas",
+        "Free Dewa For Office",
+        "Fully Fitted Kitchen",
+        "Fully Equipped Gymnasium",
+        "Jacuzzi",
+        "Jogging Track",
+        "Library",
+        "Loading Unloading Warehouses",
+        "Sauna Room",
+        "Swimming Pool",
+        "Close Public Transport",
+        "Kitchen Facility Free DEWA for Offices",
+        "Kitchen Facility",
+        "Free DEWA for  Offices"
+      ],
+      "required": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "locationFeature": {
+      "type": "customField",
+      "customField": "plugin::multi-select.multi-select",
+      "options": [
+        "Dubai Frame",
+        "Zabeel Park",
+        "Dubai Creek",
+        "Wifi Mall",
+        "Dubai Garden Glow",
+        "Dubai World Trade Center (DWTC)",
+        "Al Seef",
+        "Burj AI Arab",
+        "Jumeirah Beach",
+        "The Palm Jumeirah",
+        "Madinat Jumeirah",
+        "Wild Wadi Water Park",
+        "Jumeirah Mosque",
+        "Mercato Shopping Mall",
+        "City Walk",
+        "Box Park",
+        "Dubai Canal",
+        "Deira Gold Souk",
+        "Spice Souk",
+        "Naif Souk",
+        "Abraa",
+        "Al Fahidi Historic",
+        "District (Al Bastakiya)",
+        "Dubai Safari",
+        "Dubai Lagoons",
+        "Dragon Market",
+        "Auto Market",
+        "Ras Al Khor Wildlife Sanctury",
+        "Meydan"
+      ],
+      "required": false,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "locationURL": {
+      "type": "text",
+      "required": true,
+      "default": "Search Your project's location on google map and click on share / Embed a map COPY HTML and remove this all and past here.",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proType": {
+      "type": "enumeration",
+      "enum": [
+        "Retail",
+        "بيع بالتجزئة",
+        "Office",
+        "مكتب",
+        "Retail - F&B",
+        "البيع بالتجزئة - المأكولات والمشروبات"
+      ],
+      "required": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "proDesc": {
+      "type": "richtext",
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      }
+    },
+    "isRent": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "true",
+        "false"
+      ],
+      "required": true
+    },
+    "proPlans": {
+      "type": "component",
+      "repeatable": true,
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "component": "project-details-section.plan-section"
+    },
+    "proFeatureAR": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "options": [
+        "مساحة واسعة لوقوف السيارات",
+        "خدمة الأمن والصيانة 24 × 7",
+        "تنس الريشة",
+        "منطقة الشواء",
+        "منطقة لعب الأطفال",
+        "مقهى",
+        "محطة شحن EV",
+        "مبرد مجاني",
+        "غاز الطبخ مجاني",
+        "ديوا مجانا للمكتب",
+        "مطبخ مجهز بالكامل",
+        "صالة ألعاب رياضية مجهزة بالكامل",
+        "جاكوزي",
+        "الركض المسار",
+        "مكتبة",
+        "تحميل وتفريغ المستودعات",
+        "غرفة ساونا",
+        "حمام السباحة",
+        "إغلاق وسائل النقل العام",
+        "مرافق المطبخ هيئة كهرباء ومياه دبي مجانية للمكاتب",
+        "مرافق المطبخ",
+        "هيئة كهرباء ومياه دبي مجانية للمكاتب"
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "locationFeatureAR": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "customField",
+      "options": [
+        "إطار دبي",
+        "حديقة زعبيل",
+        "خور دبي",
+        "واي فاي مول",
+        "دبي جاردن جلو",
+        "مركز دبي التجاري العالمي (DWTC)",
+        "السيف",
+        "برج العرب",
+        "شاطئ جميرا",
+        "نخلة جميرا",
+        "مدينة جميرا",
+        "حديقة وايلد وادي المائية",
+        "مسجد جميرا",
+        "مركز تسوق ميركاتو",
+        "سيتي ووك",
+        "قناة دبي",
+        "سوق ديرة للذهب",
+        "سوق التوابل",
+        "سوق نايف",
+        "عبرة",
+        "الفهيدي التاريخية",
+        "المنطقة (البستكية)",
+        "دبي سفاري",
+        "بحيرات دبي",
+        "سوق التنين",
+        "سوق السيارات",
+        "محمية رأس الخور للحياة البرية",
+        "ميدان",
+        "",
+        "",
+        "",
+        ""
+      ],
+      "customField": "plugin::multi-select.multi-select"
+    },
+    "idSlug": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string"
+    },
+    "communitie": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": true
+        }
+      },
+      "type": "enumeration",
+      "enum": [
+        "true",
+        "false"
+      ],
+      "default": "false",
+      "required": false
+    },
+    "proShortName": {
+      "pluginOptions": {
+        "i18n": {
+          "localized": false
+        }
+      },
+      "type": "string",
+      "required": true
+    }
+  }
+}

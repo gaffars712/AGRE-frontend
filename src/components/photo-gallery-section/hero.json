@@ -1,0 +1,16 @@
+{
+  "collectionName": "components_photo_gallery_section_heroes",
+  "info": {
+    "displayName": "hero",
+    "description": ""
+  },
+  "options": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "Desc": {
+      "type": "string"
+    }
+  }
+}
