@@ -6,7 +6,6 @@ import { fetchAPI } from '../../../utils/api-handler';
 
 
 const getAllResidential = async ({ projectType,  }, lang)  => {
-  console.log(lang)
   const path = `/${projectType}-projects`;
   const urlParamsObject = {
     populate: "deep",
@@ -28,11 +27,9 @@ const getAllResidential = async ({ projectType,  }, lang)  => {
 };
 
 async function ProjectDetails({ params }) {
-  console.log(params);
   let residentialData = {};
   residentialData = await getAllResidential({ projectType: params?.projectType} , params?.lang);
-  console.log(residentialData);
-  let projectDetails = residentialData.find(item => item?.attributes.slug === params?.projectId);
+  let projectDetails = residentialData.find(item => item?.attributes.proShortName === params?.projectId);
   return (
     <div className=''>
       <div className='position-relative d-flex align-items-center'>

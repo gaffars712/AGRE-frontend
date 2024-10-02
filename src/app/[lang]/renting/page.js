@@ -12,6 +12,7 @@ import Stack from '@mui/material/Stack';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { fetchAPI } from '../utils/api-handler';
+import Loader from '@/components/commonSection/loader';
 
 const Page = ({ params, searchParams }) => {
     const { searchText, type, bedroom } = searchParams;
@@ -168,7 +169,7 @@ const Page = ({ params, searchParams }) => {
             <div className='row'>
                 {mergedData?.length ? mergedData.map((property) => (
                     <div key={property.id} className='col-12 rounded-4 col-md-6 col-lg-4 col-xl-3 col-2xl-2 mb-3 text-decoration-none h-100 text-black'>
-                        <Link href={`/${params?.lang}/project-detail/${property?.isCommercial === true ? 'commercial' : 'residential'}/${property?.attributes?.slug}`} className='position-relative w-100 d-flex h-100 text-decoration-none text-black'>
+                        <Link href={`/${params?.lang}/project-detail/${property?.isCommercial === true ? 'commercial' : 'residential'}/${property?.attributes?.proShortName}`} className='position-relative w-100 d-flex h-100 text-decoration-none text-black'>
                             <Image
                                 width={250}
                                 height={100}
@@ -183,11 +184,16 @@ const Page = ({ params, searchParams }) => {
                             </div>
                         </Link>
                     </div>
-                )) : isLoading === true ? params?.lang === 'en' ? 'loading...' : 'تحميل...'
+                )) : isLoading === true ? params?.lang === 'en' ? <Loader params={params?.lang} /> : <Loader params={params?.lang} />
                     : (
-                        <div>
-                            <Image src={NO_RECORD_FOUND} className='w-100 object-fit-cover' style={{ height: '100vh' }} alt='no record found' />
+                        <div className='w-full ' style={{ display: 'flex', justifyContent: "center" }}>
+                        <div >
+                            <Image src={NO_RECORD_FOUND} width={700} height={450} className='  object-fit-cover' alt={'no record found'} />
+                            <div style={{fontSize:"30px",fontWeight:"600",textAlign:"center", marginTop:"25px"}}>
+                                {params?.lang === 'en' ? 'No Record Found' : 'لا توجد سجلات'}
+                            </div>
                         </div>
+                    </div>
                     )
                 }
             </div>

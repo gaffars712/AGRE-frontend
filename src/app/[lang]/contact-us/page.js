@@ -39,19 +39,20 @@ async function page({ params }) {
     <div>
       <section className='map mb-5'>
         <div className='contact-banner  position-relative  '>
-          <Image alt='Banner' src={data?.banner?.length ? data?.banner[0]?.img?.data?.attributes?.url : banner} width={1000} height={200} className='w-100 z-1 policyImgHieght  object-fit-cover' />
-          <div className={`text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar'} position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft: '8%',paddingRight: params?.lang === 'ar' ? '8%' : '', top: "0px", fontWeight: "500" }}>
+          <img alt='Banner' style={{maxHeight:"150px", minHeight:"60px"}} src={data?.banner?.length ? data?.banner[0]?.img?.data?.attributes?.url : banner} width={1000} height={200} className='w-100 z-1 policyImgHieght  object-fit-cover' />
+          <div className={`text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar'} position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft: '8%', paddingRight: params?.lang === 'ar' ? '8%' : '', top: "0px", fontWeight: "500" }}>
             {data?.banner[0]?.title}
           </div>
         </div>
         <div>
           <Details addLabels={data?.addLabels} addInfo={data?.addInfo} />
         </div>
-
       </section>
 
-      <section className='section-padding  navbar-padding mb-5'>
-        <ContactForm params={params} formLabels={data?.formLabels} />
+      <section className='container   mb-5'>
+        <section className='mt-5 mb-5   mb-5'>
+          <ContactForm params={params} formLabels={data?.formLabels} />
+        </section>
       </section>
       <section className='footer-secion'>
         {/* <Footer /> */}

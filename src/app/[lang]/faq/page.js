@@ -37,7 +37,7 @@ import { fetchAPI } from "../utils/api-handler";
     
     return (
       <div>
-        <FAQ faqcontentSection={faqcontentSection}/>
+        <FAQ  params={params} faqcontentSection={faqcontentSection}/>
       </div>
     );
   };

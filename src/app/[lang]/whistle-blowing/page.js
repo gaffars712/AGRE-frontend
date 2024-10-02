@@ -1,11 +1,11 @@
 import WhistleBlowing from "./component/whistleBlowing"
 import Image from "next/image"
-import Copy from "@/assets/location/copy.svg";
+import Copy from "@/assets/images/privacyBanner.jpg";
 import Markdown from "react-markdown";
 import { fetchAPI } from "../utils/api-handler";
 
 
-const getAllWhistleBlowingsSection = async (lang ) => {
+const getAllWhistleBlowingsSection = async (lang) => {
   const path = `/whistleblowings`;
   const urlParamsObject = {
     populate: 'deep',
@@ -26,7 +26,7 @@ const getAllWhistleBlowingsSection = async (lang ) => {
     return null;
   }
 }
-async function Page({params}) {
+async function Page({ params }) {
 
   let data = {};
   data = await getAllWhistleBlowingsSection(params?.lang);
@@ -55,8 +55,8 @@ async function Page({params}) {
     // </div>
     <div>
       <div className='contact-banner position-relative  '>
-        <Image src={Copy} alt="anner" width={100} height={200} className='w-100 z-1 policyImgHieght  object-fit-cover' />
-        <div className={` text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar'} blue-linear-gradient position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft:params?.lang ==='en' ? '8%' : '',  paddingRight: params?.lang ==='ar' ? '8%' : '' , top: "0px", fontWeight: "500" }}>
+      <img src={whistleBlowingData?.banner?.data?.attributes?.url ? whistleBlowingData?.banner?.data?.attributes?.url : Copy} alt="banner" width={1000} height={0} style={{height:"180px"}}  className='w-100 z-1 policyImgHieght  object-fit-cover' />
+        <div className={` text-white ${params?.lang === 'en' ? 'blue-linear-gradient' : 'blue-linear-gradient-ar'} blue-linear-gradient position-absolute z-2 d-flex align-items-center fs-3 fs-md-1 `} style={{ width: '60%', height: '100%', paddingLeft: params?.lang === 'en' ? '8%' : '', paddingRight: params?.lang === 'ar' ? '8%' : '', top: "0px", fontWeight: "500" }}>
           {whistleBlowingData?.title}
           {/* <nav className="d-flex flex-wrap" style={{ '--bs-breadcrumb-divider': "'>'" }} aria-label="breadcrumb">
           <ol className="breadcrumb">
@@ -66,8 +66,10 @@ async function Page({params}) {
         </nav> */}
         </div>
       </div>
-      <div className="section-padding" style={{ textAlign: "justify", fontSize: '16px' }}>
-        <Markdown >{whistleBlowingData?.content}</Markdown>
+      <div className="container" >
+        <div className="mt-5 mb-5 px-2" style={{ textAlign: "justify", fontSize: '16px' }}>
+          <Markdown >{whistleBlowingData?.content}</Markdown>
+        </div>
       </div>
       {/* <WhistleBlowing /> */}
     </div>

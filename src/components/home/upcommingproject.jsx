@@ -4,8 +4,8 @@ import upimg2 from "@/assets/images/upcommingImg2.png";
 import Image from "next/image";
 import Link from "next/link";
 
-function upcommingproject({ upCommingDetails, sliderImgData }) {
-    console.log(sliderImgData);
+function upcommingproject({ upCommingDetails, sliderImgData, params }) {
+    console.log(params);
 
     console.log(upCommingDetails);
     return (
@@ -19,7 +19,7 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
                         >
                             <div className="position-relative">
                                 <div
-                                    className="position-absolute top-0 rounded-4 z-0 d-none  d-md-block d-lg-block"
+                                    className=" top-0 rounded-4 z-0   d-md-block d-lg-block"
                                     style={{
                                         background: "rgba(0, 51, 102, 0.5)",
                                         height: "265px",
@@ -31,7 +31,7 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
                                 <Image
                                     src={sliderImgData[0].sliderImg.data.attributes.url}
                                     alt=""
-                                    className="z-4 position-absolute  h-auto imgresize"
+                                    className="z-4   h-auto imgresize"
                                     width={292}
                                     height={457}
                                 />
@@ -85,66 +85,58 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
                 </div>
             </div> */}
 
-
-            <div className="pb-4 d-flex w-100 justify-content-center">
-            <div className="section-padding d-flex row w-100 justify-content-xl-center  gap-5 ">
-                <div className="col-12 col-sm-5 col-lg-5 col-xl-3" >
-                    <div
-                        className="imagbox1"
-                        style={{ width: "291px", height: "458px" }}
-                    >
-                        <div className="position-relative">
+            <div className="container">
+                <div className="pb-4 w-full d-flex justify-content-center  ">
+                    <div className=" upcomingRowMargin row w-100   ">
+                        <div className="col-6 col-sm-6 col-lg-4 col-xl-3 abovedisple" >
                             <div
-                                className="position-absolute d-none d-sm-block top-0 rounded-4 z-0"
-                                style={{
-                                    background: "rgba(0, 51, 102, 0.5)",
-                                    height: "265px",
-                                    width: "292px",
-                                    top: "-20px",
-                                    left: "-20px",
-                                }}
-                            ></div>
-                            <Image
-                                src={sliderImgData[0]?.sliderImg?.data?.attributes?.url}
-                                alt=""
-                                className="z-4 position-absolute   mt-4 h-auto"
-                                width={292}
-                                height={457}
-                            />
+                                className="imagbox1"
+                            >
+                                <div className="position-relative">
+                                    <div
+                                        className={` ${params?.lang === 'en' ? "displayBGUpcoming " : 'displayBGUpcomingAR'}   rounded-4 `}
+                                    ></div>
+                                    <img
+                                        src={sliderImgData[0]?.sliderImg?.data?.attributes?.url}
+                                        alt=""
+                                        className=" upcomingImgWidth   mt-4 h-auto"
+                                        width={120}
+                                        height={100}
+                                        style={{ zIndex: "10", position: 'relative' }}
+                                    />
+                                </div>
+                            </div>
+                            <h6 className="  mt-2 text-center" >
+                                {sliderImgData[0]?.title ? sliderImgData[0]?.title : "6 Villas, Jumeirah"}
+                            </h6>
                         </div>
-                    </div>
-                    <h6 className="  text-lg-left text-sm-center" style={{ marginTop: "32px" }}>
-                        {upCommingDetails[0]?.img?.data[0]?.attributes?.caption ?  upCommingDetails[0]?.img?.data[0]?.attributes?.caption : "6 Villas, Jumeirah"}
-                    </h6>
-                </div>
-                <div className="imagbox2 col-12 col-sm-5 col-lg-4 col-xl-3" style={{ marginTop: "24px" }}>
-                    <Image src={sliderImgData[1]?.sliderImg?.data?.attributes?.url} alt="" width={292}
-                                height={457} className="h-auto" />
-                    <h6 className=" text-lg-left text-sm-center mt-2">{upCommingDetails[0]?.img?.data[1]?.attributes?.caption ?  upCommingDetails[0]?.img?.data[1]?.attributes?.caption : "6 Villas, Jumeirah"} </h6>
-                </div>
-                <div
-                    className="d-flex justify-content-center col-12 col-md-4  sm:flex-row align-items-center"
-                    style={{
-                         width: "100%",
-                         maxWidth: "428px",
-                        marginTop: "24px",
-                    }}
-                >
-                    <div className="">
-                        <h3 className="text-headingClr">{upCommingDetails[0]?.title ? upCommingDetails[0]?.title : "Upcoming Projects"}</h3>
+                        <div className="imagbox2 col-6 col-sm-6 col-lg-4 col-xl-3 abovedisple" style={{ marginTop: "24px" }}>
+                            <img src={sliderImgData[1]?.sliderImg?.data?.attributes?.url} alt="" width={120}
+                                height={100} className="h-auto upcomingImgWidth" />
+                            <h6 className=" text-center mt-2">{sliderImgData[1]?.title ? sliderImgData[1]?.title : "6 Villas, Jumeirah"} </h6>
+                        </div>
                         <div
-                            className="mt-4 mb-5 align-items-center w-100"
+                            className="d-flex justify-content-center col-12 col-xl-6 col-lg-4 upcomingTitleWidth    align-items-center"
                             style={{
-                                fontSize: "18px",
-                                lineHeight: "27px",
-                                fontWeight: "400",
-                                textAlign: "justify",
-                                color: "#8D8D87",
+                                // maxWidth: "428px",
+                                marginTop: "24px",
                             }}
                         >
-                           {upCommingDetails?.length ? upCommingDetails[0]?.desc : " Our uniquely designed spacious villas are sure to impress anyone seeking a modern, peaceful an elegant home."}
-                        </div>
-                        {/* <Link href={'/upcoming-projects'} className="">
+                            <div className={` ${params?.lang === 'ar' ? "upcomingTitlePaddingar" : 'upcomingTitlePadding'}`}>
+                                <h3 className={` ${params?.lang === 'en' ? 'text-headingClrUpcoming' : 'text-headingClrUpcomingar'}   text-lg-left`} style={{ fontSize: "40px" }}>{upCommingDetails[0]?.title ? upCommingDetails[0]?.title : "Upcoming Projects"}</h3>
+                                <div
+                                    className={`mt-4 mb-5 align-items-center ${params?.lang === 'en' ? 'text-headingClrUpcoming' : 'text-headingClrUpcomingar'} w-100`}
+                                    style={{
+                                        fontSize: "18px",
+                                        lineHeight: "27px",
+                                        fontWeight: "400",
+                                        textAlign: "justify",
+                                        color: "#8D8D87",
+                                    }}
+                                >
+                                    {upCommingDetails?.length ? upCommingDetails[0]?.desc : " Our uniquely designed spacious villas are sure to impress anyone seeking a modern, peaceful an elegant home."}
+                                </div>
+                                {/* <Link href={'/upcoming-projects'} className="">
                             <button
                                 className="btn btn-backgroundClr w-100"
                                 style={{ maxWidth: "125px" }}
@@ -152,10 +144,38 @@ function upcommingproject({ upCommingDetails, sliderImgData }) {
                                 {upCommingDetails[0]?.viewBTN ? upCommingDetails[0]?.viewBTN : ''}
                             </button>
                         </Link> */}
+                            </div>
+                        </div>
+                        <div className="col-6 col-sm-6 col-lg-4 col-xl-3 belowDisple" >
+                            <div
+                                className="imagbox1"
+                            >
+                                <div className="position-relative">
+                                    <div
+                                        className={` ${params?.lang === 'en' ? "displayBGUpcoming " : 'displayBGUpcomingAR'}   rounded-4 `}
+                                    ></div>
+                                    <img
+                                        src={sliderImgData[0]?.sliderImg?.data?.attributes?.url}
+                                        alt=""
+                                        className=" upcomingImgWidth   mt-4 h-auto"
+                                        width={120}
+                                        height={100}
+                                        style={{ zIndex: "10", position: 'relative' }}
+                                    />
+                                </div>
+                            </div>
+                            <h6 className="  mt-2 text-center" >
+                                {sliderImgData[0]?.title ? sliderImgData[0]?.title : "6 Villas, Jumeirah"}
+                            </h6>
+                        </div>
+                        <div className="imagbox2 col-6 col-sm-6 col-lg-4 col-xl-3 belowDisple" style={{ marginTop: "24px" }}>
+                            <img src={sliderImgData[1]?.sliderImg?.data?.attributes?.url} alt="" width={120}
+                                height={100} className="h-auto upcomingImgWidth" />
+                            <h6 className=" text-center mt-2">{sliderImgData[1]?.title ? sliderImgData[1]?.title : "6 Villas, Jumeirah"} </h6>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </>
     );
 }

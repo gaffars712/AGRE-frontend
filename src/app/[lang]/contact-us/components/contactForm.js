@@ -35,11 +35,12 @@ function ContactForm({ params, formLabels }) {
     mobileNumber: '',
     email: '',
     interestedIn: '',
-    termsAccepted: false,
+    termsAccepted: true,
+    // termsAccepted: false,
   });
 
   const [errors, setErrors] = useState({});
-
+  const [btnLoader, setbtnLoader] = useState(false);
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
     setFormData({
@@ -62,14 +63,16 @@ function ContactForm({ params, formLabels }) {
     if (!formData.mobileNumber) newErrors.mobileNumber = params?.lang === 'en' ? 'Mobile Number is required.' : 'رقم الجوال مطلوب';
     if (!formData.email) newErrors.email = params?.lang === 'en' ? 'Email Address is required.' : 'عنوان البريد الإلكتروني مطلوب';
     if (!formData.interestedIn) newErrors.interestedIn = params?.lang === 'en' ? 'Interest is required.' : 'الفائدة مطلوبة';
-    if (!formData.termsAccepted) newErrors.termsAccepted = params?.lang === 'en' ? 'You must accept the terms and conditions.' : 'يجب عليك قبول الأحكام والشروط.';
+    // if (!formData.termsAccepted) newErrors.termsAccepted = params?.lang === 'en' ? 'You must accept the terms and conditions.' : 'يجب عليك قبول الأحكام والشروط.';
 
     return newErrors;
   };
 
   const handleSubmit = async (e) => {
+    setbtnLoader(true)
     e.preventDefault();
     const formErrors = validate();
+    console.log(formErrors);
     setErrors(formErrors);
 
     if (Object.keys(formErrors).length === 0) {
@@ -89,114 +92,121 @@ function ContactForm({ params, formLabels }) {
           interestedIn: '',
           termsAccepted: false,
         });
+        setbtnLoader(false)
         alert('Form submitted successfully!');
       } catch (error) {
+        setbtnLoader(false)
         console.error("Error registering:", error);
         alert('Error submitting form.');
       }
+    } else {
+      setbtnLoader(false)
     }
   };
 
   return (
-    <>
-      <div style={{ backgroundColor: '#dbe2ea' }} className='border rounded d-flex flex-wrap justify-content-center align-items-center'>
-        <div style={{ width: '796px' }} className='contact-form border p-5 m-5 bg-white rounded'>
-          <form className='' onSubmit={handleSubmit}>
-            <div className='mt-'>
-              {console.log(formLabels)}
-              <h4 className='text-center'>{formLabels[0]?.formTitle} </h4>
+    <div style={{ backgroundColor: '#dbe2ea' }} className='container border rounded d-flex flex-wrap justify-content-center align-items-center'>
+      <div style={{ maxWidth: "750px" }} className='contact-form border p-3 p-md-5 my-2 m-md-5 bg-white rounded w-100'>
+        <form className='row' onSubmit={handleSubmit}>
+          <div className='col-12 my-3 my-md-0'>
+            <h4 className='text-center'>{formLabels[0]?.formTitle} </h4>
+          </div>
+          <div className='col-12 col-md-6 mt-3'>
+            <strong>{formLabels[0]?.nameLabel}*</strong>
+            <input
+              type='text'
+              className='form-control mt-2'
+              name='fullName'
+              value={formData.fullName}
+              onChange={handleInputChange}
+              placeholder={params?.lang === 'ar' ? 'أدخل عنوان بريدك الإلكتروني' : 'Enter Value here'} // Dynamic placeholder
+            />
+            {errors.fullName && <p style={{ color: 'red' }}>{errors.fullName}</p>}
+          </div>
+          <div className='col-12 col-md-6 mt-3'>
+            <strong>{formLabels[0]?.numberLabel}*</strong>
+            <div dir='ltr'>
+            <PhoneInput dir='ltr'
+              country={"ae"}
+              value={formData.mobileNumber}
+              onChange={handlePhoneChange}
+              className="mt-2"
+              inputProps={{
+                name: "mobileNumber",
+                required: true,
+                className: "form-control",
+                id: "mobile",
+                placeholder: params?.lang === 'ar' ? 'أدخل رقم هاتفك المحمول' : 'Enter Your Mobile Number',
+              }}
+              containerStyle={{ width: "100%" }}
+              inputStyle={{
+                width: "100%",
+                direction: params?.lang === 'ar' ? 'rtl' : 'ltr',
+                textAlign: params?.lang === 'ar' ? 'right' : 'left',
+                marginTop: '18px',
+                // backgroundColor: 'red'
+              }}
+            />
             </div>
-            <div className='mt-5'>
-              <div style={{ fontSize: '16px' }} className='row'>
-                <div className='form-group col-lg-6 mb-3'>
-                  <strong>{formLabels[0]?.nameLabel}*</strong>
-                  <input
-                    type='text'
-                    className='form-control mt-2'
-                    name='fullName'
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    placeholder=''
-                  />
-                  {errors.fullName && <p style={{ color: 'red' }}>{errors.fullName}</p>}
-                </div>
-
-                <div className={`form-group col-lg-6 mt-2 ${params?.lang === 'ar' ? 'phone-input-ar' : ''}`}>
-                  <strong>{formLabels[0]?.numberLabel}*</strong>
-                  <PhoneInput
-                    country={"in"}
-                    value={formData.mobileNumber}
-                    onChange={handlePhoneChange}
-                    className=""
-                    inputProps={{
-                      name: "mobileNumber",
-                      required: true,
-                      className: "form-control",
-                      id: "mobile",
-                      style: { textAlign: 'left' } // Default alignment is left for LTR languages
-
-                    }}
-                    containerStyle={{ width: "100%" }}
-                    inputStyle={{ width: "100%", direction: 'rtl', marginTop: '18px', backgroundColor: 'red' }}
-                    style={{ Left: params?.lang === 'ar' ? '' : "" }}
-                  />
-                  {errors.mobileNumber && <p style={{ color: 'red' }}>{errors.mobileNumber}</p>}
-                </div>
-              </div>
-              <div className='row'>
-                <div className='form-group col-lg-6'>
-                  <strong>{formLabels[0]?.emailLabel}*</strong>
-                  <input
-                    type='email' // Changed to 'email' type
-                    className='form-control mt-2'
-                    name='email'
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder=''
-                  />
-                  {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
-                </div>
-
-                <div className='form-group col-lg-6' >
-                  <strong>{formLabels[0]?.interestLabel}*</strong>
-                  <input
-
-                    type='text'
-                    className='form-control mt-2'
-                    name='interestedIn'
-                    value={formData.interestedIn}
-                    onChange={handleInputChange}
-                    placeholder=''
-                  />
-                  {errors.interestedIn && <p style={{ color: 'red' }}>{errors.interestedIn}</p>}
-                </div>
-              </div>
-            </div>
-            <div className="mt-4 form-check" >
-              <input style={{ float: params?.lang === 'ar' ? 'right' : '' }}
-                type="checkbox"
-                className="form-check-input mt-2"
-                id="exampleCheck1"
-                name="termsAccepted"
-                checked={formData.termsAccepted}
-                onChange={handleInputChange}
-              />
-              <label style={{ marginRight: params?.lang === 'ar' ? '22px' : "" }} className="form-check-label" htmlFor="exampleCheck1">{formLabels[0]?.formTerms} *</label>
-              {errors.termsAccepted && <p style={{ color: 'red' }}>{errors.termsAccepted}</p>}
-            </div>
-            <div className='mt-3 text-center p-4'>
-              <button
-                type="submit"
-                style={{ backgroundColor: "#003366", width: '195px', height: '42px', borderRadius: '8px', fontSize: '16px' }}
-                className='text-white'
-              >
-                {formLabels[0]?.formBTN}
-              </button>
-            </div>
-          </form>
-        </div>
+            {errors.mobileNumber && <p style={{ color: 'red' }}>{errors.mobileNumber}</p>}
+          </div>
+          <div className='col-12 col-md-6 mt-3'>
+            <strong>{formLabels[0]?.emailLabel}*</strong>
+            <input
+              type='email'
+              className='form-control mt-2'
+              name='email'
+              value={formData.email}
+              onChange={handleInputChange}
+              placeholder={params?.lang === 'ar' ? 'أدخل عنوان بريدك الإلكتروني' : 'Enter your Email Address'}
+            />
+            {errors.email && <p style={{ color: 'red' }}>{errors.email}</p>}
+          </div>
+          <div className='col-12 col-md-6 mt-3'>
+            <strong>{formLabels[0]?.interestLabel}*</strong>
+            <select
+              className="form-select mt-2"
+              id="interestedIn"
+              name="interestedIn"
+              value={formData.interestedIn}
+              onChange={handleInputChange}
+            >
+              <option value="" disabled>
+                {params?.lang === 'ar' ? 'اختار القيمة' : 'Select value'}
+              </option>
+              {params?.lang === 'ar' ?
+                formLabels[0]?.inerestedOptionsAR && formLabels[0]?.inerestedOptionsAR.map((unit, index) => (
+                  <option key={index} value={unit}>
+                    {unit}
+                  </option>
+                ))
+                :
+                formLabels[0]?.inerestedOptionsEN && formLabels[0]?.inerestedOptionsEN.map((unit, index) => (
+                  <option key={index} value={unit}>
+                    {unit}
+                  </option>
+                ))
+              }
+            </select>
+            {errors.interestedIn && <p style={{ color: 'red' }}>{errors.interestedIn}</p>}
+          </div>
+          <div className='col-12 text-center p-4'>
+            <button
+              type="submit"
+              style={{ backgroundColor: "#003366", borderRadius: '8px', fontSize: '16px' }}
+              className='text-white btn-with-loaderbtn'
+            >
+              {btnLoader === true
+                ?
+                <div className="loaderbtn"></div>
+                :
+                <span style={{ fontWeight: "500" }}> {formLabels[0]?.formBTN} </span>
+              }
+            </button>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
   );
 }
 

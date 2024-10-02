@@ -40,33 +40,36 @@ async function Footer({ localeLang , segmentPath }) {
   let date = new Date()
   Year = date?.getFullYear()
   return (
-    <div className="bg-backgroundClr" style={{ paddingTop: "40px" }}>
+    <div className="bg-backgroundClr" >
       <div className="container bg-backgroundClr text-white">
-        <div className="row justify-content-between mb-5 ">
+        <div className="row  px-2 mb-5 " >
           {homecontentSection?.length &&
             homecontentSection[0]?.main?.map((item, index) => (
               <div
                 key={index}
-                className="col-lg-2 col-md-4 col-sm-6 mb-4 mb-lg-0"
+                style={{ paddingTop: "40px" }}
+                className="col-lg-2 col-md-4 col-sm-6 mb-4 mb-lg-0 "
               >
-                <div className="mb-3">{item?.name}</div>
+                <div className="mb-1 " style={{fontWeight:segmentPath === 'en' ? '500' : localeLang === 'en' ? '500' : '600', fontSize:segmentPath === 'en' ? '17px' : localeLang === 'en' ? '17px' : '17px'}}>{item?.name}</div>
                 {item.subName.map((it, ix) => (
                   <>
-                  {it?.type ? <div className="mb-1">{it?.type}</div> : null}
+                  {it?.type ? <Link  href={`/${segmentPath ? segmentPath : localeLang}${it?.typePath}`} className="text-white text-decoration-none-hover" style={{fontSize:"15px",}}>
+                    {it?.type}
+                    </Link> : null}
                   <Link
                     key={ix}
                     href={`/${segmentPath ? segmentPath : localeLang}${it?.path}`}
-                    style={{ textDecoration: "none", color: "white" }}
-                    className="d-flex flex-column gap-1"
+                    style={{ color: "white", fontSize:"14px" }}
+                    className="d-flex text-decoration-none-hover flex-column gap-1"
                   >
-                    <span>{it?.name}</span>
+                    <span className="mt-2 ">{it?.name}</span>
                   </Link>
                   </> ))}
               </div>
             ))}
         </div>
         <hr style={{ color: "#FFFFFF" }}></hr>
-        <div className="d-flex justify-content-center flex-wrap  gap-3 fontSize3 py-4">
+        <div className="d-flex justify-content-center flex-wrap  gap-3 fontSize3 py-2">
           {/* <Link href={"/privacy-policy"} className="text-decoration-none text-white">Privacy Policy</Link> */}
           {data?.Info[0]?.info[0]?.title?.length &&
             data?.Info[0]?.info[0]?.title?.map((item, index) => (
@@ -84,7 +87,8 @@ async function Footer({ localeLang , segmentPath }) {
                 <Link
                   // href={item?.path}
                   href={`/${segmentPath ? segmentPath : localeLang}${item?.path}`}
-                  className="text-decoration-none text-white"
+                  className="text-decoration-none-hover text-white"
+                  style={{fontSize:'15px'}}
                 >
                   {item?.name}
                 </Link>
@@ -98,7 +102,7 @@ async function Footer({ localeLang , segmentPath }) {
             {data?.followLinks?.length &&
               data?.followLinks?.map((item, index) => (
                 <Link key={index} href={item?.link ? item?.link : '/'} target="_blank">
-                  <Image
+                  <img
                     src={item?.img?.data?.attributes?.url}
                     width={22}
                     height={22}
@@ -110,8 +114,8 @@ async function Footer({ localeLang , segmentPath }) {
         </div>
       </div>
       <div
-        className=" footer-end text-center py-4 text-secondary"
-        style={{ backgroundColor: "rgba(219, 226, 233, 1)" }}
+        className=" footer-end text-center py-3 text-secondary"
+        style={{ backgroundColor: "rgba(219, 226, 233, 1)", fontSize:"14px" }}
       >
         © {Year} {data?.copy[0]?.title}
       </div>

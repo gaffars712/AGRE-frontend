@@ -4,7 +4,7 @@
 import Link from "next/link";
 import Carousel from "react-elastic-carousel";
 
-function OurResidential  ({params, residentialDetails, residentialData}) {
+function OurResidential({ params, residentialDetails, residentialData }) {
 
     const breakPoints = [
         { width: 1, itemsToShow: 1 },
@@ -61,35 +61,37 @@ function OurResidential  ({params, residentialDetails, residentialData}) {
     ];
 
     return (
-        <div
-            className="section-padding "
+        <div className=" section-padding"
             style={{ backgroundColor: "rgba(0, 51, 102, 0.15)" }}
-        >
-            <div
-                className="text-headingClr text-center mb-4"
-                style={{ fontSize: "32px" }}
             >
-                {residentialDetails?.length ?  residentialDetails[0]?.title : "Our Residential"}
-            </div>
-            <div className="text-center mb-5" style={{color:'rgba(141, 141, 135, 1)'}}>
-                {residentialDetails?.length ?  residentialDetails[0]?.desc : "Our residential portfolio consists of modern, affordable and upgraded apartments. We welcome you to make them your home"}
-            </div>
-            <Carousel breakPoints={breakPoints}>
-                {residentialData?.length &&
-                    residentialData?.map((item, index) => {
-                        return (
-                            <Card
-                            params={params}
-                                image={item?.attributes?.SliderImg?.data?.attributes?.url}
-                                title={item?.attributes?.proName}
-                                key={index}
-                                id={item?.attributes?.slug}
-                            />
-                        );
-                    })}
-            </Carousel>
-            <div className=" w-100 d-flex justify-content-center mt-5">
-                {/* <Link href={"/properties/residential"} className="">
+            <div
+                className=" container"
+            >
+                <div
+                    className="text-headingClr text-center mb-4"
+                    style={{ fontSize: "34px", fontWeight:"500" }}
+                >
+                    {residentialDetails?.length ? residentialDetails[0]?.title : "Our Residential"}
+                </div>
+                <div className="text-center mb-5" style={{ fontSize:"18px" }}>
+                    {residentialDetails?.length ? residentialDetails[0]?.desc : "Our residential portfolio consists of modern, affordable and upgraded apartments. We welcome you to make them your home"}
+                </div>
+                <Carousel breakPoints={breakPoints}>
+                    {residentialData?.length &&
+                        residentialData?.map((item, index) => {
+                            return (
+                                <Card
+                                    params={params}
+                                    image={item?.attributes?.SliderImg?.data?.attributes?.url}
+                                    title={item?.attributes?.proName}
+                                    key={index}
+                                    id={item?.attributes?.proShortName}
+                                />
+                            );
+                        })}
+                </Carousel>
+                <div className=" w-100 d-flex justify-content-center mt-5">
+                    {/* <Link href={"/properties/residential"} className="">
                     <button
                         className="btn btn-backgroundClr "
                         style={{ width: "135px" }}
@@ -97,6 +99,7 @@ function OurResidential  ({params, residentialDetails, residentialData}) {
                         {residentialDetails[0]?.viewBTN ? residentialDetails[0]?.viewBTN : ''}
                     </button>
                 </Link> */}
+                </div>
             </div>
         </div>
     );
@@ -104,16 +107,16 @@ function OurResidential  ({params, residentialDetails, residentialData}) {
 
 export default OurResidential;
 
-const Card = ({ image, title, key, id , params }) => {
+const Card = ({ image, title, key, id, params }) => {
     return (
         <Link
             href={`/${params?.lang}/project-detail/residential/${id}`}
             key={key}
             className="rounded-4 position-relative"
-            // style={{ width: "321px" }}
+        style={{ width: "321px" }}
         >
             <img
-                className="w-100  object-fit-cover rounded-4 z-1"
+                className=" w-100 object-fit-cover rounded-4 z-1"
                 // style={{ height: "410px" }}
                 src={image}
                 alt="img"
@@ -123,7 +126,7 @@ const Card = ({ image, title, key, id , params }) => {
                 style={{
                     backgroundColor: "rgba(4, 115, 169, 0.5)",
                     height: "53px",
-                    fontWeight:"500"
+                    fontWeight: "600"
                 }}
             >
                 {title}

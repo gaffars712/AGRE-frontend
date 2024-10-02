@@ -84,7 +84,7 @@ export default function Filter({ params, filters }) {
                                 placeholder={filters?.searchPlaceholder}
                                 onChange={(e) => setSearchText(e.target.value)}
                             />
-                            {selectedType == filters?.titleTwo ?
+                            {/* {selectedType == filters?.titleTwo ?
                                 <select
                                     className=" filterTypeInput form-select form-control"
                                     style={{ width: '150px' }}
@@ -125,8 +125,8 @@ export default function Filter({ params, filters }) {
                                             )
                                         })
                                     }
-                                </select>}
-                            {selectedType != filters?.titleTwo && <select
+                                </select>} */}
+                            {/* {selectedType != filters?.titleTwo && <select
                                 className="filterBedroom form-control"
                                 style={{ width: '150px' }}
                                 onChange={(e) => setSelectedBedroom(e.target.value)}
@@ -145,7 +145,7 @@ export default function Filter({ params, filters }) {
                                         )
                                     })
                                 }
-                            </select>}
+                            </select>} */}
                         </div>
                         <button className={`${params?.lang === 'en' ? 'btn-new' : 'btn-new-ar'}`} style={{ width: '100px' }} onClick={handleSearch}>
                             {filters?.SearchBTN ? filters?.SearchBTN : 'Search'}

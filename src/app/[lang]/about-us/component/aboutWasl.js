@@ -38,8 +38,8 @@ function Aboutwasl({ params, aboutDetails }) {
     reversedAboutDetails = [...aboutDetails].reverse()
   }
   return (
-    <div className="section-padding">
-      <div className="d-flex flex-column flex-md-row gap-sm-2 gap-lg-5">
+    <div className="container">
+      <div className="d-flex mt-5 mb-5 flex-column flex-md-row gap-sm-2 gap-lg-5">
         <div class="dropdown d-md-none my-5 ">
           {reversedAboutDetails?.length &&
             reversedAboutDetails
@@ -84,7 +84,7 @@ function Aboutwasl({ params, aboutDetails }) {
             reversedAboutDetails.map((item, index) => (
               <Link
                 key={index}
-                className="rounded-4 text-start p-4 mb-2 text-decoration-none"
+                className="rounded-4 text-start  p-4 mb-2 text-decoration-none"
                 style={{
                   backgroundColor:
                     selectedIndex === item?.attributes?.path
@@ -96,6 +96,7 @@ function Aboutwasl({ params, aboutDetails }) {
                     selectedIndex === item?.attributes?.path
                       ? "4px solid black"
                       : "1px solid #E4E4DC",
+                      
                 }}
                 href={item?.attributes?.path ? item?.attributes?.path : "#"}
               >
@@ -112,7 +113,7 @@ function Aboutwasl({ params, aboutDetails }) {
                 <hr className="my-6" />
                 <div className="row mb-5">
                   <h3 className="mb-2">{item?.attributes?.shortDes}</h3>
-                  <div className="col-lg-7">
+                  <div className="col-lg-7" style={{textAlign:"justify"}}>
                     <Markdown >{item?.attributes?.Desc}</Markdown>
                   </div>
                   <div className="col-lg-5 d-flex flex-column align-items-center gap-5">
@@ -128,7 +129,7 @@ function Aboutwasl({ params, aboutDetails }) {
                           borderRadius: "15px",
                         }}
                       ></div>
-                      {item?.attributes?.firstImg && <Image
+                      {item?.attributes?.firstImg && <img
                         src={item?.attributes?.firstImg?.data?.attributes?.url}
                         style={{ position: "relative", zIndex: "1" }}
                         className="w-100 h-auto rounded-4"
@@ -148,9 +149,9 @@ function Aboutwasl({ params, aboutDetails }) {
                         }}
                       ></div>
                     </div>
-                    {item?.attributes?.secondImg?.data && (
-                      <Image
-                        src={item?.attributes?.secondImg?.data?.attributes?.formats?.thumbnail?.url}
+                    {item?.attributes?.secondImg?.data?.attributes?.url && (
+                      <img
+                        src={item?.attributes?.secondImg?.data?.attributes?.url}
                         className="mt-5 w-100 h-auto"
                         alt="our-value image2"
                         width={292}

@@ -14,12 +14,11 @@ import ImgComp from '@/components/commonSection/ImgComp'
 
 const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
 
-    console.log(projectDetails);
     const [selectedImage, setSelectedImage] = useState(projectDetails?.attributes?.proImgs?.data[0].attributes.url)
     const handleUpdateImg = (imageUrl) => {
-        if(imageUrl === selectedImage){
+        if (imageUrl === selectedImage) {
             setSelectedImage(projectDetails?.attributes?.proImgs?.data[0].attributes.url)
-        }else{
+        } else {
             setSelectedImage(imageUrl)
         }
 
@@ -27,7 +26,7 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
     }
     return (
         <div className='container'>
-            <div className="row">
+            <div className="row px-3">
                 <div className='col-12 col-lg-5 p-0'>
                     <div style={{ width: "100%" }}>
                         <div className='lh-sm' style={{ fontSize: '26px' }}>{projectDetails?.attributes?.proTitle}</div>
@@ -36,28 +35,32 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                     </div>
                 </div>
                 <div className='col-12 col-lg-7 d-flex justify-content-end flex-column flex-lg-row p-0'>
-                    <div className='position-relative'>
-                        {/* <Image src={selectedImage} alt='room1' width={414} height={307} className='object-fit-cover z-1  position-absolute project-description-main-image' /> */}
-                        <ImgComp src={selectedImage} index={1} width={414} height={307} className='object-fit-cover z-1  position-absolute project-description-main-image' />
-                        <div className='project-description-main-image-bg'></div>
+                    <div className='projectDetailsImgsResponsiv'>
+                        <div className='position-relative'>
+                            {/* <Image src={selectedImage} alt='room1' width={414} height={307} className='object-fit-cover z-1  position-absolute project-description-main-image' /> */}
+                            <ImgComp src={selectedImage} index={1} width={414} height={307} className='object-fit-cover z-1 projetDetailsImags  position-absolute project-description-main-image' />
+                            <div className='project-description-main-image-bg projetDetailsImags'></div>
+                        </div>
                     </div>
-                    <div className={` d-flex flex-row flex-lg-column gap-3 ${params?.lang === 'en' ? 'sub-images-project-desc' : 'sub-images-project-desc-ar'} `} style={{ width: '104.17px' }}>
-                        {projectDetails?.attributes?.proImgs?.data?.length &&
-                            projectDetails?.attributes?.proImgs?.data?.slice(1, 5)?.map((item, index) => {
-                                const imageUrl = item?.attributes?.url;
-                                return (
-                                    <span onClick={() => handleUpdateImg(imageUrl)} key={index}>
-                                        {/* <Image src={item?.attributes?.url} onClick={() => setSelectedImage(imageUrl)} key={index} alt={`image ${index}`} width={104.17} height={104.17} className='object-fit-cover rounded-3 sub-image-project-description' style={{ boxShadow: `${imageUrl == selectedImage ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px' : ''}`, cursor: 'pointer' }} /> */}
-                                        <ImgComp className='object-fit-cover rounded-3 sub-image-project-description' index={index} src={item?.attributes?.url} width={104.17} height={104.17} />
-                                    </span>
-                                )
-                            })
-                        }
+                    <div style={{ display: 'flex', justifyContent: "center" }}>
+                        <div className={` d-flex flex-row flex-lg-column gap-3 ${params?.lang === 'en' ? 'sub-images-project-desc' : 'sub-images-project-desc-ar'} `} style={{}}>
+                            {projectDetails?.attributes?.proImgs?.data?.length &&
+                                projectDetails?.attributes?.proImgs?.data?.slice(1, 5)?.map((item, index) => {
+                                    const imageUrl = item?.attributes?.url;
+                                    return (
+                                        <span onClick={() => handleUpdateImg(imageUrl)} key={index}>
+                                            {/* <Image src={item?.attributes?.url} onClick={() => setSelectedImage(imageUrl)} key={index} alt={`image ${index}`} width={104.17} height={104.17} className='object-fit-cover rounded-3 sub-image-project-description' style={{ boxShadow: `${imageUrl == selectedImage ? 'rgba(0, 0, 0, 0.35) 0px 5px 15px' : ''}`, cursor: 'pointer' }} /> */}
+                                            <ImgComp className='object-fit-cover rounded-3 sub-image-project-description' index={index} src={item?.attributes?.url} width={104.17} height={104.17} />
+                                        </span>
+                                    )
+                                })
+                            }
+                        </div>
                     </div>
                 </div>
                 <div className='container ' style={{ marginBottom: '30px' }}>
-                    <div className="row">
-                        <div className='col-sm-10 d-flex gap-3 justify-content-start justify-content-md-start flex-wrap p-0 mt-3 mt-md-0'>
+                    <div className="row projectDetailsImgsResponsiv flex-sm-column justify-content-center">
+                        <div className='col-lg-10 d-flex gap-3 justify-content-start justify-content-md-start flex-wrap p-0 mt-3 mt-md-0'>
                             {projectDetails?.attributes?.proFeature && params?.lang === 'en' ?
                                 projectDetails?.attributes?.proFeature?.map((item, index) => {
                                     return (
@@ -66,8 +69,6 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                                                 {COMMON?.FACILITIES[item]}
                                             </div>
                                             <div className=' d-flex text-center facility-text' >{item}</div>
-
-
                                         </div>
 
                                     )
@@ -93,7 +94,7 @@ const DetailsAboutProject = ({ params, projectId, projectDetails }) => {
                 </div>
                 {/* {projectDetails?.attributes?.proPlans ? <ProjectFloor params={params} floorDetails={projectDetails?.attributes?.proPlans} /> : null} */}
                 <Map params={params} mapUrl={projectDetails?.attributes?.locationURL} mapDetails={projectDetails?.attributes} />
-                <Register projectName={projectDetails?.attributes?.proName} params={params} />
+                <Register unitType={projectDetails?.attributes?.unitType} unitTypeAR={projectDetails?.attributes?.unitTypeAR} projectName={projectDetails?.attributes?.proName} params={params} />
 
             </div>
         </div>

@@ -117,6 +117,7 @@ export default async function Home({ params }) {
   let homeData = {};
   homeData = await getAllHomeSection(params?.lang);
   let homecontentSection = await homeData?.contentSection
+  let heroSlider = await homeData?.slider
 
   let data = {};
   data = await getAllupcomingeSection(params?.lang);
@@ -129,11 +130,12 @@ export default async function Home({ params }) {
   commercialData = await getAllCommercial(params?.lang);
   let filters = {};
   filters = await getfilterLabels(params?.lang)
-
   return (
     <main className="">
-      <MainScreen params={params} filters={filters} heroDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.hero-section')} />
-      <UpcommingProject params={params} sliderImgData={data?.projects ? data.projects : ''} upCommingDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.upcoming-section')} />
+      <MainScreen params={params} filters={filters} heroDetails={heroSlider} />
+      <div className="pt-5 pb-5">
+        <UpcommingProject params={params} sliderImgData={data?.projects ? data.projects : ''} upCommingDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.upcoming-section')} />
+      </div>
       <OurResidential params={params} residentialData={residentialData} residentialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.residential-section')} />
       <OurCommercial params={params} commercialData={commercialData} commercialDetails={homecontentSection?.filter(item => item?.__component === 'home-sections.commercial-section')} />
     </main>

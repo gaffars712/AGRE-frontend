@@ -51,7 +51,7 @@ const MapComponent = ({ params, mapDetails, mapUrl }) => {
           </div>
         </div>
         <div className="col-md-5 p-0 ">
-          <div className="flex justify-content-md-end">
+          <div className="">
             <Map height={302} mapUrl={mapUrl} />
           </div>
         </div>

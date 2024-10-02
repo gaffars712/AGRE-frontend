@@ -27,7 +27,7 @@ export default function Filter({ typeLabels, params, handleSearch, search, setSe
                                 className="form-control flex-grow-1"
                                 onChange={(e) => setSearch(e.target.value)}
                             />
-                            {pathname.includes('commercial') ?
+                            {/* {pathname.includes('commercial') ?
                                 <select
                                     value={selectedOption}
                                     className="filterTypeInput form-control"
@@ -71,8 +71,8 @@ export default function Filter({ typeLabels, params, handleSearch, search, setSe
                                             )
                                         })
                                     }
-                                </select>}
-                            {pathname.includes('residential') && <select
+                                </select>} */}
+                            {/* {pathname.includes('residential') && <select
                                 value={selectedBedroom}
                                 className="filterBedroom form-control"
                                 style={{ width: '150px' }}
@@ -92,7 +92,7 @@ export default function Filter({ typeLabels, params, handleSearch, search, setSe
                                         )
                                     })
                                 }
-                            </select>}
+                            </select>} */}
                         </div>
                         <button className={` ${params?.lang === 'en' ? 'btn-new' : 'btn-new-ar'}`} style={{ width: '100px' }} onClick={handleSearch}>
                         {typeLabels?.SearchBTN ? typeLabels?.SearchBTN : 'Search'}

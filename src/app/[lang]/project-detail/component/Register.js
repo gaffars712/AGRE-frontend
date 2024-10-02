@@ -21,9 +21,8 @@ const postRegisterData = async (lang = "en", formData) => {
   };
 
   const response = await postAPI(path, urlParamsObject, options, payloadData);
-
-  if (response?.data) {
-    return response.data;
+  if (response?.message) {
+    return response.message;
   } else {
     return null;
   }
@@ -48,13 +47,14 @@ const getRegisterLabels = async (lang = "en") => {
   }
 };
 
-const Register = ({ params, projectName }) => {
+const Register = ({ unitType, unitTypeAR, params, projectName }) => {
   console.log(projectName)
   const [propertyType, setPropertyType] = useState("residential");
   const [phone, setPhone] = useState("");
   const [isValidEID, setIsValidEID] = useState("");
   const [maritalStatus, setMaritalStatus] = useState("");
   const [isAgreed, setIsAgreed] = useState(false);
+  const [btnLoader, setbtnLoader] = useState(false);
   const [termsError, setTermsError] = useState("");
   const [formData, setFormData] = useState({
     fullName: "",
@@ -74,9 +74,9 @@ const Register = ({ params, projectName }) => {
     fifthPart: ''
   });
 
-  const unitTypes = ["Kilograms", "Liters", "Meters", "Pieces"];
-  const unitTypesAR = ["كيلوجرامات", "لترات", "أمتار", "قطع"];
-  const Nationality = ["indian", "american", "UAE national", "European"];
+  const unitTypes = ["1 Bedroom", "2 Bedrooms", "3 Bedrooms"];
+  const unitTypesAR = ["غرفة نوم واحدة", "غرفتا نوم", "3 غرف نوم",];
+  const Nationality = ["Indian", "American", "UAE national", "European"];
   const NationalityAr = ["هندي", "أمريكي", "مواطن إماراتي", "أوروبي"];
 
   const handleChange = (e) => {
@@ -119,7 +119,7 @@ const Register = ({ params, projectName }) => {
     }
 
     if (!fields.mobile) {
-      errorMessages.mobile = params?.lang === 'en' ? "Mobile Number is required" : 'رقم الجوال مطلوب';
+      errorMessages.mobile = params?.lang === 'ar' ? 'رقم الجوال مطلوب' : "Mobile Number is required";
     } else {
       errorMessages.mobile = "";
     }
@@ -136,6 +136,7 @@ const Register = ({ params, projectName }) => {
   };
 
   const handleSubmit = async (e) => {
+    setbtnLoader(true)
     e.preventDefault();
 
     const fieldsToValidate = {
@@ -154,24 +155,29 @@ const Register = ({ params, projectName }) => {
         number: phone,
         formType: propertyType,
       };
-      setFormData({
-        fullName: "",
-        email: "",
-        nationality: "",
-        unitType: "",
-        comment: "",
-      });
+
       setPhone("");
       try {
         const registrationResponse = await postRegisterData(params?.lang, dataToSubmit);
-        alert("Data submitted...");
-        setFormData({});
+        if (registrationResponse == 'Form submitted successfully') {
+          setFormData({
+            fullName: "",
+            email: "",
+            nationality: "",
+            unitType: "",
+            comment: "",
+          });
+          setIsAgreed(false)
+          alert("Form Submitted Successfully.");
+          setbtnLoader(false)
+        }
       } catch (error) {
         console.error("Error registering:", error);
       }
     } else {
+      setbtnLoader(false)
       if (!isAgreed) {
-        setTermsError(params?.lang === 'en' ? "Please agree to the Terms and Conditions" : 'يرجى الموافقة على الشروط والأحكام');
+        setTermsError(params?.lang === 'en' ? "Please agree to the Terms and Conditions" : 'يرجى الموافقة على   وأحكام التأجير وسياسة');
       }
     }
   };
@@ -182,8 +188,8 @@ const Register = ({ params, projectName }) => {
 
     if (fetchedLabels) {
       const data = fetchedLabels.termsLable;
-      const termsIndexEn = data.indexOf("Terms & Conditions");
-      const termsIndexAr = data.indexOf("الشروط والأحكام");
+      const termsIndexEn = data.indexOf("Rental Terms and Conditions");
+      const termsIndexAr = data.indexOf("وأحكام التأجير وسياسة");
       const privacyIndexEn = data.indexOf("Privacy Policy");
       const privacyIndexAr = data.indexOf("سياسة الخصوصية");
 
@@ -191,8 +197,8 @@ const Register = ({ params, projectName }) => {
       const privacyIndex = privacyIndexEn !== -1 ? privacyIndexEn : privacyIndexAr;
 
       const firstResult = termsIndex !== -1 ? data.substring(0, termsIndex) : data;
-      const secondPart = termsIndex === termsIndexEn ? 'Terms & Conditions' : 'الشروط والأحكام';
-      const thirdPart = termsIndex !== -1 && privacyIndex !== -1 ? '&' : '';
+      const secondPart = termsIndex === termsIndexEn ? 'Rental Terms and Conditions' : 'وأحكام التأجير وسياسة';
+      const thirdPart = termsIndex !== -1 && privacyIndex !== -1 ? params?.lang === 'en' ? ' & ' : ' و ' : '';
       const fourthPart = privacyIndex === privacyIndexEn ? 'Privacy Policy' : 'سياسة الخصوصية';
       const fifthPart = privacyIndex !== -1 ? data.substring(privacyIndex + (privacyIndex === privacyIndexEn ? 'Privacy Policy'.length : 'سياسة الخصوصية'.length)) : '';
 
@@ -210,11 +216,25 @@ const Register = ({ params, projectName }) => {
     fetchLabels();
   }, [params?.lang]);
 
+  const CustomCheckbox = ({ checked, onChange, id, label }) => {
+    return (
+      <div style={{ display: "flex", alignItems: "start" }} className={`custom-checkbox ${params?.lang === 'ar' ? 'rtl' : ''}`}>
+        <input style={{ width: "20px", height: "20px" }}
+          type="checkbox"
+          id={id}
+          checked={checked}
+          onChange={onChange}
+        />
+        <div className="checkbox-box"></div>
+        <label htmlFor={id}>{label}</label>
+      </div>
+    );
+  };
   return (
     <div
       className="my-5 rounded-4 px-3 px-sm-5"
       style={{
-        backgroundColor: "rgba(0, 51, 102, 0.15)",
+        backgroundColor: "#dde3eb",
         padding: "40px 0px  40px 0px",
       }}
     >
@@ -225,8 +245,8 @@ const Register = ({ params, projectName }) => {
             <label className="form-label">{labels?.propertyTypeLabel}</label>
             <div>
               <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
+                <input style={{ backgroundColor: "transparent", border: "1px solid black" }}
+                  className="form-check-input p-2"
                   type="radio"
                   name="propertyType"
                   value="residential"
@@ -236,8 +256,8 @@ const Register = ({ params, projectName }) => {
                 <label className="form-check-label">{labels?.oneType}</label>
               </div>
               <div className="form-check form-check-inline">
-                <input
-                  className="form-check-input"
+                <input style={{ backgroundColor: "transparent", border: "1px solid black" }}
+                  className="form-check-input p-2"
                   type="radio"
                   name="propertyType"
                   value="commercial"
@@ -249,14 +269,14 @@ const Register = ({ params, projectName }) => {
             </div>
           </div>
 
-          <div className="row mb-3">
-            <div className="col-md-6">
+          <div className="row ">
+            <div className="col-md-6 mt-3">
               <label htmlFor="fullName" className="form-label">
                 {labels?.nameLabel} *
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control "
                 id="fullName"
                 name="fullName"
                 value={formData.fullName}
@@ -268,13 +288,13 @@ const Register = ({ params, projectName }) => {
                 </div>
               )}
             </div>
-            <div className="col-md-6">
+            <div className="col-md-6 mt-3">
               <label htmlFor="email" className="form-label">
                 {labels?.emailLabel} *
               </label>
-              <input
-                type="email"
-                className="form-control"
+              <input dir="ltr"
+                type="text"
+                className="form-control "
                 id="email"
                 name="email"
                 value={formData.email}
@@ -288,31 +308,33 @@ const Register = ({ params, projectName }) => {
             </div>
           </div>
 
-          <div className="row mb-3">
-            <div className={`form-group col-md-6  ${params?.lang === 'ar' ? 'phone-input-ar' : ''}`}>
+          <div className="row ">
+            <div className={`form-group col-md-6 mt-3  ${params?.lang === 'ar' ? '' : ''}`}>
               <label htmlFor="mobile" className="form-label">
                 {labels?.numberLabel} *
               </label>
-              <PhoneInput
-                country={"in"}
-                value={phone}
-                onChange={handlePhoneChange}
-                inputProps={{
-                  name: "mobile",
-                  required: true,
-                  className: "form-control",
-                  id: "mobile",
-                }}
-                containerStyle={{ width: "100%" }}
-                inputStyle={{ width: "100%" }}
-              />
+              <div dir="ltr">
+                <PhoneInput
+                  country={"ae"}
+                  value={phone}
+                  onChange={handlePhoneChange}
+                  inputProps={{
+                    name: "mobile",
+                    required: true,
+                    className: "form-control ",
+                    id: "mobile",
+                  }}
+                  containerStyle={{ width: "100%" }}
+                  inputStyle={{ width: "100%" }}
+                />
+              </div>
               {errors.mobile && (
                 <div className="text-danger mt-1" style={{ fontSize: "12px" }}>
                   {errors.mobile}
                 </div>
               )}
             </div>
-            <div className="col-md-6">
+            {/* <div className="col-md-6">
               <label htmlFor="nationality" className="form-label">
                 {labels?.nationalityLabel}
               </label>
@@ -345,8 +367,8 @@ const Register = ({ params, projectName }) => {
                   {errors.nationality}
                 </div>
               )}
-            </div>
-            <div className="col-md-6">
+            </div> */}
+            <div className="col-md-6 mt-3 ">
               <label htmlFor="unitType" className="form-label">
                 {labels?.UnitLabel} *
               </label>
@@ -361,17 +383,32 @@ const Register = ({ params, projectName }) => {
                   {params?.lang === 'ar' ? '- يختار -' : '- Select -'}
                 </option>
                 {params?.lang === 'ar' ?
-                  unitTypesAR.map((unit, index) => (
-                    <option key={index} value={unit}>
-                      {unit}
-                    </option>
-                  ))
+                  unitTypeAR ?
+                    unitTypeAR.map((unit, index) => (
+                      <option className="" key={index} value={unit}>
+                        {unit}
+                      </option>
+                    ))
+                    :
+                    unitTypesAR.map((unit, index) => (
+                      <option className="" key={index} value={unit}>
+                        {unit}
+                      </option>
+                    ))
                   :
-                  unitTypes.map((unit, index) => (
-                    <option key={index} value={unit}>
-                      {unit}
-                    </option>
-                  ))}
+                  unitType ?
+                    unitType.map((unit, index) => (
+                      <option className="" key={index} value={unit}>
+                        {unit}
+                      </option>
+                    ))
+                    :
+                    unitTypes.map((unit, index) => (
+                      <option className="" key={index} value={unit}>
+                        {unit}
+                      </option>
+                    ))
+                }
               </select>
               {errors.unitType && (
                 <div className="text-danger mt-1" style={{ fontSize: "12px" }}>
@@ -381,44 +418,58 @@ const Register = ({ params, projectName }) => {
             </div>
           </div>
 
-          <div className="mb-3">
+          <div className="mt-3">
             <label className="form-label">{labels?.messageLabel}</label>
             <textarea
-              className="form-control"
+              className="form-control "
               name="comment"
               value={formData.comment}
               onChange={handleChange}
               rows="3"
             />
           </div>
+          <div className=" mt-3">
 
-          <div className="form-check mb-3">
-            <input style={{ float: params?.lang === 'ar' ? 'right' : "" }}
-              type="checkbox"
-              className="form-check-input"
-              id="termsCheckbox"
+            <CustomCheckbox
               checked={isAgreed}
               onChange={() => {
                 setIsAgreed(!isAgreed);
                 setTermsError("");
               }}
+              id="termsCheckbox"
+              label={
+                <>
+                  {terms.firstResult}
+                  <a
+                    href={`${params?.lang === 'en' ? '/en/rental-terms-and-conditions' : '/ar/rental-terms-and-conditions'}`}
+                  >
+                    {terms.secondPart}
+                  </a>
+                  {terms.thirdPart}
+                  <a
+                    href={`${params?.lang === 'en' ? '/en/privacy-policy' : '/ar/privacy-policy'}`}
+                  >
+                    {terms.fourthPart}
+                  </a>
+                  {terms.fifthPart}
+                </>
+              }
             />
-            <label style={{ marginRight: params?.lang === 'ar' ? '22px' : "" }} className="form-check-label" htmlFor="termsCheckbox">
-              {terms.firstResult}
-              <a href="/terms-and-conditions">{terms.secondPart}</a> {terms.thirdPart}{" "}
-              <a href="/privacy-policy">{terms.fourthPart}</a>
-              {terms.fifthPart}
-            </label>
           </div>
           {termsError && (
-            <div className="text-danger" style={{ fontSize: "12px" }}>
+            <div className="text-danger" style={{ fontSize: '12px' }}>
               {termsError}
             </div>
           )}
 
-          <div className="text-end">
-            <button type="submit" className="btn btn-primary">
-              {labels?.formBTN}
+          <div className="text-end mt-3">
+            <button type="submit" style={{ border: "none" }} className="btn btn-with-loaderbtn btn-primary">
+              {btnLoader === true
+                ?
+                <div className="loaderbtn"></div>
+                :
+                <span style={{ fontWeight: "500" }}> {labels?.formBTN} </span>
+              }
             </button>
           </div>
         </form>

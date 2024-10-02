@@ -5,7 +5,7 @@ import Link from "next/link";
 import React from "react";
 import Carousel from "react-elastic-carousel";
 
-const OurCommercial = ({params, commercialDetails, commercialData }) => {
+const OurCommercial = ({ params, commercialDetails, commercialData }) => {
     const breakPoints = [
         { width: 1, itemsToShow: 1 },
         { width: 650, itemsToShow: 2 },
@@ -47,39 +47,42 @@ const OurCommercial = ({params, commercialDetails, commercialData }) => {
 
     return (
         <div className="section-padding ">
-            <div
-                className="text-headingClr text-center mb-4"
-                style={{ fontSize: "32px" }}
-            >
-                {commercialDetails?.length
-                    ? commercialDetails[0]?.title
-                    : "Our Commercial"}
-            </div>
-            <div className="text-center mb-5">
-                {commercialDetails?.length
-                    ? commercialDetails[0]?.desc
-                    : "Our commercial portfolio consists of modern, affordable andupgraded apartments. We welcome you to make them your home"}
-            </div>
+            <div className="container ">
+                <div
+                    className="text-headingClr text-center mb-4"
+                    style={{ fontSize: "34px", fontWeight: "500" }}
+                >
+                    {commercialDetails?.length
+                        ? commercialDetails[0]?.title
+                        : "Our Commercial"}
+                </div>
+                <div className="text-center mb-5"
+                    style={{ fontSize: '18px' }}
+                >
+                    {commercialDetails?.length
+                        ? commercialDetails[0]?.desc
+                        : "Our commercial portfolio consists of modern, affordable andupgraded apartments. We welcome you to make them your home"}
+                </div>
 
-            <Carousel breakPoints={breakPoints}>
-                {commercialData?.length &&
-                    commercialData?.map((item, index) => {
-                        return (
-                            <Card
-                            params={params}
-                                image={
-                                    item?.attributes?.SliderImg?.data
-                                        ?.attributes?.url
-                                }
-                                title={item?.attributes?.proName}
-                                key={index}
-                                id={item?.attributes?.slug}
-                            />
-                        );
-                    })}
-            </Carousel>
-            <div className=" w-100 d-flex justify-content-center mt-5">
-                {/* <Link href={"/properties/commercial"} className="">
+                <Carousel breakPoints={breakPoints}>
+                    {commercialData?.length &&
+                        commercialData?.map((item, index) => {
+                            return (
+                                <Card
+                                    params={params}
+                                    image={
+                                        item?.attributes?.SliderImg?.data
+                                            ?.attributes?.url
+                                    }
+                                    title={item?.attributes?.proName}
+                                    key={index}
+                                    id={item?.attributes?.proShortName}
+                                />
+                            );
+                        })}
+                </Carousel>
+                <div className=" w-100 d-flex justify-content-center mt-5">
+                    {/* <Link href={"/properties/commercial"} className="">
                     <button
                         className="btn btn-backgroundClr "
                         style={{ width: "135px" }}
@@ -87,6 +90,7 @@ const OurCommercial = ({params, commercialDetails, commercialData }) => {
                         {commercialDetails[0]?.viewBTN ? commercialDetails[0]?.viewBTN : ''}
                     </button>
                 </Link> */}
+                </div>
             </div>
         </div>
     );
@@ -100,7 +104,7 @@ const Card = ({ image, title, key, id, params }) => {
             href={`/${params?.lang}/project-detail/commercial/${id}`}
             key={key}
             className="rounded-4 position-relative"
-            // style={{ width: "321px" }}
+            style={{ width: "321px" }}
         >
             <img
                 className="w-100  object-fit-cover rounded-4 z-1"
@@ -113,7 +117,7 @@ const Card = ({ image, title, key, id, params }) => {
                 style={{
                     backgroundColor: "rgba(4, 115, 169, 0.5)",
                     height: "53px",
-                    fontWeight:"500"
+                    fontWeight: "600"
                 }}
             >
                 {title}

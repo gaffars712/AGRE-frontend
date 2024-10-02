@@ -2,17 +2,17 @@ import React from 'react'
 import mapcontact from "@/assets/images/map.svg"
 import Image from "next/image"
 import location from "@/assets/images/location.svg"
-import clock from "@/assets/images/clock.png"
-import call from "@/assets/images/call.png"
-import email from "@/assets/images/email.png"
+import clock from "@/assets/images/clock.svg"
+import call from "@/assets/images/call.svg"
+import email from "@/assets/images/email.svg"
 import Map from '../../../../components/commonSection/map'
 
-function Details({addLabels, addInfo}) {
+function Details({ addLabels, addInfo }) {
 
     return (
         <>
-            <div className='section-padding'>
-                <div >
+            <div className='container'>
+                <div className='mt-5 mb-5'>
                     <div className=' border rounded-3 py-3'>
                         <div className='row px-3 pt-2'>
                             <div className='d-flex gap-3 col-md-6  col-lg-3 '>
@@ -26,7 +26,7 @@ function Details({addLabels, addInfo}) {
                             </div>
                             <div className='d-flex gap-3 col-md-6 col-lg-3'>
                                 <div>
-                                    <Image src={clock} alt="img"  width={30} height={30} className='mt-3' />
+                                    <Image src={clock} alt="img" width={30} height={30} className='mt-3' />
                                 </div>
                                 <div className=''>
                                     <span style={{ fontSize: '14px' }}>{addLabels[0]?.HoursLabel}</span>
@@ -35,7 +35,7 @@ function Details({addLabels, addInfo}) {
                             </div>
                             <div className='d-flex gap-3 col-md-6 col-lg-3'>
                                 <div>
-                                    <Image src={call} alt="img"  width={30} height={30} className='mt-3' />
+                                    <Image src={call} alt="img" width={30} height={30} className='mt-3' />
                                 </div>
                                 <div className=''>
                                     <span style={{ fontSize: '14px' }}>{addLabels[0]?.contectLabel}</span>
@@ -44,7 +44,7 @@ function Details({addLabels, addInfo}) {
                             </div>
                             <div className='d-flex gap-3 col-md-6 col-lg-3'>
                                 <div>
-                                    <Image src={email} alt="img" width={30} height={30} className='mt-3'/>
+                                    <Image src={email} alt="img" width={30} height={30} className='mt-3' />
                                 </div>
                                 <div className='ml-1'>
                                     <span style={{ fontSize: '14px' }}>{addLabels[0]?.emailLabel}</span>
@@ -53,16 +53,18 @@ function Details({addLabels, addInfo}) {
                             </div>
                         </div>
 
-                        <div className='  text-center '>
+                        {/* <div className='  text-center '>
                             <button style={{ backgroundColor: "#003366", width: '125px', height: '42px', borderRadius: '8px', fontSize: '13px' }} className=' text-white'>{addLabels[0]?.addBTN}</button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
 
 
-            <div className=' section-padding col-lg-12'>
-            <Map mapUrl={addInfo[0]?.addURL}/>
+            <div className=' container col-lg-12'>
+                <div className=' mt-5 mb-5 col-lg-12'>
+                    <Map mapUrl={addInfo[0]?.addURL} />
+                </div>
             </div>
         </>
     )
